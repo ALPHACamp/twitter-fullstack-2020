@@ -25,7 +25,7 @@ const adminController = {
       tweets.forEach(tweet => {
         tweet.description = tweet.description.substring(0, 50)
       })
-      return res.render('admins/tweets', { tweets, route: 'tweets' })
+      res.render('admins/tweets', { tweets, route: 'tweets' })
     } catch (err) {
       next(err)
     }
@@ -36,7 +36,7 @@ const adminController = {
         where: { id: req.params.tweetId }
       })
       req.flash('success_messages', '成功刪除該則推文!')
-      return res.redirect('/admin/tweets')
+      res.redirect('/admin/tweets')
     } catch (err) {
       next(err)
     }
@@ -53,7 +53,7 @@ const adminController = {
         nest: true
       })
       if (!users) throw new Error('沒有使用者可顯示!')
-      const userInfos = users.filter(user => user.toJSON().role === 'user')
+      const userInfos = users.filter(user => user.toJSON().role !== 'admin')
         .map(user => {
           const userInfo = user.toJSON()
           userInfo.tweetCount = userInfo.Tweets.length

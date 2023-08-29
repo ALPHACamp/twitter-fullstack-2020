@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
-const { authenticated } = require('../middleware/auth')
+const { authenticated, authenticatedTweet } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const admin = require('./modules/admin')
 const api = require('./modules/api')
@@ -29,7 +29,7 @@ router.get('/tweets/:id/replies', authenticated, replyController.getTweetReplies
 router.post('/tweets/:tweetId/replies', authenticated, replyController.postReply)
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
 router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
-router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweets', authenticatedTweet, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweets)
 
 router.post('/following/:userId', authenticated, userController.addFollowing)
