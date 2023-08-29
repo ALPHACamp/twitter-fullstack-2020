@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     account: DataTypes.STRING,
     password: DataTypes.STRING,
-    avatar: DataTypes.STRING,
+    avatar: { type: DataTypes.STRING, defaultValue: '/images/icons/ac_icon.svg' },
     introduction: DataTypes.TEXT,
     role: DataTypes.STRING,
     cover: DataTypes.STRING
