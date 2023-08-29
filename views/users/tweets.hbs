@@ -1,16 +1,106 @@
-{{>navigation route='users'}}
+{{>navs/user-left-column  route='users'}}
 
-<div style="margin-left:198px; padding: 0px 10px; width:641px; " class="border border-light">
+<div style=" margin: 0px 25px; width:641px; " class="border">
+    {{>header route='user'}}
     <div class="mx-auto border border-light">
-        {{>header}}
+        
         {{>userpage-info}}
         {{>personaldata-modal}}
-        {{>user-page-tabs route='tweets'}}
+        {{>navs/user-page-tabs route='tweets'}}
     </div>
     {{!-- 留言 --}}
     {{#each tweets}}
-    {{>tweet-card}}
+    {{>contentcards/tweet-card}}
     {{/each}}
 </div>
 
 {{>top-users-bar}}
+
+{{!-- modal 主頁欄 --}}
+
+<div class="modal" id="myModalmain" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-flex justify-content-start">
+                <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+            <form action="" method="POST">
+                <div class="ms-2">
+                    <div class="d-flex flex-row">
+                        <a href="#">
+                            <img class=""
+                                src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
+                                alt="" width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+                        </a>
+
+                        <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"
+                            style="border:none"></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row-reverse mb-3 me-2">
+                    <button class="btn pt-1 pb-1 ps-3 pe-3"
+                        style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+                        推文
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{!-- 留言modal --}}
+
+<div class="modal" id="ModalReply" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="d-flex justify-content-start">
+                <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+            <form action="" method="POST">
+                <div class="ms-2">
+                    <div class="d-flex flex-row">
+                        <a href="#">
+                            <img class=""
+                                src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
+                                alt="" width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+                        </a>
+                        <p class="inline ms-1 mt-1">Christofu</p>
+                        <span class="ms-1 mt-2" style="font-size: 0.2rem;">@account</span>
+                        <span class="ms-1 mt-2" style="font-size: 0.2em;">. 3小時</span>
+                    </div>
+
+                    <div class="col-10 mx-auto ps-1">
+                        <p>Voluptatem cumque non quibusdam. Repudiandae consequatur veritatis ducimus ut.Quia quae harum
+                            fuga et
+                            rerum eos neque ut. Aut unde aliquam </p>
+                        <P style="font-size: 14px">回覆給<span style="color:#FF6600">@Christofu</span></P>
+                    </div>
+
+                    <div class="d-flex flex-row">
+                        <a href="#">
+                            <img class="" src="https://i.imgur.com/Na2PT87.jpg" alt="" width="40px" height="40px"
+                                style="background-color:#FF6600; border-radius: 30px">
+                        </a>
+                        <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="推你的回覆"
+                            style="border:none"></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row-reverse mb-3 me-2">
+                    <button class="btn pt-1 pb-1 ps-3 pe-3"
+                        style="background-color:#FF6600; color:white; border-radius: 30px" type="submit">
+                        回覆
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{{>personaldata-modal}}

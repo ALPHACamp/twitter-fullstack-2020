@@ -1,26 +1,48 @@
 <div class="card border-white">
-    <div class="p-0 position-relative">
+    <div class="position-relative">
         <img src={{#if
-            user.cover}}{{user.cover}}{{else}}"https://live.staticflickr.com/65535/49985934496_ce401213ed_3k.jpg"{{/if}}
+            user.cover}}{{user.cover}}{{else}}"/icon/cover.png"{{/if}}
             class="card-img-top" style="height: 200px;object-fit: cover;object-position: center;" alt="cover">
         <div style="width:140px; height:140px; background-color:#FF6600"
             class="position-absolute top-100 start-0 translate-middle-y rounded-circle ms-3 overflow-hidden border border-4 border-white">
             <img src={{#if
-                user.avatar}}{{user.avatar}}{{else}}"https://s3.ap-southeast-2.amazonaws.com/cdn.greekherald.com.au/wp-content/uploads/2020/07/05194617/default-avatar.png"{{/if}}
-                style="aspect-ratio: 1 / 1;width: 140px;object-fit: cover;object-position: center;" alt="avatar">
+                user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                style="aspect-ratio: 1/1; width: 140px; object-fit: cover;object-position: center;" class="" alt="avatar">
         </div>
     </div>
     <div class="card-body text-end">
-        {{!-- <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
+        {{!-- {{#ifCond reqUser.id user.id}}
+        {{else}}
+         <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
             <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
                 style="width: 13px; height: 13px" alt="...">
         </a>
         <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1">
             <img src="https://png.pngtree.com/png-clipart/20190705/original/pngtree-vector-forward-icon-png-image_4184777.jpg"
                 style="width: 13px; height: 13px" alt="...">
-        </a> --}}
+        </a>
+        {{/ifCond}} --}}
+
+        {{#ifCond reqUser.id user.id}}
         <a href="#" style="color:#FF6600; border-color:#FF6600; border-radius: 30px" class="btn mx-1 px-3"
             data-bs-toggle="modal" data-bs-target="#personalData">編輯個人資料</a>
+             {{else}}
+    
+                {{#if isFollowed}}
+                <form action="/following/{{user.id}}?_method=DELETE" method="POST">
+                    <button type="submit"
+                        style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+                        class="btn">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/following/{{user.id}}" method="POST">
+                    <button type="submit"
+                        style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
+                        class="btn">跟隨</button>
+                </form>
+                {{/if}}
+     
+             {{/ifCond}} 
     </div>
     <div class="card-body">
         <h4 class="card-title mb-1">{{user.name}}</h4>
