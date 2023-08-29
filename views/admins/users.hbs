@@ -1,9 +1,7 @@
 {{> navs/admin-left-column}}
-<div class="border-start border-end" style="position: absolute; left: 24px;width: 937px;margin-left: 333px;">
-  <div class="border-bottom" style="margin-top: 24px; height: 51px;">
-    <h4 class="fw-bold" style="margin-left: 21px;">使用者列表</h4>
-  </div>
-  <div class="d-flex flex-wrap">
+<div style=" margin: 0px 25px; width:937px; " class="border">
+  {{>header route='main' title='使用者列表'}}
+  <div class="d-flex flex-wrap mx-2">
     {{#each userInfos}}
       <div class="card border-light bg-light" style="width:210px; height:314px; margin: 16px 0 0 16px;border-radius: 10px;">
         <div class="position-relative">
@@ -25,7 +23,7 @@
           <div class="d-flex justify-content-center" style="height: 24px;">
             <div style="margin-right: 16px;"> 
               <span style="width: 24px; height: 24px;margin-right: 8px;">
-                {{>post-icon}}
+                {{>icons/post-icon}}
               </span>
               <span class="align-middle" style="font-family: Montserrat;font-size: 16px;font-style: normal;font-weight: 500;line-height: 26px;">
                 {{this.tweetCount}}
@@ -33,7 +31,7 @@
             </div>
             <div>
               <span style="width: 24px; height: 24px; margin-right: 8px;">
-                {{>like-icon w=24 h=24}}
+                {{>icons/like-icon w=24 h=24}}
               </span>
               <span class="align-middle" style="font-family: Montserrat;font-size: 16px;font-style: normal;font-weight: 500;line-height: 26px;">
                 {{this.likeCount}}

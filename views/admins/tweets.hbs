@@ -1,8 +1,6 @@
 {{> navs/admin-left-column}}
-<div class="border-start border-end" style="position: absolute; left: 24px; width: 937px;margin-left: 333px;">
-  <div class="border-bottom" style="margin-top: 24px; height: 51px;">
-    <h4 class="fw-bold" style="margin-left: 21px;">推文清單</h4>
-  </div>
+<div style=" margin: 0px 25px; width:937px; " class="border">
+  {{>header route='main' title='推文清單'}}
   {{#each tweets}}
     <div class="border-bottom" style="padding: 16px 0 16px 0;width: 937px;">
       <div class="d-flex">
