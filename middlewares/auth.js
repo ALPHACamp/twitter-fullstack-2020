@@ -15,7 +15,9 @@ const userLocalAuth = (req, res, next) => {
 
       if (user.role === 'admin') {
         req.flash('error_messages', '管理員不能訪問此區域')
-        return res.redirect('back')
+        const referer = req.get('Referer') || '/admin/signin'
+        res.redirect(referer) // 傳回上一頁
+        // return res.redirect('back')
       }
 
       // activate passport.sequrlizeUser
@@ -43,7 +45,9 @@ const adminLocalAuth = (req, res, next) => {
 
       if (user.role !== 'admin') {
         req.flash('error_messages', '只有管理員可以訪問此區域')
-        return res.redirect('/')
+        const referer = req.get('Referer') || '/signin'
+        return res.redirect(referer) // 傳回上一頁
+        // return res.redirect('back')
       }
 
       // activate passport.sequrlizeUser
@@ -51,6 +55,7 @@ const adminLocalAuth = (req, res, next) => {
         if (err) {
           return next(err)
         }
+
         return next()
       })
     })
@@ -64,14 +69,16 @@ const authenticatedUser = (req, res, next) => {
       if (user.role !== 'admin') {
         res.locals.layout = 'user-layout' // 指定user要使用user-layout.handlebars
         res.locals.user = user // 在本地端也放入user參數方便模板使用
+
         return next()
       } else {
         req.flash('error_messages', '管理員不能訪問此區域')
+
         const referer = req.get('Referer') || '/admin/tweets' // 取得上一頁是從哪裡來
-        res.redirect(referer) // 傳回上一頁
+        return res.redirect(referer) // 傳回上一頁
       }
     } else {
-      res.redirect('/signin')
+      return res.redirect('/signin')
     }
   } catch (error) {
     next(error)
@@ -89,10 +96,10 @@ const authenticatedAdmin = (req, res, next) => {
     } else {
       req.flash('error_messages', '只有管理員可以訪問此區域')
       const referer = req.get('Referer') || '/tweets' // 取得上一頁是從哪裡來
-      res.redirect(referer) // 傳回上一頁
+      return res.redirect(referer) // 傳回上一頁
     }
   } else {
-    res.redirect('/admin/signin')
+    return res.redirect('/admin/signin')
   }
 }
 
