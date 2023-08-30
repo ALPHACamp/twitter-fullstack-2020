@@ -45,6 +45,7 @@ const tweetController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
         // console.log(req.user)
         res.render('tweet', { tweets: data, reqUser, topUsers, user: user.toJSON() })
       })
