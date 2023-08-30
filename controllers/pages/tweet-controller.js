@@ -1,17 +1,58 @@
-const { Tweet, User, Like } = require('../../models')
+const { Tweet, User, Like, Reply } = require('../../models')
 
 const tweetController = {
-  getTweets: (req, res, next) => {
-    return Tweet.findAll({
-      include: [User],
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true
+  getTweets: async (req, res, next) => {
+    const [tweets, likes, replies] = await Promise.all([
+      Tweet.findAll({
+        include: [User],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Like.findAll({
+        raw: true,
+        nest: true
+      }),
+      Reply.findAll({
+        raw: true,
+        nest: true
+      })])
+
+    const likedTweetsId = []
+    likes.forEach(like => {
+      if (like.UserId === req.user.id) {
+        likedTweetsId.push(like.TweetId)
+      }
     })
-      .then(tweets => {
-        res.render('tweets', { tweets })
-      })
-      .catch(err => next(err))
+
+    const tweetLikedMap = {}
+    likes.forEach(like => {
+      if (!tweetLikedMap[like.TweetId]) {
+        tweetLikedMap[like.TweetId] = 1
+      } else {
+        tweetLikedMap[like.TweetId] = tweetLikedMap[like.TweetId] + 1
+      }
+    })
+
+    const tweetRepliedMap = {}
+    replies.forEach(reply => {
+      if (!tweetRepliedMap[reply.TweetId]) {
+        tweetRepliedMap[reply.TweetId] = 1
+      } else {
+        tweetRepliedMap[reply.TweetId] = tweetRepliedMap[reply.TweetId] + 1
+      }
+    })
+
+    const data = tweets.map(r => ({
+      ...r,
+      isLiked: likedTweetsId.includes(r.id),
+      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0,
+      replyCount: tweetRepliedMap[r.id] ? tweetRepliedMap[r.id] : 0
+    }))
+
+    const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
+
+    res.render('tweets', { tweets: sortedData, user: req.user })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
