@@ -167,27 +167,38 @@ const userController = {
         ]
       })
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+
       // likedtweet area
       const likes = await Like.findAll({
+        order: [['tweetId', 'DESC']],
         where: { userId: userId },
         raw: true,
         nest: true //
       })
       const likedTweetsId = likes.map(like => like.tweetId)
+
       const tweets = await Tweet.findAll({
-        order: [['createdAt', 'DESC']],
+        order: [['id', 'DESC']],
         include: [User, Reply, Like],
         where: { id: likedTweetsId }
       })
+
       const myLikedTweets = await Like.findAll({
         where: { userId: reqUser.id }
       })
       const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
+
       const tweetsResult = tweets
         .map(t => ({
           ...t.toJSON(),
           isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
         }))
+
+      for (let i = 0; i < likes.length; i++) {
+        tweetsResult[i].likedCreatedAt = likes[i].createdAt
+      }
+      tweetsResult.sort((a, b) => b.likedCreatedAt - a.likedCreatedAt)
+
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
@@ -223,17 +234,18 @@ const userController = {
       // followships area
       const followships = await Followship.findAll({
         where: { followerId: userId },
-        order: [['createdAt', 'DESC']],
+        order: [['followingId', 'DESC']],
         raw: true,
         nest: true
       })
       const followingsId = await followships.map(s => s.followingId)
-      const followingsUser = await User.findAll({ where: { id: followingsId }, raw: true, nest: true })
+      const followingsUser = await User.findAll({ where: { id: followingsId }, order: [['id', 'DESC']], raw: true, nest: true })
       for (let i = 0; i < followingsId.length; i++) {
         followships[i].followingUser = followingsUser[i]
         followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followingId)
       }
-     
+      followships.sort((a, b) => b.createdAt - a.createdAt)
+
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
@@ -266,16 +278,17 @@ const userController = {
       // followships area
       const followships = await Followship.findAll({
         where: { followingId: userId },
-        order: [['createdAt', 'DESC']],
+        order: [['followerId', 'DESC']],
         raw: true,
         nest: true
       })
-      const followersId = await followships.map(s => s.followerId)     
-      const followersUser = await User.findAll({ where: { id: followersId }, raw: true, nest: true })     
+      const followersId = await followships.map(s => s.followerId)
+      const followersUser = await User.findAll({ where: { id: followersId }, order: [['id', 'DESC']], raw: true, nest: true })
       for (let i = 0; i < followersId.length; i++) {
         followships[i].followerUser = followersUser[i]
         followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followerId)
       }
+      followships.sort((a, b) => b.createdAt - a.createdAt)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -304,7 +317,7 @@ const userController = {
       Followship.findOne({
         where: {
           followerId: helpers.getUser(req).id,
-          followingId: req.params.userId
+          followingId: userId
         }
       })
     ])
@@ -321,10 +334,11 @@ const userController = {
       .catch(err => next(err))
   },
   removeFollowing: (req, res, next) => {
+    const { userId } = req.params
     return Followship.findOne({
       where: {
         followerId: helpers.getUser(req).id,
-        followingId: req.params.userId
+        followingId: userId
       }
     })
       .then(followship => {

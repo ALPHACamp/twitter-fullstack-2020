@@ -19,19 +19,36 @@
             <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{#ifCond route 'followings'}}{{this.followingUser.account}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.account}}{{/ifCond}}</span>
             <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
             <div class="ms-auto">
+                {{#ifCond route 'followings'}}
                 {{#if this.isFollowed }}
-                <form action="/following/{{#ifCond route 'followings'}}{{this.followingUser.id}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.id}}{{/ifCond}}?_method=DELETE" method="POST">
+                <form action="/following/{{this.followingId}}?_method=DELETE" method="POST">
                     <button type="submit"
                         style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
                         class="btn">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/following/{{#ifCond route 'followings'}}{{this.followingUser.id}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.id}}{{/ifCond}}" method="POST">
+                <form action="/following/{{this.followingId}}" method="POST">
                     <button type="submit"
                         style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
                         class="btn">跟隨</button>
                 </form>
                 {{/if}}
+                {{/ifCond}}
+                {{#ifCond route 'followers'}}
+                {{#if this.isFollowed }}
+                <form action="/following/{{this.followerId}}?_method=DELETE" method="POST">
+                    <button type="submit"
+                        style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+                        class="btn">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/following/{{this.followerId}}" method="POST">
+                    <button type="submit"
+                        style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
+                        class="btn">跟隨</button>
+                </form>
+                {{/if}}
+                {{/ifCond}}
             </div>
         </div>
 
