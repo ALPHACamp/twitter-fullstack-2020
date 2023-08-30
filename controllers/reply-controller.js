@@ -54,7 +54,7 @@ const replyController = {
     const userId = helpers.getUser(req).id
     const { tweetId } = req.params
     const { comment } = req.body
-    if (!comment) throw new Error('內容不可空白')
+    if (!comment) throw new Error('內容不可空白！')
     Reply.create({ userId, tweetId, comment })
       .then(() => {
         const { tweetId } = req.params

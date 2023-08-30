@@ -7,11 +7,11 @@ const userController = {
   getEditPage: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) {
-        req.flash('error_messages', '沒有瀏覽權限!')
+        req.flash('error_messages', '沒有瀏覽權限！')
         return res.redirect(`/api/users/${helpers.getUser(req).id}`)
       }
       const user = await User.findByPk(req.params.id, { raw: true })
-      if (!user) throw new Error('使用者不存在!')
+      if (!user) throw new Error('使用者不存在！')
       res.render('users/edit', { user, reqUser: helpers.getUser(req) })
     } catch (err) {
       next(err)
@@ -20,34 +20,34 @@ const userController = {
   editUser: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) {
-        req.flash('error_messages', '沒有編輯權限!')
+        req.flash('error_messages', '沒有編輯權限！')
         return res.redirect(`/api/users/${helpers.getUser(req).id}`)
       }
       const user = await User.findByPk(req.params.id)
-      if (!user) throw new Error('使用者不存在!')
+      if (!user) throw new Error('使用者不存在！')
 
       const { name, account, email, password, checkPassword, introduction } = req.body
       const updateInfo = {}
       if (name) {
-        if (name.length > 50) throw new Error('暱稱長度不可超過50個字!')
+        if (name.length > 50) throw new Error('名稱長度不可超過50個字！')
         updateInfo.name = name
       }
       if (password) {
-        if (password !== checkPassword) throw new Error('密碼不相符!')
+        if (password !== checkPassword) throw new Error('密碼不相符！')
         updateInfo.password = await bcrypt.hash(password, 10)
       }
       if (introduction) {
-        if (introduction.length > 160) throw new Error('自我介紹長度不可超過160個字!')
+        if (introduction.length > 160) throw new Error('自我介紹長度不可超過160個字！')
         updateInfo.introduction = introduction
       }
       if (account) {
         const sameAccountUser = await User.findOne({ where: { account } })
-        if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用!')
+        if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用！')
         updateInfo.account = account
       }
       if (email) {
         const sameEmailUser = await User.findOne({ where: { email } })
-        if (sameEmailUser && sameEmailUser.id !== Number(req.params.id)) throw new Error('該Email已被使用!')
+        if (sameEmailUser && sameEmailUser.id !== Number(req.params.id)) throw new Error('該Email已被使用！')
         updateInfo.email = email
       }
 
@@ -63,7 +63,7 @@ const userController = {
         }
       }
       await user.update(updateInfo)
-      req.flash('success_messages', '使用者資料編輯成功')
+      req.flash('success_messages', '使用者資料編輯成功！')
       res.redirect('back')
     } catch (err) {
       next(err)
