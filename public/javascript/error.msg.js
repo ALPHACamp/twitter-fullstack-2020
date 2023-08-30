@@ -30,8 +30,8 @@ document.querySelectorAll('[id^=submitBtn]').forEach(btn => {
     } else {
       contentMessage.textContent = ''
     }
-    if (contentInput.value.length > 140) {
-      contentMessage.textContent = '字數不可超過 140 字'
+    if (contentInput.value.length > 50) {
+      contentMessage.textContent = '字數不可超過 50 字'
       event.preventDefault()
     }
   })
