@@ -47,6 +47,9 @@ app.use(passport.session())
 app.use((req, res, next) => {
   // 預留給需要放到res.local的message
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.info_messages = req.flash('info_messages')
+  res.locals.warning_messages = req.flash('warning_messages')
   next()
 })
 

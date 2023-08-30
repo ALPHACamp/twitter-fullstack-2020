@@ -96,7 +96,8 @@ const tweetController = {
         comment
       })
 
-      return res.redirect('back')
+      const referer = req.get('Referer') || '/signin'
+      res.redirect(referer) // 回到上一頁
     } catch (error) {
       return (next)
     }

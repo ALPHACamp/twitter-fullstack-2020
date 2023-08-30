@@ -43,7 +43,7 @@ const adminLocalAuth = (req, res, next) => {
 
       if (user.role !== 'admin') {
         req.flash('error_messages', '只有管理員可以訪問此區域')
-        return res.redirect('back')
+        return res.redirect('/')
       }
 
       // activate passport.sequrlizeUser
@@ -67,7 +67,7 @@ const authenticatedUser = (req, res, next) => {
         return next()
       } else {
         req.flash('error_messages', '管理員不能訪問此區域')
-        const referer = req.get('Referer') || '/admin/signin' // 取得上一頁是從哪裡來
+        const referer = req.get('Referer') || '/admin/tweets' // 取得上一頁是從哪裡來
         res.redirect(referer) // 傳回上一頁
       }
     } else {
@@ -88,7 +88,7 @@ const authenticatedAdmin = (req, res, next) => {
       return next()
     } else {
       req.flash('error_messages', '只有管理員可以訪問此區域')
-      const referer = req.get('Referer') || '/signin' // 取得上一頁是從哪裡來
+      const referer = req.get('Referer') || '/tweets' // 取得上一頁是從哪裡來
       res.redirect(referer) // 傳回上一頁
     }
   } else {

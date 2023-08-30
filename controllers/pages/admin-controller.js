@@ -59,7 +59,7 @@ const adminController = {
         return tweet
       })
 
-      res.render('admin/tweets', { tweets })
+      res.render('admin/tweets', { tweets, route: 'tweets' })
     } catch (error) {
       return next(error)
     }
@@ -108,7 +108,7 @@ const adminController = {
         }
       })
 
-      res.render('admin/users', { users: backendUsers })
+      res.render('admin/users', { users: backendUsers, route: 'users' })
     } catch (error) {
       return next(error)
     }
