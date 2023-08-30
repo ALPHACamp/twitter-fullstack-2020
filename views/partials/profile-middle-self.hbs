@@ -1,10 +1,10 @@
-<div class="self-profile-container" style="width: 639px; height: 378px; position: absolute;">
+<div class="self-profile-container" style="width: 639px; height: 378px; position: relative;">
   <img src="{{ tweetsUser.cover }}" alt="user-cover" style="width: 639px; height: 200px" class="img-fluid">
   <img src="{{ tweetsUser.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: relative; width: 140px; height: 140px; top: -70px; left: 16px; background-color: #FFFFFF;">
   <div class="user-info" style="position: absolute; top: 200px;">
     <div class="button d-flex justify-content-end" style="height: 70px; position: relative; width: 639px;">
-       <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="button" data-bs-toggle="modal" data-bs-target="#edit-profile-{{ tweetsUser.id }}">編輯個人資料</button>
-       {{> edit-user-modal}}
+      <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="button" data-bs-toggle="modal" data-bs-target="#edit-profile-{{ tweetsUser.id }}">編輯個人資料</button>
+      {{> edit-user-modal}}
     </div>
     <div class="info my-3 ps-4" style="height: 108px; position: relative;">
       <div class="name-acoount">
@@ -18,14 +18,77 @@
       </p>
       <div class="followship-container">
         <span style="font-size: 14px; font-weight: 400; font-family: Noto Sans TC">
-          <span style="color: #171725">
-            個<span style="color: #6C757D">跟隨中</span>
+          <span class="followings-button me-3" style="color: #171725">
+            <a href="/users/{{tweetsUser.id}}/followings" class="text-dark text-decoration-none">
+              {{followingsCount}} 個<span style="color: #6C757D">跟隨中</span>
+            </a>
           </span>
-          <span style="color: #171725">
-            位<span style="color: #6C757D;">跟隨者</span>
+          <span class="followers-button me-3" style="color: #171725">
+            <a href="/users/{{tweetsUser.id}}/followers" class="text-dark text-decoration-none">
+              {{followersCount}} 位<span style="color: #6C757D;">跟隨者</span>
+            </a>
           </span>
         </span>
       </div>
     </div>
+    {{> user-info-tab}}
+    {{#each likedTweets}}
+    <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-bottom">
+      <div class="card-body col-12 p-3">
+        <div class="row p-1">
+          <div class="col-1 d-flex justify-content-center align-items-start">
+            <a href="/users/{{this.id}}/tweets">
+              <img src="{{#if this.avatar}}{{ this.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+            </a>
+          </div>
+          <div class="col-10 row">
+            <div class="col-12 d-inline-flex align-items-center">
+              <div style="height: 26px; font-size: 15px">
+                <a href="/users/{{this.id}}/tweets" class="text-dark"
+                  style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">
+                  {{ this.name }}
+                </a>
+                <span style="font-size: 14px; font-weight: 400">
+                  @{{ this.account }}·{{ relativeTime this.tweetCreatedAt }}
+                </span>
+              </div>
+            </div>
+            <div class="col-12 mt-1 me-0" onclick="javascript:location.href='/tweets/{{this.tweetId}}/replies'"
+              style="cursor: pointer;">
+              {{ this.tweetDescription }}
+            </div>
+            <div class="tweets-icon-container d-flex flex-row mt-2">
+              <div class="reply">
+                <button class="reply bg-white" type="button" data-bs-toggle="modal"
+                  data-bs-target="#reply-tweet-{{this.tweetId}}">
+                  <img src="/images/icons/reply.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                  <span class="ms-1"
+                    style="height: 14px; width: 14px; font-family: Montserrat;">{{this.repliesCount}}</span>
+                </button>
+                {{> reply-modal}}
+              </div>
+              {{#if isLiked}}
+              <form action="/tweets/{{this.tweetId}}/unlike" method="POST" class="like ms-4" style="background: none;">
+                <button type="submit" class="like-button" style="background-color: transparent;">
+                  <img src="/images/icons/red-liked.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                  <span class="ms-1"
+                    style="height: 14px; width: 14px; font-family: Montserrat;">{{this.likesCount}}</span>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.tweetId}}/like" method="POST" class="like ms-4" style="background: none;">
+                <button type="submit" class="like-button" style="background-color: transparent;">
+                  <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                  <span class="ms-1" style="height: 14px; width: 14px; font-family: Montserrat;">{{this.likesCount}}</span>
+                </button>
+              </form>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
   </div>
 </div>

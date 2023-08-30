@@ -1,0 +1,59 @@
+{{#ifCond route 'getUserTweets'}}
+<ul class="nav nav-tabs">
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border-top: 0;border-left: 0;border-right: 0; border-bottom: solid #ff6600; color: #ff6600; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/tweets">推文</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/replies">回覆</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+{{/ifCond}}
+
+{{#ifCond route 'getReplies'}}
+<ul class="nav nav-tabs">
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/tweets">推文</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border-top: 0;border-left: 0;border-right: 0; border-bottom: solid #ff6600; color: #ff6600; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/replies">回覆</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+{{/ifCond}}
+
+{{#ifCond route 'getLikes'}}
+<ul class="nav nav-tabs">
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/tweets">推文</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border: 0; color: #6c757d; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/replies">回覆</a>
+  </li>
+  <li class="nav-item text-center" style="width: 130px; height: 52px">
+    <a class="nav-link p-0"
+      style="border-top: 0;border-left: 0;border-right: 0; border-bottom: solid #ff6600; color: #ff6600; width: 130px; height: 52px; display: flex; align-items: center; justify-content: center;"
+      href="/users/{{tweetsUser.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+{{/ifCond}}

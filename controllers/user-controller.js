@@ -259,6 +259,10 @@ const userController = {
   },
   getLikes: (req, res, next) => {
     const userId = req.params.id
+    const loginUserId = helper.getUser(req).id || null
+    const profileRoute = Number(userId) === Number(loginUserId)
+    const otherProfileRoute = !profileRoute
+
     return User.findByPk(userId, {
       include: [
         {
@@ -281,25 +285,43 @@ const userController = {
               ]
             }
           ]
-        }
+        },
+        { model: Tweet },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
       ],
       order: [[{ model: Like, as: 'LikedTweets' }, 'createdAt', 'DESC']]
     })
       .then(user => {
+        if (!user) throw new Error('User does not exist!')
+        const tweetsCount = user.Tweets.length
+        const followersCount = user.dataValues.Followers.length
+        const followingsCount = user.dataValues.Followings.length
         const likedTweets = user.LikedTweets.map(like => {
           const likedTweet = like.Tweet
           const tweetAuthor = likedTweet.User.dataValues
           return {
+            id: tweetAuthor.id,
             avatar: tweetAuthor.avatar,
             name: tweetAuthor.name,
             account: tweetAuthor.account,
+            tweetId: likedTweet.dataValues.id,
             tweetDescription: likedTweet.dataValues.description,
             tweetCreatedAt: likedTweet.dataValues.createdAt,
             likesCount: likedTweet.LikedUsers.length,
-            repliesCount: likedTweet.Replies.length
+            repliesCount: likedTweet.Replies.length,
+            isLiked: likedTweet.LikedUsers.some(likedUser => likedUser.UserId === loginUserId && likedUser.isLike)
           }
         })
-        res.render('userLikes', { likedTweets })
+        res.render('userLikes', {
+          likedTweets,
+          profileRoute,
+          otherProfileRoute,
+          tweetsCount,
+          followersCount,
+          followingsCount,
+          tweetsUser: user.dataValues
+        })
       })
       .catch(err => next(err))
   }
