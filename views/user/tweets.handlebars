@@ -9,35 +9,35 @@
       <img src="{{viewingUser.avatar}}" class="user-avatar position-absolute" alt="">
       <div class="user-action d-flex flex-row-reverse gap-3">
         {{#ifCond user.id viewingUser.id}}
-          {{!--修改:編輯個人資料改成可以開啟modal的按鈕--}}
-          <button type="button"
-            class="nav-tweet-btn btn btn-outline-primary d-flex justify-content-center align-items-center"
-            data-bs-toggle="modal" data-bs-target="#user-setting-modal">
-            編輯個人資料
-          </button>
-          {{!--修改結束--}}
-          <a href=""
-            class="{{#if isNoted}}active{{/if}} info-pic btn btn-outline-primary d-flex justify-content-center align-items-center  user-card-icon user-card-icon-noti">
-            <img src="/images/icons/noti_outlined.svg" alt="" class="filter-main-color">
-          </a>
-          <a href=""
-            class="{{#if isMessaged}}active{{/if}}mes-pic btn btn-outline-primary d-flex justify-content-center align-items-center user-card-icon user-card-icon-message">
-            <img src="/images/icons/message_outlined.svg" alt="" class="filter-main-color">
-          </a>
+        {{!--修改:編輯個人資料改成可以開啟modal的按鈕--}}
+        <button type="button"
+          class="nav-tweet-btn btn btn-outline-primary d-flex justify-content-center align-items-center"
+          data-bs-toggle="modal" data-bs-target="#user-setting-modal">
+          編輯個人資料
+        </button>
+        {{!--修改結束--}}
+        <a href=""
+          class="{{#if isNoted}}active{{/if}} info-pic btn btn-outline-primary d-flex justify-content-center align-items-center  user-card-icon user-card-icon-noti">
+          <img src="/images/icons/noti_outlined.svg" alt="" class="filter-main-color">
+        </a>
+        <a href=""
+          class="{{#if isMessaged}}active{{/if}}mes-pic btn btn-outline-primary d-flex justify-content-center align-items-center user-card-icon user-card-icon-message">
+          <img src="/images/icons/message_outlined.svg" alt="" class="filter-main-color">
+        </a>
         {{else}}
-          {{#if viewingUser.isFollowed}}
-          {{!-- 要使用if/else的地方 --}}
-          <form action="/followships/{{viewingUser.id}}?_method=DELETE" method="post">
-            <button type="submit" class="btn btn-primary">正在跟隨</button>
-          </form>
-          {{else}}
-          {{!-- 要使用if/else的地方 --}}
-          <form action="/followships" method="post">
-            <input type="text" name="id" value="{{viewingUser.id}}" class="d-none">
-            <button type="submit" class="btn btn-outline-primary">跟隨</button>
-          </form>
-          {{/if}}
-         {{/ifCond}} 
+        {{#if viewingUser.isFollowed}}
+        {{!-- 要使用if/else的地方 --}}
+        <form action="/followships/{{viewingUser.id}}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-primary">正在跟隨</button>
+        </form>
+        {{else}}
+        {{!-- 要使用if/else的地方 --}}
+        <form action="/followships" method="post">
+          <input type="text" name="id" value="{{viewingUser.id}}" class="d-none">
+          <button type="submit" class="btn btn-outline-primary">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifCond}}
       </div>
       <div class="user-info mt-2">
         <div class="mb-1">
@@ -51,10 +51,10 @@
         </div>
         <div class="d-flex gap-2 font-size-sm m-0 p-0">
           <a href="/users/{{viewingUser.id}}/followings" class="link-unstyled">
-             <p>{{viewingUser.followingCount}}個 <span class="text-secondary">跟隨中</span></p>
+            <p>{{viewingUser.followingCount}}個 <span class="text-secondary">跟隨中</span></p>
           </a>
           <a href="/users/{{viewingUser.id}}/followers" class="link-unstyled">
-          <p>{{viewingUser.followerCount}}位 <span class="text-secondary">跟隨者</span></p>
+            <p>{{viewingUser.followerCount}}位 <span class="text-secondary">跟隨者</span></p>
           </a>
         </div>
       </div>
@@ -79,13 +79,49 @@
   <div class="container main-tweets-areap-0 p-0 m-0  tweet-display flex-shrink-1">
     <div class="scrollbar-hidden p-0 pt-3 m-0 d-flex flex-column gap-3">
       {{!-- user tweets --}}
+      {{#ifCond userTab 'replies'}}
+      {{#each replies}}
+      <div data-link="/tweets/{{this.TweetId}}/replies"
+        class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
+        <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
+          <div class="tweet-user-icon flex-shrink-0  p-0">
+            <a href="/users/{{this.UserId}}/tweets"
+              class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+              <img src="{{this.User.avatar}}" alt="" class="w-100 h-100">
+            </a>
+          </div>
+          <div class="tweet-card-content d-flex flex-column gap-2">
+
+            <div class="tweet-user-horizontal">
+              <a href="/users/{{this.UserId}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
+                <p class="fw-bold">{{this.User.name}}</p>
+                <p class="font-size-sm text-secondary">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
+              </a>
+            </div>
+
+            <div class="tweet-user-replied">
+              <a href="/users/{{this.Tweet.User.id}}/tweets"
+                class=" d-flex gap-2 link-unstyled align-items-center">
+                <p class="font-size-sm text-secondary">回覆</p>
+                <p class="font-size-sm main-color">@{{this.Tweet.User.account}}</p>
+              </a>
+            </div>
+            <p class="m-0 text-wrap text-break">
+              {{this.comment}}
+            </p>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
       {{#each tweets}}
       <div data-link="/tweets/{{this.id}}/replies" data-id="{{this.id}}"
-        class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0 mt-3">
+        class="tweet-card card  shadow-none  py-0 px-4 m-0 rounded-0  border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
         <div class="card-body m-0 p-0 pb-3 d-flex gap-2">
 
           <div class="tweet-user-icon flex-shrink-0  p-0">
-            <a href="/users/{{this.User.id}}/tweets" class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
+            <a href="/users/{{this.User.id}}/tweets"
+              class="overflow-hidden  rounded-circle link-unstyled  child-img-center w-100 h-100 p-0">
               <img src="{{this.User.avatar}}" alt="" class="w-100 h-100">
             </a>
           </div>
@@ -133,6 +169,7 @@
         <div class="bottom-border"></div>
       </div>
       {{/each}}
+      {{/ifCond}}
     </div>
   </div>
 </div>
