@@ -75,7 +75,7 @@ const adminController = {
   getUsers: async (req, res, next) => {
     try {
       const backendUsers = await User.findAll({
-        where: { role: { [Op.ne]: 'admin' } },
+        // 使用者需要看到所有用戶，包含root帳號
         attributes: [
           'id',
           'name',
