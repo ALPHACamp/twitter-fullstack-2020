@@ -213,24 +213,26 @@ const userController = {
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
-        include: Tweet
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' }
+        ]
       })
-      // tweet area
+
+      // followships area
       const followships = await Followship.findAll({
         where: { followerId: userId },
-        raw: true
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-      const followingsId = followships.map(followship => followship.followingId)
-      const tweets = await Tweet.findAll({
-        include: User,
-        where: { UserId: followingsId },
-        order: [['createdAt', 'DESC']]
-      })
-      const tweetsResult = tweets
-        .map(t => ({
-          ...t.toJSON(),
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === t.userId)
-        }))
+      const followingsId = await followships.map(s => s.followingId)
+      const followingsUser = await User.findAll({ where: { id: followingsId }, raw: true, nest: true })
+      for (let i = 0; i < followingsId.length; i++) {
+        followships[i].followingUser = followingsUser[i]
+        followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followingId)
+      }
+     
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
@@ -246,7 +248,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/followings', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
+      return res.render('users/followings', { user: user.toJSON(), followships, topUsers, reqUser })
     } catch (err) {
       next(err)
     }
@@ -259,22 +261,21 @@ const userController = {
       const user = await User.findByPk(userId, {
         include: Tweet
       })
-      // tweet area
+
+      // followships area
       const followships = await Followship.findAll({
         where: { followingId: userId },
-        raw: true
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
       })
-      const followersId = followships.map(followship => followship.followerId)
-      const tweets = await Tweet.findAll({
-        include: User,
-        where: { UserId: followersId },
-        order: [['createdAt', 'DESC']]
-      })
-      const tweetsResult = tweets
-        .map(t => ({
-          ...t.toJSON(),
-          isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === t.userId)
-        }))
+      const followersId = await followships.map(s => s.followerId)     
+      const followersUser = await User.findAll({ where: { id: followersId }, raw: true, nest: true })     
+      for (let i = 0; i < followersId.length; i++) {
+        followships[i].followerUser = followersUser[i]
+        followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followerId)
+      }
+
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
@@ -290,7 +291,7 @@ const userController = {
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
 
-      return res.render('users/followers', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser })
+      return res.render('users/followers', { user: user.toJSON(), followships, topUsers, reqUser })
     } catch (err) {
       next(err)
     }

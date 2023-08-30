@@ -1,11 +1,11 @@
 {{>navs/user-left-column route='users'}}
 <div style="position: absolute; left: 332px; width:641px;" class="border">
-    {{>header route='user'}} 
-    {{>navs/user-followpage-tabs route='followers'}}
-    {{!-- 留言 --}}
-    {{#each tweets}}
-        {{>contentcards/user-followpage-tweet-card}}
-    {{/each}}
+  {{>header route='user'}}
+  {{>navs/user-followpage-tabs route='followers'}}
+  {{!-- 追隨者 --}}
+  {{#each followships}}
+  {{>contentcards/user-followpage-tweet-card route='followers'}}
+  {{/each}}
 </div>
 {{>top-users-bar}}
 

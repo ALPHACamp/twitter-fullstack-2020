@@ -1,25 +1,32 @@
-<div class="mx-auto p-2 border-bottom" >
+<div class="mx-auto p-2 border-bottom">
     <div class="card-body">
         <div class="mx-auto d-flex flex-row">
-            <a href="/users/{{this.User.id}}/tweets">
+            <a href="/users/{{#ifCond route 'followings'}}{{this.followingUser.id}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.id}}{{/ifCond}}/tweets">
                 <div style="width:40px; height:40px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                    {{#ifCond route 'followings'}}
                     <img src={{#if
-                        this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                        this.followingUser.avatar}}{{this.followingUser.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
                         style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center;" alt="avatar">
+                    {{/ifCond}}
+                    {{#ifCond route 'followers'}}
+                    <img src={{#if
+                        this.followerUser.avatar}}{{this.followerUser.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                        style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center;" alt="avatar">
+                    {{/ifCond}}
                 </div>
             </a>
-            <p class="inline ms-1 mt-1">{{this.User.name}}</p>
-            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.User.account}}</span>
+            <p class="inline ms-1 mt-1">{{#ifCond route 'followings'}}{{this.followingUser.name}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.name}}{{/ifCond}}</p>
+            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{#ifCond route 'followings'}}{{this.followingUser.account}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.account}}{{/ifCond}}</span>
             <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.createdAt}}</span>
             <div class="ms-auto">
                 {{#if this.isFollowed }}
-                <form action="/following/{{this.User.id}}?_method=DELETE" method="POST">
+                <form action="/following/{{#ifCond route 'followings'}}{{this.followingUser.id}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.id}}{{/ifCond}}?_method=DELETE" method="POST">
                     <button type="submit"
                         style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
                         class="btn">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/following/{{this.User.id}}" method="POST">
+                <form action="/following/{{#ifCond route 'followings'}}{{this.followingUser.id}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.id}}{{/ifCond}}" method="POST">
                     <button type="submit"
                         style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
                         class="btn">跟隨</button>
@@ -28,11 +35,11 @@
             </div>
         </div>
 
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
-            <div class="col-10 mx-auto">
-                <p>{{this.description}}</p>
-            </div>
-        </a>
+
+        <div class="col-10 mx-auto">
+            <p>{{#ifCond route 'followings'}}{{this.followingUser.introduction}}{{/ifCond}}{{#ifCond route 'followers'}}{{this.followerUser.introduction}}{{/ifCond}}</p>
+        </div>
+
 
     </div>
 </div>
