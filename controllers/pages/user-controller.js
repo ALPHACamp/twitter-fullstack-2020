@@ -263,6 +263,7 @@ const userController = {
       next(error)
     }
   },
+
   getUserReplies: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
     const viewingUserId = req.params.id

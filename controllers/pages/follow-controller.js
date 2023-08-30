@@ -1,6 +1,7 @@
 const { Followship, User } = require('../../models')
 const { FollowshipError } = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
+
 const followshipController = {
   postFollowship: async (req, res, next) => {
     try {
@@ -32,6 +33,7 @@ const followshipController = {
         followerId,
         followingId
       })
+
       return res.redirect('back')
     } catch (error) {
       return next(error)
@@ -55,6 +57,7 @@ const followshipController = {
       }
 
       await followship.destroy()
+
       return res.redirect('back')
     } catch (error) {
       return next(error)

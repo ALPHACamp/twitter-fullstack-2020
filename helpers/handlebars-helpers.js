@@ -1,6 +1,6 @@
-// 以下是
 const dayjs = require('dayjs')
 const relativeTime = require('dayjs/plugin/relativeTime')
+
 require('dayjs/locale/zh-tw')
 dayjs.extend(relativeTime)
 
@@ -29,4 +29,10 @@ const getRepliesTweetUser = context => {
   console.log(context)
   return 'sad'
 }
-module.exports = { currentYear, relativeTimeFromNow, detailTime, ifCond, getRepliesTweetUser }
+module.exports = {
+  currentYear,
+  relativeTimeFromNow,
+  detailTime,
+  ifCond,
+  getRepliesTweetUser
+}

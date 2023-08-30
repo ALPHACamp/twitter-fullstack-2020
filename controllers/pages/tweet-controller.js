@@ -4,11 +4,11 @@ const { followingUsersTweets, isValidWordsLength } = require('../../helpers/twee
 const { getTweetReplies } = require('../../helpers/replies-helper')
 const errorHandler = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
+
 const MAX_TWEET_LENGTH = 140
 const TWEET_MODAL_JS = 'tweetModal.js'
 
 const tweetController = {
-
   /* user home page */
   getTweets: async (req, res, next) => {
     try {
@@ -58,6 +58,7 @@ const tweetController = {
       return next(error)
     }
   },
+
   getReplies: async (req, res, next) => {
     try {
       const javascripts = [TWEET_MODAL_JS]
@@ -83,6 +84,7 @@ const tweetController = {
       return next(error)
     }
   },
+
   postReplies: async (req, res, next) => {
     try {
       const userId = helpers.getUser(req).id
@@ -102,6 +104,7 @@ const tweetController = {
       return (next)
     }
   },
+
   postLike: async (req, res, next) => {
     try {
       const tweetId = req.params.id
@@ -134,6 +137,7 @@ const tweetController = {
       return next(error)
     }
   },
+
   postUnlike: async (req, res, next) => {
     try {
       const tweetId = req.params.id

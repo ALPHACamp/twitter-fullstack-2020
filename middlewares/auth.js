@@ -64,10 +64,12 @@ const authenticatedUser = (req, res, next) => {
       if (user.role !== 'admin') {
         res.locals.layout = 'user-layout' // 指定user要使用user-layout.handlebars
         res.locals.user = user // 在本地端也放入user參數方便模板使用
+
         return next()
       } else {
-        req.flash('error_messages', '管理員不能訪問此區域')
         const referer = req.get('Referer') || '/admin/tweets' // 取得上一頁是從哪裡來
+
+        req.flash('error_messages', '管理員不能訪問此區域')
         res.redirect(referer) // 傳回上一頁
       }
     } else {
@@ -85,10 +87,12 @@ const authenticatedAdmin = (req, res, next) => {
     if (user.role === 'admin') {
       res.locals.layout = 'admin-layout'// 指定admin要使用admin-layout.handlebars
       res.locals.user = user // 在本地端也放入user參數方便模板使用
+
       return next()
     } else {
-      req.flash('error_messages', '只有管理員可以訪問此區域')
       const referer = req.get('Referer') || '/tweets' // 取得上一頁是從哪裡來
+
+      req.flash('error_messages', '只有管理員可以訪問此區域')
       res.redirect(referer) // 傳回上一頁
     }
   } else {
@@ -96,4 +100,9 @@ const authenticatedAdmin = (req, res, next) => {
   }
 }
 
-module.exports = { userLocalAuth, adminLocalAuth, authenticatedAdmin, authenticatedUser }
+module.exports = {
+  userLocalAuth,
+  adminLocalAuth,
+  authenticatedAdmin,
+  authenticatedUser
+}
