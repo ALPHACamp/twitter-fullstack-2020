@@ -49,6 +49,7 @@
             </div>
             <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆"></textarea>
           </div>
+          <input type="text" name="TweetId" value="{{ this.id }}" style="outline: none; color: #FFFFFF" class="border-0">
           <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>
         </form>
       </div>
@@ -110,10 +111,10 @@
                 src="{{#if user.avatar}}{{ user.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
                 class="rounded-circle ms-2" style="width: 50px; height: 50px" alt="avatar">
             </div>
-            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20"
-              minlength:"1" placeholder="推你的回覆"></textarea>
+            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆" style="outline: none;"></textarea>
           </div>
-          <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>
+          <input type="text" name="TweetId" value="{{tweet.id}}" style="outline: none; color: #FFFFFF" class="border-0">
+          <button type="submit" class="btn"  id="reply-button" data-bs-dismiss="modal">回覆</button>
         </form>
       </div>
     </div>
