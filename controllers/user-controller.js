@@ -53,8 +53,15 @@ const userController = {
     res.redirect('/admin/tweets')
   },
   getUserSetting: (req, res, next) => {
-    return res.render('user-setting')
+    const currentUserId = helpers.getUser(req).id
+    return User.findByPk(currentUserId, { raw: true})
+      .then(user => {
+        if (!user) throw new Error('使用者不存在')
+        res.render('user-setting', { currentUserId, user})
+      })
+    
   },
+  
   getUserFollowings: (req, res, next) => {
     const userId = req.params.id
     const currentUserId = helpers.getUser(req).id
@@ -141,7 +148,7 @@ const userController = {
           { model: Tweet, include: [
               User, 
               Reply,
-              {model: User, as: 'LikedUsers'}
+              { model: User, as: 'LikedUsers' }
             ]
           },
           // profile Data
@@ -161,9 +168,9 @@ const userController = {
         if (!user) throw new Error('使用者不存在')
         const userData = user.toJSON()
         // 取使用者Like的推文id
-        const likeTweets = helpers.getUser(req).LikedTweets.map(Lt => Lt.id)
+        const likeTweets = helpers.getUser(req).LikedTweets?  helpers.getUser(req).LikedTweets.map(Lt => Lt.id) : []
         // profile 追隨鈕判斷
-        const isFollowed = helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId)
+        const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : []
         const tweetCount =  userData.Tweets.length
         const followerCount = userData.Followers.length
         const followingCount = userData.Followings.length
@@ -215,7 +222,7 @@ const userController = {
       const userData = user.toJSON()
       const currentUserId = helpers.getUser(req).id
       // Profile Data
-      const isFollowed = helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId)
+      const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : [] 
       const tweetCount =  userData.Tweets.length
       const followerCount = userData.Followers.length
       const followingCount = userData.Followings.length
@@ -263,9 +270,9 @@ const userController = {
       const userData = user.toJSON()
       if (!user) throw new Error('使用者不存在')
       // 取使用者Like的推文id
-        const likeTweets = helpers.getUser(req).LikedTweets.map(Lt => Lt.id)
+      const likeTweets = helpers.getUser(req).LikedTweets ? helpers.getUser(req).LikedTweets.map(Lt => Lt.id) :[]
       // Profile Data
-      const isFollowed = helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId)
+      const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : []
       const tweetCount =  userData.Tweets.length
       const followerCount = userData.Followers.length
       const followingCount = userData.Followings.length
@@ -295,7 +302,6 @@ const userController = {
       })
     })
     .catch(err => next(err))
-    
   }
 }
 
