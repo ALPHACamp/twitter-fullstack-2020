@@ -27,12 +27,13 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 // 使用者功能路由
-router.get('/users/:id/likes', userController.getUserLikes)
-router.get('/users/:id/replies', userController.getUserReplies)
-router.get('/users/:id/tweets', userController.getUserTweets)
-router.get('/users/:id/followers', userController.getUserFollowers)
-router.get('/users/:id/followings', userController.getUserFollowings)
-router.get('/users/:id/setting', userController.getUserSetting)
+router.get('/users/:id/likes', authenticated, userController.getUserLikes)
+router.get('/users/:id/replies', authenticated, userController.getUserReplies)
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
+router.get('/users/:id/followings',authenticated, userController.getUserFollowings)
+router.get('/users/:id/setting', authenticated, userController.getUserSetting)
+// router.put('/api/users/:id', authenticated, userController.putUserSetting)
 
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
