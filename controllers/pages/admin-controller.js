@@ -30,6 +30,8 @@ const adminController = {
           return next(err)
         }
 
+        req.flash('success_messages', '你已成功登出!')
+
         res.redirect('/admin/signin')
       })
     } catch (error) {
