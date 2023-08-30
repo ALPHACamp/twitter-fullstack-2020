@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "NODE_ENV=test mocha test --exit --recursive --timeout 5000",
+    "test": "mocha test --exit --recursive --timeout 5000",
     "dbmigrate": "npx sequelize db:migrate && npx sequelize db:seed:all",
     "dbundo": "npx sequelize db:seed:undo:all &&  npx sequelize db:migrate:undo:all"
   },
