@@ -10,8 +10,9 @@ const replyController = {
       include: [
         User,
         { model: Like, as: 'LikedUsers' },
-        { model: Reply, order: [['createdAt', 'DESC']], include: [User] }
-      ]
+        { model: Reply, include: [User] }
+      ],
+      order: [[{ model: Reply }, 'createdAt', 'DESC']]
     })
       .then(tweet => {
         if (!tweet) throw new Error('No tweet found!')
@@ -44,7 +45,6 @@ const replyController = {
       // 修剪留言內容去掉前後空白
       comment = comment.trim()
       if (!comment) throw new Error('內容不可空白')
-
       await Reply.create({
         UserId,
         TweetId,
