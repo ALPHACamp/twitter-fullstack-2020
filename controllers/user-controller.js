@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
-const { User } = require('../models')
-
+const { User, Tweet, Reply, Like } = require('../models')
+const helpers = require('../_helpers')
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -53,13 +53,85 @@ const userController = {
     res.redirect('/admin/tweets')
   },
   getUserSetting: (req, res, next) => {
-    return res.render('user-setting')
+    const currentUserId = helpers.getUser(req).id
+    return User.findByPk(currentUserId, { raw: true})
+      .then(user => {
+        if (!user) throw new Error('使用者不存在')
+        res.render('user-setting', { currentUserId, user})
+      })
+    
   },
+  
   getUserFollowings: (req, res, next) => {
-    return res.render('followings')
+    const userId = req.params.id
+    const currentUserId = helpers.getUser(req).id
+    return Promise.all([
+      User.findByPk(userId, {
+        include:[ 
+          Tweet, 
+          { model: User, as:'Followings'}
+        ],
+        order:[['Followings', 'createdAt', 'Desc']]
+      }),
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ]) 
+      .then(([user, followShips])=> {
+        if (!user) throw new Error('使用者不存在')
+        const userData = user.toJSON()
+        const tweetCount =  userData.Tweets.length
+        const followings = userData.Followings.map(following => ({
+          ...following,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === following.id)
+        }))
+        
+        // 推薦追隨
+        const topUser = followShips.map(followShip => ({
+          ...followShip.toJSON(),
+          followerCount: followShip.Followers.length,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('followings', {user: userData, tweetCount, followings, topUser, currentUserId})
+      })
+      .catch(err => next(err))
   },
   getUserFollowers: (req, res, next) => {
-    return res.render('followers')
+    const userId = req.params.id
+    const currentUserId = helpers.getUser(req).id
+    return Promise.all([
+      User.findByPk(userId, {
+        include:[ 
+          Tweet, 
+          { model: User, as:'Followers'}
+        ],
+        order:[['Followers', 'createdAt', 'Desc']]
+      }),
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ]) 
+      .then(([user, followShips]) => {
+        if (!user) throw new Error('使用者不存在')
+        const userData = user.toJSON()
+        const tweetCount =  userData.Tweets.length
+        const followers = userData.Followers.map(follower => ({
+          ...follower,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === follower.id)
+        }))
+        // 推薦追隨
+        const topUser = followShips.map(followShip => ({
+          ...followShip.toJSON(),
+          followerCount: followShip.Followers.length,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+
+        res.render('followers', {user: userData, tweetCount, followers, topUser, currentUserId })
+      })
+      .catch(err => next(err))
+    
   },
   logout: (req, res) => {
     req.flash('success_messages', '成功登出！')
@@ -67,13 +139,169 @@ const userController = {
     res.redirect('/signin')
   },
   getUserTweets: (req, res, next) => {
-    res.render('user-tweets')
+    const userId = Number(req.params.id)
+    const currentUserId = helpers.getUser(req).id
+    return Promise.all([
+      User.findByPk( userId, {
+        include: [
+          // tweets Data
+          { model: Tweet, include: [
+              User, 
+              Reply,
+              { model: User, as: 'LikedUsers' }
+            ]
+          },
+          // profile Data
+          { model: User, as: 'Followers'}, 
+          { model: User, as: 'Followings'},
+          { model: Tweet, as: 'LikedTweets'}
+        ],
+        order: [['Tweets','createdAt', 'DESC']]
+      }),
+      // 推薦追隨
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ]) 
+    
+      .then(([user, followShips]) => {
+        if (!user) throw new Error('使用者不存在')
+        const userData = user.toJSON()
+        // 取使用者Like的推文id
+        const likeTweets = helpers.getUser(req).LikedTweets?  helpers.getUser(req).LikedTweets.map(Lt => Lt.id) : []
+        // profile 追隨鈕判斷
+        const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : []
+        const tweetCount =  userData.Tweets.length
+        const followerCount = userData.Followers.length
+        const followingCount = userData.Followings.length
+        const tweets = userData.Tweets.map(tweet => ({
+          ...tweet,
+          isLiked : likeTweets.includes(tweet.id),
+          LikeCount: tweet.LikedUsers.length,
+          replyCount: tweet.Replies.length
+        }))
+        // 推薦追隨
+        const topUser = followShips.map(followShip => ({
+          ...followShip.toJSON(),
+          followerCount: followShip.Followers.length,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+        res.render('user-tweets', { 
+          user: userData,
+          currentUserId,
+          tweetCount,
+          followerCount,
+          followingCount,
+          isFollowed,
+          topUser,
+          tweets
+        })
+      })
+      .catch(err => next(err))
   },
   getUserReplies: (req, res, next) => {
-    res.render('user-replies')
+    const userId = Number(req.params.id)
+    return Promise.all([
+      User.findByPk(userId, {
+        include: [
+          Tweet,
+          { model: Reply, include: { model: Tweet, include: [User] }},
+          { model: User, as: 'Followers'}, 
+          { model: User, as: 'Followings'},
+        ],
+        order: [[Reply, 'updatedAt', 'DESC']]
+      }),
+      // 推薦追隨
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ])
+    .then(([user, followShips]) => {
+      if (!user) throw new Error('使用者不存在')
+      const userData = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+      // Profile Data
+      const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : [] 
+      const tweetCount =  userData.Tweets.length
+      const followerCount = userData.Followers.length
+      const followingCount = userData.Followings.length
+      // 推薦追隨
+      const topUser = followShips.map(followShip => ({
+        ...followShip.toJSON(),
+        followerCount: followShip.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+
+      res.render('user-replies', {
+        user: userData,
+        currentUserId,
+        tweetCount,
+        followerCount,
+        followingCount,
+        isFollowed,
+        topUser,
+        replies: userData.Replies,
+      })
+    })
+    .catch(err => next(err))
+      
   },
   getUserLikes: (req, res, next) => {
-    res.render('user-likes')
+    const userId = Number(req.params.id)
+    const currentUserId = helpers.getUser(req).id
+    return Promise.all([
+      User.findByPk(userId, {
+        include: [
+          Tweet,
+          { model:Tweet, as:'LikedTweets', include: [User, Reply, {model: User, as: 'LikedUsers'}]},
+          { model: User, as: 'Followers'}, 
+          { model: User, as: 'Followings'},
+        ],
+        order: [['LikedTweets', 'updatedAt', 'DESC']]
+      }),
+      // 推薦追隨
+      User.findAll({
+        include: { model: User, as: 'Followers'}
+      })
+    ])
+    .then(([user, followShips]) => {
+      const userData = user.toJSON()
+      if (!user) throw new Error('使用者不存在')
+      // 取使用者Like的推文id
+      const likeTweets = helpers.getUser(req).LikedTweets ? helpers.getUser(req).LikedTweets.map(Lt => Lt.id) :[]
+      // Profile Data
+      const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : []
+      const tweetCount =  userData.Tweets.length
+      const followerCount = userData.Followers.length
+      const followingCount = userData.Followings.length
+
+      const tweets = userData.LikedTweets.map(tweet => ({
+          ...tweet,
+          isLiked : likeTweets.includes(tweet.id),
+          LikeCount: tweet.LikedUsers.length,
+          replyCount: tweet.Replies.length
+        }))
+      // 推薦追隨
+      const topUser = followShips.map(followShip => ({
+        ...followShip.toJSON(),
+        followerCount: followShip.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+      res.render('user-likes', {
+        user: userData,
+        currentUserId,
+        tweetCount,
+        followerCount,
+        followingCount,
+        isFollowed,
+        topUser,
+        likedTweets: tweets
+      })
+    })
+    .catch(err => next(err))
   }
 }
 

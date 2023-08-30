@@ -6,7 +6,7 @@
       {{>user-header}}
       {{>profile}}
       {{>user-tabs route='replies'}}
-      {{!-- #each replies --}}
+      {{#each replies}}
         <div class="d-flex flex-column flex-wrap justify-content-center mb-2"
           style="border-bottom: 1px #E6ECF0 solid; max-width:639px; margin: 0px 12px 0px 0px;">
           <div class="d-inline-flex">
@@ -15,27 +15,25 @@
                 class="ms-4 mt-2">
             </a>
             <div class="d-inline-flex flex-wrap pt-3 ms-3">
-              <h5 style="color: #171725;">John Due</h5>
-              <span class="ms-1" style="color: #6C757D;">@JohnDue.account · 3小時</span>
+              <h5 style="color: #171725;">{{../user.name}}</h5>
+              <span class="ms-1" style="color: #6C757D;">@{{../user.account}}· {{relativeTimeFromNow this.createdAt}}</span>
             </div>
           </div>
         
-          <div class="d-flex flex-column align-self-end" style="padding-left: 20px;">
-            <div class="pe-2">
+          <div class="d-flex flex-column align-self-start">
+            <div class="pe-2" style="margin-left:88px;">
               <span style="color:#6C757D">回覆</span>
-              <a href="/users/{{user.id}}/tweets" style="text-decoration:none;">
-                <span class="ms-1" style="color:#FF6600">@ Apple</span>
+              <a href="/users/{{this.Tweet.UserId}}/tweets" style="text-decoration:none;">
+                <span style="color:#FF6600">@{{this.Tweet.User.account}}</span>
               </a>
-            </div>
-            <div class="pe-2 d-flex mt-3" style="max-width: 528px; margin: 0px auto 0px auto;">
-              <p>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
-                Voluptate exercitation incididunt
-                aliquip deserunt reprehenderit elit laborum.
+              <p class="mt-2">
+                {{this.comment}}
               </p>
             </div>
+
           </div>
         </div>
-      {{!-- /each --}}
+      {{/each}}
 
     </div>
     {{>right}}

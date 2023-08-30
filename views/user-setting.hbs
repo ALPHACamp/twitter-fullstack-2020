@@ -4,14 +4,14 @@
   
   
     <div class="col-md-6" style="border: 1px #E6ECF0 solid; max-width: 639px;height:1200px;">
-      {{!-- {{>message}} --}}
+      
       <div class="m-5">
         <h2><strong>帳戶設定</strong></h2>
       </div>
   
       <hr class="mb-2">
-  
-      <form class="px-3 border-left mt-5" action="/users/{{user.id}}?_method=PUT" method="POST">
+      {{>messages}}
+      <form class="px-3 border-left mt-5" action="/api/users/{{currentUserId}}?_method=PUT" method="POST">
   
         <div class="form-group mt-3" style="height:78px; weight:593px">
           <div style="background-color:#F5F8FA">
@@ -62,7 +62,7 @@
               <font color="#696974">密碼再確認</font>
             </label>
             <input type="text" class="form-control" id="passwordCheck" name="passwordCheck"
-              style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA" />
+              style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA"/>
           </div>
         </div>
   
@@ -70,9 +70,11 @@
         <div class="d-flex justify-content-end mt-3">
           <button class="btn btn-primary btn-block"
             style="border-radius:50px; width:88px; height:46px;padding:8px 24px 8px 24px; background-color: #FF6600; border:none"
-            type="submit"><strong>
+            type="submit">
+            <strong>
               <font size="4">儲存</font>
-            </strong></button>
+            </strong>
+          </button>
         </div>
   
       </form>
