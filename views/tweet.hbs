@@ -51,7 +51,7 @@
           <div class="d-flex flex-row">
             <div class="me-4 d-flex flex-row">
               <a type="submit" class="text-decoration-none " style="color:#6C757D" data-bs-toggle="modal"
-                data-bs-target="#ModalReply{{this.id}}" data-bs-whatever="{{this.id}}">
+                data-bs-target="#ModalReply{{this.id}}">
                 {{>icons/reply-icon}}
                 <span class="mx-1 align-self-center"
                   style="font-size: 0.2rem;font-family: Montserrat;color:#6C757D">{{this.Replies.length}}</span>
@@ -84,8 +84,8 @@
           </div>
         </div>
       </div>
-
     </div>
+
     {{!--reply modal--}}
     <div class="modal" id="ModalReply{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -139,18 +139,19 @@
                   </div>
                 </a>
                 <div class="d-flex flex-row">
-                  <textarea class="ms-1 mt-2" name="comment" id="" rows="6" placeholder="推你的回覆"
-                    style="border:none;width:528px" maxlength="140" required></textarea>
+                  <textarea id="contentInput{{this.id}}" class="ms-1 mt-2" name="comment" rows="6" placeholder="推你的回覆"
+                    style="border:none;width:528px"></textarea>
                 </div>
               </div>
 
             </div>
 
             <div style="padding: 16px 24px" class="d-flex flex-row-reverse align-items-center">
-              <button class="btn text-end my-auto" style="background-color:#FF6600; color:white; border-radius: 30px"
+              <button id="submitBtn" data-id="{{this.id}}" class="btn text-end my-auto" style="background-color:#FF6600; color:white; border-radius: 30px"
                 type="submit">
                 回覆
               </button>
+              <span id="contentMessage{{this.id}}" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
             </div>
           </form>
         </div>
@@ -183,18 +184,18 @@
               </div>
             </a>
             <div style="margin-left: 8px" class="d-flex flex-column">
-              <textarea class="ms-1 mt-2" name="description" id="contentInput" rows="6" placeholder="有什麼新鮮事?"
+              <textarea class="ms-1 mt-2" name="description" id="contentInput1" rows="6" placeholder="有什麼新鮮事?"
                 style="border:none;width:528px"></textarea>
             </div>
           </div>
         </div>
         <div style="padding: 16px" class="d-flex flex-row-reverse align-items-center">
           <button class="btn text-end my-auto py-1 px-3"
-            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" id="submitBtn">
+            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" id="submitBtn1">
             推文
           </button>
           {{!-- DOM render --}}
-          <span id="emptyContentMessage" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
+          <span id="contentMessage1" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
         </div>
       </form>
     </div>
