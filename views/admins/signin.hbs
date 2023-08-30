@@ -5,16 +5,22 @@
 <div class="my-4 text-center">
   <h3 class="fw-bold mb-3">後台登入</h3>
 </div>
-<form style="width: 356px;margin: 0 auto;" action="/admin/signin" method="POST">
+<form class="needs-validation" style="width: 356px;margin: 0 auto;" action="/admin/signin" method="POST" novalidate>
   <div class="form-floating mb-3">
     <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
       name="account" placeholder="請輸入帳號" style="background-color: #f5f8fa !important;" required autofocus>
     <label for="account">帳號</label>
+    <div class="invalid-feedback">
+      不可空白！
+    </div>
   </div>
   <div class="form-floating mb-4">
     <input type="password" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="password"
       name="password" placeholder="請輸入密碼" style="background-color: #f5f8fa !important;" required>
     <label for="password">密碼</label>
+    <div class="invalid-feedback">
+      不可空白！
+    </div>
   </div>
   <div class="d-grid mb-3">
     <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"

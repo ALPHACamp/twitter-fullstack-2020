@@ -5,35 +5,50 @@
   <div class="mb-4 text-center">
     <h3 class="fw-bold mb-3">建立你的帳號</h3>
   </div>
-  <form style="width: 356px;margin: 0 auto;" action="/signup" method="POST">
+  <form class="needs-validation" style="width: 356px;margin: 0 auto;" action="/signup" method="POST" novalidate>
     <div class="form-floating mb-3">
       <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
         name="account" placeholder="請輸入帳號" style="background-color: #f5f8fa !important;" required autofocus>
       <label for="account">帳號</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
     <div class="form-floating mb-3">
       <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" maxlength="50"
         class="form-control border-3 border-top-0 border-start-0 border-end-0"
         style="background-color: #f5f8fa !important;" required>
       <label for="name">名稱</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
     <div class="form-floating mb-3">
       <input type="email" id="email" name="email" placeholder="請輸入Email"
         class="form-control border-3 border-top-0 border-start-0 border-end-0"
         style="background-color: #f5f8fa !important;" required>
       <label for="email">Email</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
     <div class="form-floating mb-3">
       <input type="password" id="password" name="password" placeholder="請輸入密碼"
         class="form-control border-3 border-top-0 border-start-0 border-end-0"
         style="background-color: #f5f8fa !important;" required>
       <label for="password">密碼</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
     <div class="form-floating mb-4">
       <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼"
         class="form-control border-3 border-top-0 border-start-0 border-end-0"
         style="background-color: #f5f8fa !important;" required>
       <label for="checkPassword">密碼確認</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
     <div class="d-grid mb-3">
       <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"

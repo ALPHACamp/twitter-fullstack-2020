@@ -36,7 +36,7 @@ const userController = {
         if (password !== checkPassword) throw new Error('密碼不相符！')
         updateInfo.password = await bcrypt.hash(password, 10)
       }
-      if (introduction) {
+      if (introduction !== undefined) { // 可以將 introduction 更新為空字串
         if (introduction.length > 160) throw new Error('自我介紹長度不可超過160個字！')
         updateInfo.introduction = introduction
       }
