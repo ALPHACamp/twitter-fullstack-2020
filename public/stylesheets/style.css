@@ -144,115 +144,9 @@ a:hover {
   color: #44444F;
 }
 
-.nav-item-user:hover,
-.nav-row.active .nav-item-title-user {
-  color: var(--brand-color);
-}
+/* ---------- Signin / Signup ---------- */
 
-.nav-item-icon {
-  position: relative;
-  width: 24px;
-  height: 24px;
-}
-
-.nav-item-home-icon {
-  position: absolute;
-  top: 2.2px;
-  left: 0.9px;
-  width: 22.2px;
-  height: 20.25px;
-  background-image: url('/stylesheets/icons/home_filled.svg');
-}
-
-.nav-item-user-icon {
-  position: absolute;
-  top: 2.2px;
-  left: 0.9px;
-  width: 22.2px;
-  height: 22.2px;
-  background-image: url('/stylesheets/icons/user_outlined.svg');
-}
-
-.nav-item-user:hover .nav-item-icon .nav-item-user-icon,
-.nav-row.active .nav-item-icon .nav-item-user-icon {
-  background-image: url('/stylesheets/icons/user_filled.svg');
-}
-
-.nav-item-title-tweet {
-  width: 72px;
-  height: 26px;
-  font-weight: 700;
-  line-height: 26px;
-  color: #FF6600;
-}
-
-.nav-item-title-user {
-  width: 90px;
-  height: 26px;
-  font-weight: 700;
-  line-height: 26px;
-}
-
-.logout-form {
-  position: fixed;
-  bottom: 0;
-}
-
-.logout-btn {
-  width: 178px;
-  height: 58px;
-  text-decoration: none;
-  color: #44444F;
-  background-color: white;
-  border: none;
-}
-
-.logout-btn:focus {
-  outline: none;
-  background-color: white;
-}
-
-.nav-item-logout {
-  position: relative;
-  left: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 76px;
-  height: 26px;
-  color: #44444F;
-}
-
-.nav-item-logout:hover,
-.nav-row.active .nav-item-title-logout {
-  color: var(--brand-color);
-}
-
-.nav-item-logout-icon {
-  position: absolute;
-  top: 2px;
-  left: 3px;
-  width: 24px;
-  height: 24px;
-  background-image: url('/stylesheets/icons/logout.svg');
-}
-
-.nav-item-logout:hover .nav-item-icon .nav-item-logout-icon,
-.nav-row.active .nav-item-icon .nav-item-logout-icon {
-  background-image: url('/stylesheets/icons/logout_colored.svg');
-}
-
-.nav-item-title-logout {
-  width: 36px;
-  height: 26px;
-  font-weight: 700;
-  line-height: 26px;
-} 
-
-
-/* ---------- User / Admin Signin ---------- */
-
-.signin-container {
+.signin-container, .signup-container {
   height: 100vh;
   max-width: 356px;
   display: flex;
@@ -260,7 +154,7 @@ a:hover {
   margin: 0 auto;
 }
 
-.signin-logo-container {
+.signin-logo-container, .signup-logo-container {
   position: relative;
   margin: 0 auto;
   top: 64px;
@@ -269,7 +163,7 @@ a:hover {
   padding: 5px;
 }
 
-.signin-logo {
+.signin-logo, .signup-logo {
   position: absolute; 
   top: 5px;
   left: 5px;
@@ -287,42 +181,79 @@ a:hover {
   line-height: 26px;
 }
 
-.admin-signin-title{
-  position: sticky;
+.signup-title {
+  position: relative;
   margin: 0 auto;
-  top: 138px;
-  width: 112px;
+  top: 88px;
+  width: 168px;
   height: 26px;
   font-weight: 700;
   line-height: 26px;
 }
 
 .form-item-account {
-  position: sticky;
+  position: absolute;
   margin: 0 auto;
   width: 356px;
   top: 204px;
-  margin-bottom: 60px;
   border-radius: 2px;
   background-color: var(--form-gray);
 }
 
-.form-item-password {
-  position: relative;
+.form-item-name {
+  position: absolute;
   margin: 0 auto;
   width: 356px;
-  top: 86px;
+  top: 290px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-email {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 376px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.signin-container .form-item-password {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 290px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.signup-container
+.form-item-password {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 462px;
+  margin-bottom: 32px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-checkPassword {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 548px;
   margin-bottom: 32px;
   border-radius: 2px;
   background-color: var(--form-gray);
 }
 
 .form-label {
-  height: 22px;
-  width: 356px;
   margin-left: 10.55px;
   color: #696974;
   font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 .form-input {
@@ -330,10 +261,12 @@ a:hover {
   width: 356px;
   padding: 0 0 0 10px;
   background-color: var(--form-gray);
-  /* border */
   border-radius: 2px;
   border-width: 0;
   border-bottom: 2px solid #657786;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
 }
 
 .form-input::placeholder,
@@ -354,7 +287,7 @@ a:hover {
   border-bottom: 2px solid var(--danger);
 } */
 
-.invalid-feedback {
+/* .invalid-feedback {
   background-color: white;
   width: 270px;
   font-size: 12px;
@@ -363,9 +296,14 @@ a:hover {
   line-height: 20px;
   letter-spacing: 0px;
   text-align: left;
-}
+} */
 
-.input-minmax,
+/* .invalid-feedback {
+  margin: 0;
+  background-color: white;
+} */
+
+/* .input-minmax,
 .textarea-minmax {
   position: absolute;
   right: 0;
@@ -378,23 +316,37 @@ a:hover {
   color: #696974;
   line-height: 20px;
   letter-spacing: 0px;
-}
+} */
 
 .btn-submit {
   display: flex;
   justify-content: center;
   padding: 8px 24px;
-  position: relative;
+  position: absolute;
   width: 356px;
   height: 46px;
-  top: 94px;
+  top: 384px;
   margin: 0 auto;
   border-radius: 50px;
   background: #FF6600;
   border: none;
 }
 
-.btn-signin-text {
+.btn-signup {
+  display: flex;
+  justify-content: center;
+  padding: 8px 24px;
+  position: absolute;
+  width: 356px;
+  height: 46px;
+  top: 642px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background: #FF6600;
+  border: none;
+}
+
+.btn-signin-text, .btn-signup-text {
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
@@ -404,9 +356,8 @@ a:hover {
 }
 
 .sub-btn {
-  text-align: right;
   position: relative;
-  top: 120px;
+  top: 368px;
   left: 180px;
   width: 160px;
   height: 36px;
@@ -417,6 +368,20 @@ a:hover {
   font-weight: 400;
   line-height: 30px;
   letter-spacing: 0px;
+}
+
+.btn-cancel {
+  position: relative;
+  top: 622px;
+  margin: 0 auto;
+  width: 56px;
+  height: 36px;
+  padding: 6px 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0062FF;
+  text-decoration:underline;
 }
 
 .admin-sub-btn {
