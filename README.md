@@ -98,7 +98,17 @@
 ## 功能展示
 
 ### 登入
+使用非admin帳號登入前台
+![](./README/demo_gif/login.gif)
+
+帳號或密碼錯誤會有通知
+![](./README/demo_gif/login_fail.gif)
+
+admin帳號不可以登入前台
+![](./README/demo_gif/login_admin_ban.gif)
 ### 註冊
+![](./README/demo_gif/signup.gif)
+
 ### 首頁
 ### 發送推文
 ### 回復推文
