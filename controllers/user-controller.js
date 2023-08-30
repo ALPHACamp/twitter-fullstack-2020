@@ -113,6 +113,7 @@ const userController = {
           isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       return res.render('users/tweets', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser, isFollowed })
     } catch (err) {
