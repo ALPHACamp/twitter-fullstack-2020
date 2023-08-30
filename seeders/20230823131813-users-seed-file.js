@@ -13,9 +13,7 @@ const generateUsers = async () => {
       role: 'user',
       avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
       introduction: faker.lorem.text().substring(0, 50),
-      cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
-      created_at: new Date(),
-      updated_at: new Date()
+      cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`
     }
     users.push(user)
   }
@@ -26,25 +24,33 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     try {
       const generatedUsers = await generateUsers()
-      await queryInterface.bulkInsert(
-        'Users',
-        [
-          ...generatedUsers,
-          {
-            account: 'root',
-            name: 'root',
-            email: 'root@example.com',
-            password: await bcrypt.hash('12345678', 10),
-            role: 'admin',
-            avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
-            introduction: faker.lorem.text().substring(0, 50),
-            cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
-            created_at: new Date(),
-            updated_at: new Date()
-          }
-        ],
-        {}
-      )
+      const users = [
+        ...generatedUsers,
+        {
+          account: 'root',
+          name: 'root',
+          email: 'root@example.com',
+          password: await bcrypt.hash('12345678', 10),
+          role: 'admin',
+          avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
+          introduction: faker.lorem.text().substring(0, 50),
+          cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`
+          // ,
+          // created_at: new Date(),
+          // updated_at: new Date()
+        }
+      ]
+
+      const delayInMinutes = 5
+
+      for (let i = 0; i < users.length; i++) {
+        const createdAt = new Date(Date.now() - i * delayInMinutes * 60000).toISOString().substring(0, 16)
+
+        users[i].created_at = createdAt
+        users[i].updated_at = createdAt
+      }
+
+      await queryInterface.bulkInsert('Users', users, {})
       console.log('Users table seeding completed successfully.')
     } catch (error) {
       console.error('Error seeding Users.', error)
