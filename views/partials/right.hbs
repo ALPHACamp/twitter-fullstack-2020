@@ -6,7 +6,7 @@
       <h4 style="color: #171725; font-weight: 500;">推薦跟隨</h4>
     </div>
     
-    {{!-- each topUser --}}
+    {{#each topUser}}
       <li class="list-group-item bg-light" style="border: none">
         <div class="row justify-content-around align-items-center">
       
@@ -16,8 +16,8 @@
             </a>
           </div>
           <div class="col-4 pt-3 d-flex flex-column align-items-start" style="margin-left:-10px">
-            <h5 style="line-height: 18px; width:inherit;">pizzahut</h5>
-            <p class="text-muted" style="line-height: 16px; width:inherit;">@pizzahut</p>
+            <h5 style="line-height: 18px; width:inherit;">{{this.name}}</h5>
+            <p class="text-muted" style="line-height: 16px; width:inherit;">@{{this.account}}</p>
           </div>
           {{!-- 追蹤鈕 --}}
           <div class="col-5 d-flex justify-content-end">
@@ -29,7 +29,7 @@
             {{else}}
             <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
               <button type="submit" class="btn btn-outline-light btn-block"
-                style="width:64px; height:40px; font-size: 15px; border-radius: 50px; font-weight: bold; border-color: #FF6600;">
+                style="width:64px; height:40px; font-size: 15px; border-radius: 50px; border-color: #FF6600;">
                 <font color="#FF6600">跟隨</font>
               </button>
             </form>
@@ -38,7 +38,7 @@
       
         </div>
       </li>
-      {{!-- /each --}}
+      {{/each}}
       
 
   </div>
