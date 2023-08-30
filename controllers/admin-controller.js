@@ -45,7 +45,6 @@ const adminController = {
     try {
       const users = await User.findAll({
         include: [
-          Like,
           Tweet,
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -53,11 +52,12 @@ const adminController = {
         nest: true
       })
       if (!users) throw new Error('沒有使用者可顯示！')
+      const likes = await Like.findAll({ raw: true, nest: true })
       const userInfos = users.filter(user => user.toJSON().role !== 'admin')
         .map(user => {
           const userInfo = user.toJSON()
           userInfo.tweetCount = userInfo.Tweets.length
-          userInfo.likeCount = userInfo.Likes.length
+          userInfo.likeCount = likes.filter(like => userInfo.Tweets.some(tweet => tweet.id === like.TweetId)).length
           userInfo.followerCount = userInfo.Followers.length
           userInfo.followingCount = userInfo.Followings.length
           return userInfo
