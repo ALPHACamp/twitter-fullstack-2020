@@ -11,8 +11,8 @@ const USER_PAGE_JS = 'userPage.js'
 const CHECK_PASSWORD_JS = 'checkPassword.js'
 
 const userHelper = {
-  getUserInfo: async req => {
-    return await User.findByPk(req.params.id, {
+  getUserInfo: req => {
+    return User.findByPk(req.params.id, {
       attributes: {
         include: [
           [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'followingCount'],
@@ -58,6 +58,7 @@ const userHelper = {
       order: [[{ model: User, as: 'Followings' }, { model: Followship }, 'createdAt', 'DESC']]
 
     })
+
     return userWithfollowings.toJSON()
   },
 
@@ -89,6 +90,7 @@ const userHelper = {
       order: [[{ model: User, as: 'Followers' }, { model: Followship }, 'createdAt', 'DESC']]
 
     })
+
     return userWithfollowers.toJSON()
   },
 
