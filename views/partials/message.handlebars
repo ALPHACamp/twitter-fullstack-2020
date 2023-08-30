@@ -33,6 +33,7 @@
   </div>
 </div>
 {{/if}}
+
 {{#if info_messages}}
 <div class="error-message error-message-container  error-info">
   <div class="error-message-content">
@@ -43,4 +44,18 @@
     </div>
   </div>
 </div>
+{{/if}}
+
+{{#if errors}}
+{{#each errors}}
+<div class="error-message error-message-container error-warning form-error-message">
+  <div class="error-message-content">
+    <p class="error-message-words">{{ this.messages }}</p>
+    <div class="error-message-circle">
+      <div class="error-message-img">
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
 {{/if}}
