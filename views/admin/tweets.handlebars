@@ -14,7 +14,7 @@
     <div class="scrollbar-hidden p-0 m-0 gap-0 d-flex flex-column">
       {{#each tweets}}
       <div
-        data-id="{{ this.User.id }}"
+        data-id="{{ this.id }}"
         class="admin-tweet-card card shadow-none py-0 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
         <div class="card-body m-0 pb-3 d-flex gap-2">
           <div class="tweet-user-icon flex-shrink-0 p-0">
@@ -111,6 +111,7 @@
       e.preventDefault()
       // Get tweet id
       const tweetId = button.closest(".admin-tweet-card").dataset.id
+      console.log('tweetId', tweetId)
 
       // Fill delete form action
       const deleteForm = document.querySelector("#deleteTweetForm")
