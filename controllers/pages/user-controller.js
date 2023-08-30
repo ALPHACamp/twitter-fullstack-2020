@@ -141,6 +141,7 @@ const userController = {
       return next(error)
     }
   },
+
   getSignupPage: (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, CHECK_PASSWORD_JS]
 
@@ -212,6 +213,8 @@ const userController = {
         password: hash
       })
 
+      req.flash('success_messages', '註冊成功!')
+
       return res.redirect('/signin')
     } catch (error) {
       return next(error)
@@ -224,6 +227,8 @@ const userController = {
         if (err) {
           return next(err)
         }
+
+        req.flash('success_messages', '你已成功登出!')
 
         res.redirect('/signin')
       })
@@ -280,13 +285,15 @@ const userController = {
 
   getUserEditPage: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, CHECK_PASSWORD_JS]
+    const loadingUser = req.user.id
 
     await userService.getUserEditPage(req, (error, data) => {
       if (error) return next(error)
 
       // 為了配合api，將錯誤寫成json，再到這裡導入錯誤
       if (data.status === 'error') {
-        throw new errorHandler.UserError(data.messages)
+        req.flash('error_messages', data.messages)
+        return res.redirect(`/users/${loadingUser}`)
       }
 
       res.render('user/setting', {
@@ -299,9 +306,15 @@ const userController = {
   },
 
   postUserInfo: async (req, res, next) => {
-    await userService.postUserInfo(req, (err, data) => err
-      ? next(err)
-      : res.redirect('back'))
+    await userService.postUserInfo(req, (error, data) => {
+      if (error) {
+        return next(error)
+      }
+
+      req.flash('success_messages', '修改成功!')
+
+      res.redirect('back')
+    })
   },
 
   getFollowings: async (req, res, next) => {

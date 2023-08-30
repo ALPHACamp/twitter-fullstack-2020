@@ -12,12 +12,12 @@ const userServices = {
       if (Number(req.params.id) !== usingUser.id) {
         return cb(null, {
           status: 'error',
-          messages: "Can't edit other profile!"
+          messages: '請勿修改他人資料!'
         })
       }
 
       const user = await User.findByPk(req.params.id, { raw: true })
-      if (!user) throw new Error("User didn't exist!")
+      if (!user) throw new errorHandler.UserError("User didn't exist!")
 
       return cb(null, user)
     } catch (error) {
