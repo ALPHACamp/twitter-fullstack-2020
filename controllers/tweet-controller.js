@@ -54,11 +54,11 @@ const tweetController = {
   postTweets: (req, res, next) => {
     const { description } = req.body
     const UserId = helpers.getUser(req).id
-    if (!description) throw new Error('內容不可空白')
-    if (description.length > 140) throw new Error('不可超過140字')
+    if (!description) throw new Error('內容不可空白！')
+    if (description.length > 140) throw new Error('不可超過140字！')
     User.findByPk(UserId)
       .then(user => {
-        if (!user) throw new Error("User didn't exist!")
+        if (!user) throw new Error('使用者不存在！')
         return Tweet.create({ description, UserId })
       })
       .then(() => {
@@ -80,8 +80,8 @@ const tweetController = {
     ])
       .then(([tweet, like]) => {
         // console.log(like)
-        if (!tweet) throw new Error("tweet didn't exist!")
-        if (like) throw new Error('You have liked this tweet!')
+        if (!tweet) throw new Error('該推文不存在！')
+        if (like) throw new Error('已經 like 過該貼文！')
 
         return Like.create({
           userId: helpers.getUser(req).id,
@@ -99,7 +99,7 @@ const tweetController = {
       }
     })
       .then(like => {
-        if (!like) throw new Error("You haven't liked this restaurant")
+        if (!like) throw new Error('尚未 like 過該貼文！')
         // console.log(like)
         return like.destroy()
       })
