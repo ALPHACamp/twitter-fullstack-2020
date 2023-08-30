@@ -32,7 +32,9 @@ const followshipController = {
         followerId,
         followingId
       })
-      return res.redirect('back')
+
+      const referer = req.get('Referer') || '/signin'
+      return res.redirect(referer) // 回到上一頁
     } catch (error) {
       return next(error)
     }
@@ -55,7 +57,9 @@ const followshipController = {
       }
 
       await followship.destroy()
-      return res.redirect('back')
+
+      const referer = req.get('Referer') || '/signin'
+      return res.redirect(referer) // 回到上一頁
     } catch (error) {
       return next(error)
     }

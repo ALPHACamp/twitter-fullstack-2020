@@ -19,7 +19,7 @@ router.get('/signin', adminController.getAdminSignInPage)
 router.get('/logout', adminController.adminLogout)
 router.post('/signin', adminLocalAuth, adminController.adminSignin)
 
-router.get('/', adminLocalAuth, (req, res) => {
+router.get('/', authenticatedAdmin, (req, res) => {
   res.redirect('/admin/tweets')
 })
 

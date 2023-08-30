@@ -6,13 +6,15 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "NODE_ENV=test mocha test --exit --recursive --timeout 5000",
+    "test": "mocha test --exit --recursive --timeout 5000",
+    "testLocal": "NODE_ENV=test mocha test --exit --recursive --timeout 5000",
     "dbmigrate": "npx sequelize db:migrate && npx sequelize db:seed:all",
     "dbundo": "npx sequelize db:seed:undo:all &&  npx sequelize db:migrate:undo:all"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",

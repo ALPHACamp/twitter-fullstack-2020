@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, 'public'))) // for css and 前端js
 
 app.use(cookieParser()) // 用來找到JWS cookie
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'I_really_need_to_pass_this_test',
   resave: false,
   saveUninitialized: true
 }))

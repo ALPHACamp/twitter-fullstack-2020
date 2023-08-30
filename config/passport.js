@@ -14,6 +14,14 @@ const localStrategy = new LocalStrategy(
   },
   async function (req, account, password, done) {
     try {
+      // 登入時先清空session
+      // 避免user登入後按上一頁，可以用root登入
+      req.logout(function (err) {
+        if (err) {
+          return done(err, null)
+        }
+      })
+
       const user = await User.findOne({ where: { account } })
 
       if (!user) {
@@ -49,6 +57,7 @@ passport.deserializeUser(async function (id, done) {
       raw: true,
       nest: true
     })
+
     delete user.password
 
     return done(null, user)
