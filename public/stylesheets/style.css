@@ -86,7 +86,7 @@ a:hover {
 /* ---------- Navbar ---------- */
 
 .navbar-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 130px;
   width: 178px;
@@ -495,11 +495,12 @@ a:hover {
 
 .admin-tweets-footer {
   position: fixed;
-  left: 332px;
+  left: 333px;
   bottom: 0;
   width: 937px;
   height: 54px;
   border-top: 1px solid #E6ECF0;
+  border-left: 1px solid #E6ECF0;
   z-index: 1;
   background-color: white;
 }
