@@ -252,7 +252,8 @@ a:hover {
 
 /* ---------- Signin / Signup ---------- */
 
-.signin-container, .signup-container {
+.signin-container,
+.signup-container {
   height: 100vh;
   max-width: 356px;
   display: flex;
@@ -260,7 +261,8 @@ a:hover {
   margin: 0 auto;
 }
 
-.signin-logo-container, .signup-logo-container {
+.signin-logo-container,
+.signup-logo-container {
   position: relative;
   margin: 0 auto;
   top: 64px;
@@ -269,8 +271,9 @@ a:hover {
   padding: 5px;
 }
 
-.signin-logo, .signup-logo {
-  position: absolute; 
+.signin-logo,
+.signup-logo {
+  position: absolute;
   top: 5px;
   left: 5px;
   width: 40px;
@@ -302,13 +305,39 @@ a:hover {
   margin: 0 auto;
   width: 356px;
   top: 204px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-name {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 290px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-email {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 376px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.signin-container .form-item-password {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 290px;
   margin-bottom: 60px;
   border-radius: 2px;
   background-color: var(--form-gray);
 }
 
-.signup-container
-.form-item-password {
+.signup-container .form-item-password {
   position: absolute;
   margin: 0 auto;
   width: 356px;
@@ -426,7 +455,8 @@ a:hover {
   border: none;
 }
 
-.btn-signin-text, .btn-signup-text {
+.btn-signin-text,
+.btn-signup-text {
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
@@ -461,7 +491,7 @@ a:hover {
   font-size: 16px;
   line-height: 24px;
   color: #0062FF;
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 
