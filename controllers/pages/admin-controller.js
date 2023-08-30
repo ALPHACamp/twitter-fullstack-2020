@@ -1,4 +1,8 @@
+<<<<<<< HEAD:controllers/pages/admin-controller.js
 const { Tweet, User, Like, Followship, Reply } = require('../../models')
+=======
+const { Tweet, User, Like, Followship, Reply } = require('../models')
+>>>>>>> 575e73bba15fd350e9fc509a620e59e895521146:controllers/admin-controller.js
 
 const adminController = {
   signInPage: (req, res) => {
