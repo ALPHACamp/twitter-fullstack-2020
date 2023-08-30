@@ -46,6 +46,7 @@ const replyController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
 
         res.render('replies', { tweet: tweet.toJSON(), replies, isLiked, topUsers, reqUser, user: user.toJSON() })
       })
@@ -56,9 +57,11 @@ const replyController = {
     const { tweetId } = req.params
     const { comment } = req.body
     if (!comment) throw new Error('內容不可空白')
+    if (comment.length > 50) throw new Error('留言字數不可超過50字')
     Reply.create({ userId, tweetId, comment })
       .then(() => {
         const { tweetId } = req.params
+        req.flash('success_messages', '留言新增成功!')
         res.redirect(`/tweets/${tweetId}/replies`)
       })
       .catch(err => next(err))

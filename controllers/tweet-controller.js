@@ -45,6 +45,7 @@ const tweetController = {
             isFollowed: req.user && req.user.Followings.some(f => f.id === u.id)
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
         // console.log(req.user)
         res.render('tweet', { tweets: data, reqUser, topUsers, user: user.toJSON() })
       })
@@ -60,8 +61,8 @@ const tweetController = {
         if (!user) throw new Error("User didn't exist!")
         return Tweet.create({ description, UserId })
       })
-      .then(tweet => {
-        // console.log(tweet)
+      .then(() => {
+        req.flash('success_messages', '推文新增成功!')
         res.redirect('/tweets')
       })
       .catch(err => next(err))
