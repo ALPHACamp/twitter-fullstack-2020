@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const upload = require('../middleware/multer')
 // 引入Controller
 const passport = require('../config/passport')
 const tweetController = require('../controllers/tweet-controller')
@@ -34,6 +35,7 @@ router.get('/users/:id/followers', authenticated, userController.getUserFollower
 router.get('/users/:id/followings',authenticated, userController.getUserFollowings)
 router.get('/users/:id/setting', authenticated, userController.getUserSetting)
 // router.put('/api/users/:id', authenticated, userController.putUserSetting)
+router.put('/users/:id/edit', upload.fields([ { name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]) , authenticated, userController.putUserProfile)
 
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
