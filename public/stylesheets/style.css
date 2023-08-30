@@ -82,9 +82,6 @@ a:hover {
   text-decoration: none;
 }
 
-<<<<<<< HEAD
-/* ---------- Signin / Signup ---------- */
-=======
 
 /* ---------- Navbar ---------- */
 
@@ -253,8 +250,7 @@ a:hover {
 } 
 
 
-/* ---------- User / Admin Signin ---------- */
->>>>>>> 575e73bba15fd350e9fc509a620e59e895521146
+/* ---------- Signin / Signup ---------- */
 
 .signin-container, .signup-container {
   height: 100vh;
@@ -291,19 +287,11 @@ a:hover {
   line-height: 26px;
 }
 
-<<<<<<< HEAD
 .signup-title {
   position: relative;
   margin: 0 auto;
   top: 88px;
   width: 168px;
-=======
-.admin-signin-title{
-  position: sticky;
-  margin: 0 auto;
-  top: 138px;
-  width: 112px;
->>>>>>> 575e73bba15fd350e9fc509a620e59e895521146
   height: 26px;
   font-weight: 700;
   line-height: 26px;
@@ -488,7 +476,6 @@ a:hover {
   letter-spacing: 0px;
 }
 
-<<<<<<< HEAD
 .btn-cancel {
   position: relative;
   top: 622px;
@@ -501,19 +488,6 @@ a:hover {
   line-height: 24px;
   color: #0062FF;
   text-decoration:underline;
-}
-=======
-.admin-sub-btn {
-  position: relative;
-  top: 120px;
-  left: 268px;
-  width: 88px;
-  height: 36px;
-  padding: 6px 12px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0px;
 }
 
 
@@ -689,4 +663,3 @@ a:hover {
   color: #171725;
 }
 
->>>>>>> 575e73bba15fd350e9fc509a620e59e895521146
