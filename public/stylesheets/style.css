@@ -78,27 +78,198 @@ h5 {
   font-size: 18px;
 }
 
-
-/* ---------- User /Admin Signin ---------- */
-
-.signin-container {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  height: 100vh;
-  max-width: 356px;
+a:hover {
+  text-decoration: none;
 }
 
-.signin-logo-container {
-  position: relative;
-  top: 64px;
+
+/* ---------- Navbar ---------- */
+
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 130px;
+  width: 178px;
+  height: 100vh;
+  min-height: 400px;
+}
+
+.navbar-logo-container {
+  position: fixed;
+  top: 8px;
+  left: 143px;
   width: 50px;
   height: 50px;
-  margin: 0 auto;
   padding: 5px;
 }
 
-.signin-logo {
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+} 
+
+.main-navbar {
+  position: fixed;
+  top: 66px;
+  width: 178px;
+  height: 124px;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-row {
+  position: relative;
+  width: 178px;
+  height: 58px;
+}
+
+.nav-item-tweet {
+  position: relative;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 112px;
+  height: 26px;
+}
+
+.nav-item-user {
+  position: relative;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 130px;
+  height: 26px;
+  color: #44444F;
+}
+
+.nav-item-user:hover,
+.nav-row.active .nav-item-title-user {
+  color: var(--brand-color);
+}
+
+.nav-item-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-item-home-icon {
+  position: absolute;
+  top: 2.2px;
+  left: 0.9px;
+  width: 22.2px;
+  height: 20.25px;
+  background-image: url('/stylesheets/icons/home_filled.svg');
+}
+
+.nav-item-user-icon {
+  position: absolute;
+  top: 2.2px;
+  left: 0.9px;
+  width: 22.2px;
+  height: 22.2px;
+  background-image: url('/stylesheets/icons/user_outlined.svg');
+}
+
+.nav-item-user:hover .nav-item-icon .nav-item-user-icon,
+.nav-row.active .nav-item-icon .nav-item-user-icon {
+  background-image: url('/stylesheets/icons/user_filled.svg');
+}
+
+.nav-item-title-tweet {
+  width: 72px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  color: #FF6600;
+}
+
+.nav-item-title-user {
+  width: 90px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.logout-form {
+  position: fixed;
+  bottom: 0;
+}
+
+.logout-btn {
+  width: 178px;
+  height: 58px;
+  text-decoration: none;
+  color: #44444F;
+  background-color: white;
+  border: none;
+}
+
+.logout-btn:focus {
+  outline: none;
+  background-color: white;
+}
+
+.nav-item-logout {
+  position: relative;
+  left: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 76px;
+  height: 26px;
+  color: #44444F;
+}
+
+.nav-item-logout:hover,
+.nav-row.active .nav-item-title-logout {
+  color: var(--brand-color);
+}
+
+.nav-item-logout-icon {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/logout.svg');
+}
+
+.nav-item-logout:hover .nav-item-icon .nav-item-logout-icon,
+.nav-row.active .nav-item-icon .nav-item-logout-icon {
+  background-image: url('/stylesheets/icons/logout_colored.svg');
+}
+
+.nav-item-title-logout {
+  width: 36px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+} 
+
+
+/* ---------- Signin / Signup ---------- */
+
+.signin-container, .signup-container {
+  height: 100vh;
+  max-width: 356px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.signin-logo-container, .signup-logo-container {
+  position: relative;
+  margin: 0 auto;
+  top: 64px;
+  width: 50px;
+  height: 50px;
+  padding: 5px;
+}
+
+.signin-logo, .signup-logo {
   position: absolute; 
   top: 5px;
   left: 5px;
@@ -108,40 +279,87 @@ h5 {
 
 .signin-title {
   position: sticky;
+  margin: 0 auto;
   top: 138px;
   width: 185px;
   height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.signup-title {
+  position: relative;
   margin: 0 auto;
+  top: 88px;
+  width: 168px;
+  height: 26px;
   font-weight: 700;
   line-height: 26px;
 }
 
 .form-item-account {
-  position: sticky;
-  top: 204px;
-  width: 356px;
+  position: absolute;
   margin: 0 auto;
-  margin-bottom: 60px;
+  width: 356px;
+  top: 204px;
   border-radius: 2px;
   background-color: var(--form-gray);
 }
 
-.form-item-password {
-  position: relative;
-  top: 86px;
-  width: 356px;
+.form-item-name {
+  position: absolute;
   margin: 0 auto;
+  width: 356px;
+  top: 290px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-email {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 376px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.signin-container .form-item-password {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 290px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.signup-container
+.form-item-password {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 462px;
+  margin-bottom: 32px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-checkPassword {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 548px;
   margin-bottom: 32px;
   border-radius: 2px;
   background-color: var(--form-gray);
 }
 
 .form-label {
-  height: 22px;
-  width: 356px;
   margin-left: 10.55px;
   color: #696974;
   font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 .form-input {
@@ -152,6 +370,9 @@ h5 {
   border-radius: 2px;
   border-width: 0;
   border-bottom: 2px solid #657786;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
 }
 
 .form-input::placeholder,
@@ -172,7 +393,7 @@ h5 {
   border-bottom: 2px solid var(--danger);
 } */
 
-.invalid-feedback {
+/* .invalid-feedback {
   background-color: white;
   width: 270px;
   font-size: 12px;
@@ -181,9 +402,14 @@ h5 {
   line-height: 20px;
   letter-spacing: 0px;
   text-align: left;
-}
+} */
 
-.input-minmax,
+/* .invalid-feedback {
+  margin: 0;
+  background-color: white;
+} */
+
+/* .input-minmax,
 .textarea-minmax {
   position: absolute;
   right: 0;
@@ -196,23 +422,37 @@ h5 {
   color: #696974;
   line-height: 20px;
   letter-spacing: 0px;
-}
+} */
 
 .btn-submit {
-  position: relative;
-  top: 94px;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
   padding: 8px 24px;
+  position: absolute;
   width: 356px;
   height: 46px;
+  top: 384px;
+  margin: 0 auto;
   border-radius: 50px;
-  border: none;
   background: #FF6600;
+  border: none;
 }
 
-.btn-signin-text {
+.btn-signup {
+  display: flex;
+  justify-content: center;
+  padding: 8px 24px;
+  position: absolute;
+  width: 356px;
+  height: 46px;
+  top: 642px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background: #FF6600;
+  border: none;
+}
+
+.btn-signin-text, .btn-signup-text {
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
@@ -223,24 +463,426 @@ h5 {
 
 .sub-btn {
   position: relative;
-  top: 120px;
-  left: 196px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  top: 368px;
+  left: 180px;
   width: 160px;
   height: 36px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0px;
-}
-
-.dot {
+  display: flex;
+  justify-content: space-evenly;
   text-align: center;
   font-size: 16px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 30px;
   letter-spacing: 0px;
-  color: #000000;
+}
+
+.btn-cancel {
+  position: relative;
+  top: 622px;
+  margin: 0 auto;
+  width: 56px;
+  height: 36px;
+  padding: 6px 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0062FF;
+  text-decoration:underline;
+}
+
+
+/* ---------- Admin tweets ---------- */
+
+.admin-tweets, .admin-users {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-tweets-container {
+  position: fixed;
+  left: 332px;
+  width: 938px;
+  height: 100vh;
+  min-height: 400px;
+  margin: 0 0.87px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  overflow: hidden;
+}
+
+.admin-tweets-header {
+  position: fixed;
+  left: 333px;
+  width: 937px;
+  height: 75px;
+  border-left: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweets-header .main-title {
+  position: sticky;
+  top: 24px;
+  left: 354px;
+  width: 96px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.admin-tweets-list-container {
+  position: absolute;
+  top: 91px;
+  left: 0;
+  width: 937px;
+  height: 1055px;
+  overflow-y: scroll;
+  bottom: 0;
+}
+
+.admin-tweets-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-tweets-footer {
+  position: fixed;
+  left: 332px;
+  bottom: 0;
+  width: 937px;
+  height: 54px;
+  border-top: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-tweet-container {
+  width: 937px;
+  height: 103px;
+}
+
+.admin-tweet-left {
+  display: flex;
+  flex-direction: row;
+  padding: 0px 24px;
+  width: 634px;
+  height: 86px;
+  gap: 8px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.admin-tweet-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.admin-tweet-avatar .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-avatar .default-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.admin-tweet-right {
+  display: flex;
+  flex-direction: column;
+  width: 855px;
+  height: 86px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.tweet-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 855px;
+  height: 26px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  height: 26px; 
+}
+
+.user-name {
+  text-align: left;
+  padding-right: 10px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+.user-sub-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  height: 22px;
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #6C757D;
+}
+
+.delete-icon {
+  margin-right: 4px;
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/close.svg');
+  filter: invert(44%) sepia(11%) saturate(344%) hue-rotate(202deg) brightness(90%) contrast(88%);
+}
+
+.tweet-text {
+  text-align: left;
+  width: 855px;
+  height: 52px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+
+/* ---------- Admin users ---------- */
+
+.admin-users-container {
+  position: fixed;
+  left: 332px;
+  margin: 0 0.87px;
+  width: 1076px;
+  height: 100vh;
+  min-height: 400px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.admin-users-header {
+  position: fixed;
+  left: 333px;
+  width: 1075px;
+  height: 75px;
+  border-left: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-users-header .main-title {
+  position: sticky;
+  top: 24px;
+  left: 357px;
+  width: 120px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.admin-user-container {
+  top: 91px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 888px;
+  gap: 16px;
+  margin: 90px 15px;
+}
+
+.admin-user-card {
+  display: flex;
+  flex-direction: column;
+  width: 210px;
+  height: 314px;
+  border-radius: 10px;
+  background-color: #F6F7F8;
+}
+
+.card-cover {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.default-cover {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+  background-image: url('/stylesheets/icons/cover.svg');
+}
+
+.card-center {
+  position: relative;
+  left: 55px;
+  bottom: 70px;
+  width: 100px;
+  height: 154px;
+}
+
+.photo .card-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(0deg, #C4C4C4, #C4C4C4);
+  border: 4px solid #FFFFFF;
+}
+
+.photo .default-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-image: url('/stylesheets/icons/profile-img.svg');
+}
+
+.name {
+  top: 108px;
+  width: 100px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #171725;
+}
+
+.account {
+  top: 132px;
+  left: 1.35px;
+  width: 90.5px;
+  height: 22px;
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #6C757D;
+}
+
+.card-foot{
+  position: relative;
+  bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  height: 26px;
+  gap: 16px;
+}
+
+.reply {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  height: 24px;
+  gap: 8px;  
+}
+
+.post-icon {
+  width: 24px;
+  height: 22px;
+  background-image: url('/stylesheets/icons/post_dark80.svg');
+  filter: invert(42%) sepia(6%) saturate(604%) hue-rotate(201deg) brightness(96%) contrast(91%);
+}
+
+.reply-count {
+  height: 15px;
+  /* font-family: "Montserrat"; */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: right;
+  color: #1C1C1C;
+}
+
+.like {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  flex-direction: row;
+  align-items: center;
+  height: 26px;
+  gap: 8px;
+}
+
+.like-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/like_secondary.svg');
+  filter: invert(48%) sepia(9%) saturate(476%) hue-rotate(167deg) brightness(90%) contrast(85%);
+}
+
+.like-count {
+  height: 26px;
+  /* font-family: "Montserrat"; */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: right;
+  color: #171725;
+}
+
+.follow {
+  display: flex;
+  margin: 0 auto;
+  padding-top: 10px;
+  height: 32px;
+  gap: 8px;
+}
+
+.follower, .following {
+  display: flex;
+  height: 22px;
+}
+
+.follow-count {
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+.follow-text {
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #6C757D;
 }
