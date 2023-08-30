@@ -126,28 +126,31 @@ const userController = {
   },
   getFollowers: (req, res, next) => {
     const otherProfileRoute = true
-    return User.findByPk(req.params.id, {
+    const userId = req.params.id
+    const currentUser = helper.getUser(req)
+    return User.findByPk(userId, {
       include: [
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
         { model: Tweet }
       ]
     })
-      .then(currentUser => {
-        if (!currentUser) throw new Error("User didn't exist!")
-        const tweetsCount = currentUser.Tweets.length
-        const followers = currentUser.Followers.map(follower => ({
+      .then(user => {
+        if (!user) throw new Error("User didn't exist!")
+        const tweetsCount = user.Tweets.length
+        const followers = user.Followers.map(follower => ({
           ...follower.toJSON(),
-          followByMe: req.user.Followings.some(following => following.id === follower.id),
-          self: req.user.id === follower.id
+          followByMe: currentUser.Followings.some(following => following.id === follower.id),
+          self: currentUser.id === follower.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followers', { otherProfileRoute, tweetsCount, followers, currentUser, tweetsUser: currentUser.name, id: currentUser.id })
+        res.render('followers', { otherProfileRoute, tweetsCount, followers, user, tweetsUser: user.name, id: user.id })
       })
       .catch(err => next(err))
   },
   getFollowings: (req, res, next) => {
     const otherProfileRoute = true
+    const currentUser = helper.getUser(req)
     return User.findByPk(req.params.id, {
       include: [
         { model: User, as: 'Followers' },
@@ -155,51 +158,53 @@ const userController = {
         { model: Tweet }
       ]
     })
-      .then(currentUser => {
-        if (!currentUser) throw new Error("User didn't exist!")
-        const tweetsCount = currentUser.Tweets.length
-        const followings = currentUser.Followings.map(following => ({
+      .then(user => {
+        if (!user) throw new Error("User didn't exist!")
+        const tweetsCount = user.Tweets.length
+        const followings = user.Followings.map(following => ({
           ...following.toJSON(),
-          followByMe: req.user.Followings.some(followingByMe => followingByMe.id === following.id),
-          self: req.user.id === following.id
+          followByMe: currentUser.Followings.some(followingByMe => followingByMe.id === following.id),
+          self: currentUser.id === following.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followings', { otherProfileRoute, tweetsCount, followings, currentUser, tweetsUser: currentUser.name, id: currentUser.id })
+        res.render('followings', { otherProfileRoute, tweetsCount, followings, user, tweetsUser: user.name, id: user.id })
       })
       .catch(err => next(err))
   },
   addFollowing: (req, res, next) => {
-    const id = req.body.id
-    return Promise.all([
-      User.findByPk(id),
-      Followship.findOne({
-        where: {
-          followerId: req.user.id,
-          followingId: id
-        }
-      })
-    ])
-      .then(([user, followship]) => {
-        if (user.toJSON().id === req.user.id) throw new Error("Can't follow yourself")
-        if (!user) throw new Error("User didn't exist!")
+    const userId = req.body.id
+    const loginUserId = helper.getUser(req).id
+    if (Number(loginUserId) === Number(userId)) {
+      req.flash('error_messages', 'cannot follow self')
+      return res.redirect(200, 'back')
+    }
+    return Followship.findOne({
+      where: {
+        followerId: loginUserId,
+        followingId: userId
+      }
+    })
+      .then(followship => {
         if (followship) throw new Error('Your are already following this user!')
         return Followship.create({
-          followerId: req.user.id,
-          followingId: id
+          followerId: loginUserId,
+          followingId: userId
         })
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
   deleteFollowing: (req, res, next) => {
+    const userId = req.params.id
+    const loginUserId = helper.getUser(req).id
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
-        followingId: req.params.id
+        followerId: loginUserId,
+        followingId: userId
       }
     })
       .then(followship => {
-        if (!followship) throw new Error("You haven't followed this user!")
+        if (!followship) throw new Error('You have not followed this user!')
         return followship.destroy()
       })
       .then(() => res.redirect('back'))
