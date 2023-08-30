@@ -86,7 +86,7 @@ a:hover {
 /* ---------- Navbar ---------- */
 
 .navbar-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 130px;
   width: 178px;
@@ -494,6 +494,7 @@ a:hover {
 /* ---------- Admin tweets ---------- */
 
 .admin-tweets, .admin-users {
+  position: relative;
   display: flex;
   flex-direction: row;
 }
