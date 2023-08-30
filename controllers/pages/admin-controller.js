@@ -5,7 +5,10 @@ const adminController = {
   /* admin 登入 */
   getAdminSignInPage: (req, res, next) => {
     try {
-      if (helpers.ensureAuthenticated(req)) return res.redirect('/admin')
+      if (helpers.ensureAuthenticated(req)) {
+        return res.redirect('/admin')
+      }
+
       return res.render('admin/signin')
     } catch (error) {
       return next(error)
@@ -36,7 +39,7 @@ const adminController = {
   /* admin登入結束 */
 
   getAdminHomePage: async (req, res, next) => {
-    res.redirect('/admin/tweets')
+    return res.redirect('/admin/tweets')
   },
 
   getTweets: async (req, res, next) => {
