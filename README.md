@@ -107,22 +107,76 @@
 admin帳號不可以登入前台
 ![](./README/demo_gif/login_admin_ban.gif)
 
+user帳號不可以前往後台
+![](./README/demo_gif/user_disallow.gif)
 ### 註冊
 使用註冊頁面註冊，需要提供用戶名稱、帳號、密碼、密碼確認與信箱，註冊後頭項與背景為預設值
 ![](./README/demo_gif/signup.gif)
 
 ### 首頁
-
+首頁可以查看自己與已追蹤使用者的所有貼文，依照時間順序最新的排最上面。
 ![](./README/demo_gif/homepage.gif)
+
 ### 發送推文
+點擊上方的「有什麼新鮮事？」區塊，就可以跳出推文Modal, 輸入與送交推文時，會檢查字數是否於1~140字之間，若不是則禁止上傳並出現提示字樣。
+送交成功後會出現通知訊息。
+![](./README/demo_gif/tweet.gif)
+
 ### 回復推文
+點擊`/tweet`或`/reply`頁面上的對話框icon，就可以跳出回覆Modal, 輸入與送交回覆時，會檢查字數是否於1~140字之間，若不是則禁止上傳並出現提示字樣。
+送交成功後會出現通知訊息。
+![](./README/demo_gif/reply.gif)
+
 ### 對貼文按Like/Unlike
+點擊`/tweet`或`/reply`頁面上的愛心icon，可以對喜歡的推文like，愛心會變成紅色，再按一次可以unlike
+![](./README/demo_gif/like.gif)
+
 ### 追蹤使用者
+點擊跟隨圖案可以跟隨用戶，並使該用戶的推文在`/tweets`上出現被追蹤者的tweets
+![](./README/demo_gif/follow.gif)
 ### 個人介面
+點擊左方「個人資料」可以進入登入用戶的個人界面
+![](./README/demo_gif/visit_user_page.gif)
+
+點擊任一頭像或名稱可以進入該用戶的個人界面
+![](./README/demo_gif/visit_other_user.gif)
+
+在「推文」中可以看到該用戶的所有推文，也可以在此處like或回覆此貼文
+![](./README/demo_gif/user_tweet.gif)
+
+在「回覆」中可以看到該使用者所有的回覆，點擊後可以到`/reply`頁面查看原始推文
+![](./README/demo_gif/user_reply.gif)
+
+在「喜歡的內容」頁面可以看到該使用者所有喜歡的推文，如果在登入使用者的頁面取消喜歡，該推文會消失
+![](./README/demo_gif/user_like.gif)
+
 ### 編輯個人資訊
+
+個人頁面中點擊編輯個人資料可以修改頭像、背景、名稱與自我介紹，並有規定字數，若超過該字數則無法修改。
+![](./README/demo_gif/edit_personalFile.gif)
+
+### [後台]登入
+後台只能使用`admin`帳號才能登入
+![](./README/demo_gif/admin_login.gif)
+
+從後台前往前台會被阻止並跳出通知訊息
+![](./README/demo_gif/admin_disallow.gif)
+
+一般使用者不可登入後台
+![](./README/demo_gif/admin_fail.gif)
+
 ### [後台]首頁
+「推文清單」中，依照tweets的建立時間順序由近至遠呈現所有tweets
+![](./README/demo_gif/admin_tweet.gif)
+
 ### [後台]刪除貼文
+
+可以在「推文清單」的tweets右上角按下「X」可以刪除用戶的tweet
+![](./README/demo_gif/admin_delete.gif)
+
 ### [後台]查看所有使用者
+在「使用者列表」中，`admin`以外的使用者依照他們所發送的tweets數量由多至少排序，已卡片形式排列。
+![](./README/demo_gif/admin_user.gif)
 
 ## 使用套件
 
