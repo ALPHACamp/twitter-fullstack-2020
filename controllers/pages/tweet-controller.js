@@ -53,7 +53,10 @@ const tweetController = {
         description
       })
 
-      return res.redirect('back')
+      req.flash('success_messages', '推文發送成功')
+
+      const referer = req.get('Referer') || '/signin'
+      return res.redirect(referer) // 回到上一頁
     } catch (error) {
       return next(error)
     }
@@ -96,8 +99,10 @@ const tweetController = {
         comment
       })
 
+      req.flash('success_messages', '推文發送成功')
+
       const referer = req.get('Referer') || '/signin'
-      res.redirect(referer) // 回到上一頁
+      return res.redirect(referer) // 回到上一頁
     } catch (error) {
       return (next)
     }
