@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const { User } = db
+const { User } = ('../../models')
 
 const userController = {
   signUpPage: (req, res) => {

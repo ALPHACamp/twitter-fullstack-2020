@@ -1,42 +1,17 @@
-const { Tweet, User, Like } = require('../models')
+const { Tweet, User, Like } = require('../../models')
 
 const tweetController = {
-  getTweets: async (req, res, next) => {
-    const [tweets, likes] = await Promise.all([
-      Tweet.findAll({
-        include: [User],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      }),
-      Like.findAll({
-        raw: true,
-        nest: true
-      })])
-
-    const likedTweetsId = []
-    likes.forEach(like => {
-      if (like.UserId === req.user.id) {
-        likedTweetsId.push(like.TweetId)
-      }
+  getTweets: (req, res, next) => {
+    return Tweet.findAll({
+      include: [User],
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true
     })
-    console.log(likedTweetsId)
-
-    const tweetLikedMap = {}
-    likes.forEach(like => {
-      if (!tweetLikedMap[like.TweetId]) {
-        tweetLikedMap[like.TweetId] = 1
-      } else {
-        tweetLikedMap[like.TweetId] = tweetLikedMap[like.TweetId] + 1
-      }
-    })
-
-    const data = tweets.map(r => ({
-      ...r,
-      isLiked: likedTweetsId.includes(r.id),
-      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0
-    }))
-    res.render('tweets', { tweets: data })
+      .then(tweets => {
+        res.render('tweets', { tweets })
+      })
+      .catch(err => next(err))
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
@@ -102,4 +77,5 @@ const tweetController = {
       .catch(err => next(err))
   }
 }
+
 module.exports = tweetController
