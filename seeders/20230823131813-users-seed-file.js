@@ -35,9 +35,6 @@ module.exports = {
           avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
           introduction: faker.lorem.text().substring(0, 50),
           cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`
-          // ,
-          // created_at: new Date(),
-          // updated_at: new Date()
         }
       ]
 
