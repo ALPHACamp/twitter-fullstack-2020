@@ -493,7 +493,7 @@ a:hover {
 
 /* ---------- Admin tweets ---------- */
 
-.admin-tweets {
+.admin-tweets, .admin-users {
   display: flex;
   flex-direction: row;
 }
@@ -663,3 +663,225 @@ a:hover {
   color: #171725;
 }
 
+
+/* ---------- Admin users ---------- */
+
+.admin-users-container {
+  position: fixed;
+  left: 332px;
+  margin: 0 0.87px;
+  width: 1076px;
+  height: 100vh;
+  min-height: 400px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.admin-users-header {
+  position: fixed;
+  left: 333px;
+  width: 1075px;
+  height: 75px;
+  border-left: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  z-index: 1;
+  background-color: white;
+}
+
+.admin-users-header .main-title {
+  position: sticky;
+  top: 24px;
+  left: 357px;
+  width: 120px;
+  height: 26px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.admin-user-container {
+  top: 91px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 888px;
+  gap: 16px;
+  margin: 90px 15px;
+}
+
+.admin-user-card {
+  display: flex;
+  flex-direction: column;
+  width: 210px;
+  height: 314px;
+  border-radius: 10px;
+  background-color: #F6F7F8;
+}
+
+.card-cover {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.default-cover {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+  background-image: url('/stylesheets/icons/cover.svg');
+}
+
+.card-center {
+  position: relative;
+  left: 55px;
+  bottom: 70px;
+  width: 100px;
+  height: 154px;
+}
+
+.photo .card-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(0deg, #C4C4C4, #C4C4C4);
+  border: 4px solid #FFFFFF;
+}
+
+.photo .default-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-image: url('/stylesheets/icons/profile-img.svg');
+}
+
+.name {
+  top: 108px;
+  width: 100px;
+  height: 26px;
+  font-family: "Noto Sans TC";
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #171725;
+}
+
+.account {
+  top: 132px;
+  left: 1.35px;
+  width: 90.5px;
+  height: 22px;
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #6C757D;
+}
+
+.card-foot{
+  position: relative;
+  bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  height: 26px;
+  gap: 16px;
+}
+
+.reply {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  height: 24px;
+  gap: 8px;  
+}
+
+.post-icon {
+  width: 24px;
+  height: 22px;
+  background-image: url('/stylesheets/icons/post_dark80.svg');
+  filter: invert(42%) sepia(6%) saturate(604%) hue-rotate(201deg) brightness(96%) contrast(91%);
+}
+
+.reply-count {
+  height: 15px;
+  /* font-family: "Montserrat"; */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: right;
+  color: #1C1C1C;
+}
+
+.like {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  flex-direction: row;
+  align-items: center;
+  height: 26px;
+  gap: 8px;
+}
+
+.like-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url('/stylesheets/icons/like_secondary.svg');
+  filter: invert(48%) sepia(9%) saturate(476%) hue-rotate(167deg) brightness(90%) contrast(85%);
+}
+
+.like-count {
+  height: 26px;
+  /* font-family: "Montserrat"; */
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: right;
+  color: #171725;
+}
+
+.follow {
+  display: flex;
+  margin: 0 auto;
+  padding-top: 10px;
+  height: 32px;
+  gap: 8px;
+}
+
+.follower, .following {
+  display: flex;
+  height: 22px;
+}
+
+.follow-count {
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #171725;
+}
+
+.follow-text {
+  font-family: "Noto Sans TC";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0px;
+  color: #6C757D;
+}
