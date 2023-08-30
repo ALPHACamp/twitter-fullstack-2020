@@ -410,15 +410,15 @@ const userController = {
         nest: true
       })
 
-      // return res.render('user/tweets', {
-      //   route: 'user',
-      //   userTab: 'replies',
-      //   replies,
-      //   viewingUser,
-      //   recommendUser,
-      //   javascripts
-      // })
-      return res.json(replies)
+      return res.render('user/tweets', {
+        route: 'user',
+        userTab: 'replies',
+        replies,
+        viewingUser,
+        recommendUser,
+        javascripts
+      })
+      // return res.json(replies)
     } catch (error) {
       next(error)
     }
