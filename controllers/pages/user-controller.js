@@ -384,37 +384,41 @@ const userController = {
 
       const recommendUser = await userHelper.topFollowedUser(req)
 
-      const tweets = await Tweet.findAll({
+      const replies = await Reply.findAll({
+        where: {
+          UserId: loggingUserId
+        },
         include: [
           {
-            model: User,
+            model: Tweet,
+            include: [{
+              model: User,
+              attributes: ['account'],
+              require: true
+            }],
+            attributes: [],
             required: true
           },
           {
-            model: Reply,
-            where: { UserId: viewingUserId }
+            model: User,
+            attributes: ['name', 'account', 'avatar'],
+            require: true
           }
         ],
-        attributes: {
-          include: [
-            [sequelize.literal('(SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
-            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
-            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
-          ]
-        },
-        order: [[Reply, 'createdAt', 'DESC']],
+        order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
 
-      return res.render('user/tweets', {
-        route: 'user',
-        userTab: 'replies',
-        tweets,
-        viewingUser,
-        recommendUser,
-        javascripts
-      })
+      // return res.render('user/tweets', {
+      //   route: 'user',
+      //   userTab: 'replies',
+      //   replies,
+      //   viewingUser,
+      //   recommendUser,
+      //   javascripts
+      // })
+      return res.json(replies)
     } catch (error) {
       next(error)
     }
