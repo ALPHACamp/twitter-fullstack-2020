@@ -1,37 +1,49 @@
-<div class="container-signin m-5">
-  <div class="text-center">
-    {{!-- Logo --}}
-    <img id="ac-logo" src="/images/icons/logo.png" alt="logo">
-    {{!-- Title --}}
-    <h3 id="signin-title">登入 Alphitter</h3>
+<div class="signin-container">
+
+  {{!-- Logo --}}
+  <div class="signin-logo-container">
+    <img src="/stylesheets/icons/logo.svg" alt="logo" class="signin-logo">
+
   </div>
+
+  {{!-- Title --}}
+  <h3 class="signin-title">登入 Alphitter</h3>
 
   {{!-- Form --}}
-  <div class=" d-flex justify-content-center">
-    <form class="form-signin" action="/signin" method="POST">
-      {{!-- 帳號 --}}
-      <div class="mb-3" id="form-input-line">
-        <label class="form-label" for="account">帳號</label>
-        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" required>
-      </div>
-      {{!-- 密碼 --}}
-      <div class="mb-3" id="form-input-line">
-        <label class="form-label" for="password">密碼</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼" required>
-      </div>
-      {{!-- 登入 button --}}
-      <button id="btn-signin-submit" class="btn btn-primary" type="submit">登入</button>
-    </form>
-  </div>
+  <form action="/signin" method="POST" id="form" class="needs-validation" novalidate>
 
-  <div class="text-end">
-    <div class="col">
-      {{!-- 註冊 Link --}}
-      <a href="/signup" class="btn btn-link">註冊</a>
-      <span>・</span>
-      {{!-- 後台登入 Link --}}
-      <a href="/admin/signin" class="btn btn-link">後台登入</a>
+
+    {{!-- 帳號 --}}
+    <div class="form-item-account">
+      <label for="account" class="form-label">帳號</label>
+      <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{ account }}" required />
+      
+      {{!-- 驗證錯誤的提示訊息 --}}
+      {{!-- <div class="invalid-feedback">請輸入帳號</div>
+      <div class="input-minmax">0/10</div> --}}
     </div>
+
+    {{!-- 密碼 --}}
+    <div class="form-item-password">
+      <label for="password" class="form-label">密碼</label>
+      <input type="password" id="password" name="password" placeholder="請輸入密碼" class="form-input" value="{{ password }}" required />
+      
+      {{!-- <div class="invalid-feedback">請輸入密碼</div> --}}
+      {{!-- <div class="input-minmax"></div> --}}
+    </div>
+
+
+    {{!-- 登入 button --}}
+    <button type="submit" class="btn btn-info btn-submit" id="submit">
+      <span class="btn-signin-text">登入</span>
+    </button>
+  </form>
+
+
+  <div class="sub-btn">
+    <a href="/signup" style="text-decoration:underline">註冊</a>
+    <span>・</span>
+    <a href="/admin/signin" style="text-decoration:underline">後台登入</a>
   </div>
 
 </div>
