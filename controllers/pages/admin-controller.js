@@ -1,4 +1,5 @@
-const { User, Tweet, Like } = require('../../models')
+const { User, Tweet, Like, sequelize } = require('../../models')
+const { Op } = require('sequelize')
 const helpers = require('../../_helpers')
 
 const adminController = {
@@ -51,6 +52,7 @@ const adminController = {
           model: User,
           required: true
         },
+        order: [['createdAt', 'DESC']],
         raw: true,
         nest: true
       })
@@ -72,45 +74,21 @@ const adminController = {
 
   getUsers: async (req, res, next) => {
     try {
-      const users = await User.findAll({
-        attribute: ['id', 'name', 'account', 'avatar'],
-        include: [
-          {
-            model: Tweet,
-            as: 'Tweets',
-            attribute: ['id']
-          },
-          {
-            model: User,
-            as: 'Followers',
-            attribute: ['id']
-          },
-          {
-            model: User,
-            as: 'Followings',
-            attribute: ['id']
-          },
-          {
-            model: Like,
-            as: 'Likes',
-            attribute: ['id']
-          }
-        ]
-      })
-
-      const backendUsers = users.map(user => {
-        const tweetCount = user.Tweets.length
-        const followerCount = user.Followers.length
-        const followingCount = user.Followings.length
-        const likeCount = user.Likes.length
-
-        return {
-          ...user.dataValues,
-          tweetCount,
-          followerCount,
-          followingCount,
-          likeCount
-        }
+      const backendUsers = await User.findAll({
+        where: { role: { [Op.ne]: 'admin' } },
+        attributes: [
+          'id',
+          'name',
+          'account',
+          'avatar',
+          'role',
+          [sequelize.literal('( SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetCount'],
+          [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'followerCount'],
+          [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'followingCount'],
+          [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.user_id = User.id)'), 'likeCount']
+        ],
+        order: [['tweetCount', 'DESC']],
+        raw: true
       })
 
       res.render('admin/users', { users: backendUsers, route: 'users' })
