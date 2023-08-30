@@ -37,5 +37,6 @@ router.delete('/following/:userId', authenticated, userController.removeFollowin
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)
+router.use((req, res) => { res.status(404).render('404') })
 
 module.exports = router
