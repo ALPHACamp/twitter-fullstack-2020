@@ -1,6 +1,7 @@
 const { Followship, User } = require('../../models')
 const { FollowshipError } = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
+
 const followshipController = {
   postFollowship: async (req, res, next) => {
     try {
@@ -33,8 +34,10 @@ const followshipController = {
         followingId
       })
 
+
       const referer = req.get('Referer') || '/signin'
       return res.redirect(referer) // 回到上一頁
+
     } catch (error) {
       return next(error)
     }
@@ -58,8 +61,10 @@ const followshipController = {
 
       await followship.destroy()
 
+
       const referer = req.get('Referer') || '/signin'
       return res.redirect(referer) // 回到上一頁
+
     } catch (error) {
       return next(error)
     }
