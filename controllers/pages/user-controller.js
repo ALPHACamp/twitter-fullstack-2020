@@ -41,7 +41,9 @@ const userController = {
       return next(error)
     }
   },
+
   postSignup: async (req, res, next) => {
+    const javascripts = [INPUT_LENGTH_JS, CHECK_PASSWORD_JS]
     const { account, name, email, password, checkPassword } = req.body
     const errors = []
 
@@ -59,6 +61,7 @@ const userController = {
 
     if (errors.length) {
       return res.render('login/signup', {
+        javascripts,
         errors,
         account,
         name,
