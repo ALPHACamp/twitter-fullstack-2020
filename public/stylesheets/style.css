@@ -436,6 +436,7 @@ a:hover {
 /* ---------- Admin tweets ---------- */
 
 .admin-tweets {
+  position: relative;
   display: flex;
   flex-direction: row;
 }
