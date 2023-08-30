@@ -1,6 +1,6 @@
 <div class="row">
   <!-- 左側nav bar -->
-  <div class="col-3" style="padding:0 0 0 120px;">
+  <div class="col-3" style="padding:0 0 0 70px;">
 
     <div class=" container" style="padding: 0;">
 
@@ -91,10 +91,10 @@
 
         <div id="icon-container" style="display: flex; align-items:center">
 
-          <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal"
-            style="margin: 0 25px 0 0; cursor:pointer;" src="/stylesheets/icons/reply_outlined.svg" width="16"
-            height="16" href="#" alt="reply" onclick="btnReply(`{{this.id}}`)">
-
+          <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal" style="margin: 0; cursor:pointer;"
+            src="/stylesheets/icons/reply_outlined.svg" width="16" height="16" href="#" alt="reply"
+            onclick="btnReply(`{{this.id}}`)">
+          <span style="margin:0 35px 0 8px;">{{this.replyCount}}</span>
           {{#if this.isLiked}}
           <form id="unlike" name="unlike" action="/tweets/{{this.id}}/unlike" method="POST"
             style="display: flex; align-items:center;">
@@ -166,17 +166,36 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form action="/tweets" method="POST">
+      <form action="/replies" method="POST">
         <div class="modal-body">
+          <div style="display: flex;">
+            <img id="replyModalAvatar" src="" width="50" height="50" style="border-radius: 99em">
+            <div style="margin: 0 10px;">
+              <strong><span style="font-size:18px;" id="replyModalName"></span></strong>
 
-          <span style="font-size:18px;" id="replyModalName"><strong>{{this.User.name}} </strong></span>
-          <span style="color:gray; font-size:14px;" id="replyModalAccount"> @{{this.User.account}}·</span>
-          <sapn style="color:gray; font-size:14px;" id="replyModalFromNow">{{relativeTimeFromNow
-            this.createdAt}}</span>
-            <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription">{{this.description}}</p>
+              <span style="color:gray; font-size:14px;" id="replyModalAccount"></span>
 
-            <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="推你的回覆"
-              required></textarea>
+              {{!-- <sapn style="color:gray; font-size:14px;" id="replyModalFromNow"></span> --}}
+
+                <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
+
+                <span style="color:gray; font-size:14px;" id="replyModalAccount">回覆給</span>
+
+                <span style="color:rgb(255, 106, 0); font-size:14px;" id="replyModalAt"></span>
+            </div>
+          </div>
+
+          <div style="display: flex; margin:8px 0;">
+            <img id="userAvatar" src="" width="50" height="50" style="border-radius: 99em">
+            <div style="margin: 0 10px;">
+              <span style="color:gray; font-size:14px;">推你的回覆</span>
+            </div>
+          </div>
+
+          <input id="TweetId" type="hidden" name="TweetId" value="" />
+
+          <textarea class="form-control" id="comment" name="comment" rows="3" cols="140" style="margin: 10px 0 0 0;"
+            required></textarea>
         </div>
 
         <div class="modal-footer">
@@ -184,7 +203,6 @@
             <strong>回覆</strong>
           </button>
         </div>
-
       </form>
 
     </div>
@@ -197,15 +215,23 @@
 
     if (replyModal) {
       replyModal.addEventListener('shown.bs.modal', event => {
-        // alert(id)
         fetch(`http://localhost:3000/api/tweets/${id}`)
           .then(res => {
-            return res.text();
+            return res.json();
           })
           .then(result => {
-            document.querySelector('#replyModalName').textContent = result
+            document.querySelector('#replyModalAvatar').src = result.avatar
+            document.querySelector('#replyModalName').textContent = result.name
+            document.querySelector('#replyModalAccount').innerHTML = `  @${result.account}·`
+            // document.querySelector('#replyModalFromNow').innerHTML = dayjs(${ result.createdAt }).fromNow()
+            document.querySelector('#replyModalDescription').textContent = result.description
+            document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
+            document.querySelector('#userAvatar').src = result.loginUserAvatar
+            document.querySelector('#TweetId').value = result.tweet_id
           })
+          .catch(error => console.error("Error:", error))
       })
+
     }
   }
 

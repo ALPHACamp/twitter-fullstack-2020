@@ -7,6 +7,7 @@ const users = require('./modules/users')
 // Controllers
 const tweetController = require('../../controllers/pages/tweet-controller')
 const userController = require('../../controllers/pages/user-controller')
+const replyController = require('../../controllers/pages/reply-controller')
 
 // middleware
 const { generalErrorHandler } = require('../../middleware/error-handler')
@@ -37,6 +38,9 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
+
+// Reply
+router.post('/replies', authenticated, replyController.postReply)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
 router.use('/', generalErrorHandler)

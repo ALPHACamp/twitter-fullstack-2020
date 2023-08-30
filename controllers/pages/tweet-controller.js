@@ -1,8 +1,8 @@
-const { Tweet, User, Like } = require('../../models')
+const { Tweet, User, Like, Reply } = require('../../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
-    const [tweets, likes] = await Promise.all([
+    const [tweets, likes, replies] = await Promise.all([
       Tweet.findAll({
         include: [User],
         order: [['createdAt', 'DESC']],
@@ -10,6 +10,10 @@ const tweetController = {
         nest: true
       }),
       Like.findAll({
+        raw: true,
+        nest: true
+      }),
+      Reply.findAll({
         raw: true,
         nest: true
       })])
@@ -30,15 +34,25 @@ const tweetController = {
       }
     })
 
+    const tweetRepliedMap = {}
+    replies.forEach(reply => {
+      if (!tweetRepliedMap[reply.TweetId]) {
+        tweetRepliedMap[reply.TweetId] = 1
+      } else {
+        tweetRepliedMap[reply.TweetId] = tweetRepliedMap[reply.TweetId] + 1
+      }
+    })
+
     const data = tweets.map(r => ({
       ...r,
       isLiked: likedTweetsId.includes(r.id),
-      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0
+      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0,
+      replyCount: tweetRepliedMap[r.id] ? tweetRepliedMap[r.id] : 0
     }))
 
     const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
 
-    res.render('tweets', { tweets: sortedData })
+    res.render('tweets', { tweets: sortedData, user: req.user })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description

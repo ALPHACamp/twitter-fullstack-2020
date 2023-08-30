@@ -106,7 +106,7 @@ a:hover {
 .navbar-logo {
   width: 40px;
   height: 40px;
-} 
+}
 
 .main-navbar {
   position: fixed;
@@ -247,7 +247,7 @@ a:hover {
   height: 26px;
   font-weight: 700;
   line-height: 26px;
-} 
+}
 
 
 /* ---------- User / Admin Signin ---------- */
@@ -270,7 +270,7 @@ a:hover {
 }
 
 .signin-logo {
-  position: absolute; 
+  position: absolute;
   top: 5px;
   left: 5px;
   width: 40px;
@@ -287,7 +287,7 @@ a:hover {
   line-height: 26px;
 }
 
-.admin-signin-title{
+.admin-signin-title {
   position: sticky;
   margin: 0 auto;
   top: 138px;
@@ -556,7 +556,7 @@ a:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  height: 26px; 
+  height: 26px;
 }
 
 .user-name {
@@ -605,3 +605,41 @@ a:hover {
   color: #171725;
 }
 
+#btn-nav-tweet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+
+  width: 156px;
+  height: 46px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+#btn-tweet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 56px;
+  height: 35px;
+
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
