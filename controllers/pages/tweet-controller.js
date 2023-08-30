@@ -51,9 +51,9 @@ const tweetHelper = {
     }
   },
 
-  getTweetReplies: req => {
+  getTweetReplies: async req => {
     const tweetId = req.params.id
-    const tweetWithRepies = Tweet.findByPk(tweetId, {
+    const tweetWithRepies = await Tweet.findByPk(tweetId, {
       include: [
         { model: User, attributes: ['id', 'name', 'account', 'avatar'] },
         { model: Reply, include: [{ model: User, attributes: ['id', 'name', 'account', 'avatar'] }] }
