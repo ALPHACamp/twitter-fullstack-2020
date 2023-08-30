@@ -61,8 +61,8 @@ const tweetController = {
         if (!user) throw new Error("User didn't exist!")
         return Tweet.create({ description, UserId })
       })
-      .then(tweet => {
-        // console.log(tweet)
+      .then(() => {
+        req.flash('success_messages', '推文新增成功!')
         res.redirect('/tweets')
       })
       .catch(err => next(err))
