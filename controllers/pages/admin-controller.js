@@ -1,4 +1,4 @@
-const { Tweet, User, Like, Followship } = require('../models')
+const { Tweet, User, Like, Followship, Reply } = require('../../models')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -92,6 +92,22 @@ const adminController = {
       const sortedUser = userData.sort((a, b) => b.tweetsCount - a.tweetsCount)
 
       res.render('admin/users', { user: sortedUser })
+    } catch (err) {
+      next(err)
+    }
+  },
+  deleteTweet: async (req, res, next) => {
+    try {
+      const TweetId = req.params.id
+      const tweet = await Tweet.findByPk(TweetId)
+      if (!tweet) throw new Error("Tweet didn't exist!")
+      const deletedTweet = await tweet.destroy()
+      const reply = await Reply.destroy({ where: { TweetId } })
+      const like = await Like.destroy({ where: { TweetId } })
+      if (!deletedTweet || !reply || !like) throw new Error('發生錯誤，請稍後再試')
+
+      req.flash('success_messages', '成功刪除')
+      res.redirect('back')
     } catch (err) {
       next(err)
     }
