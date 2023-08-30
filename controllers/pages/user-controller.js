@@ -12,47 +12,19 @@ const USER_PAGE_JS = 'userPage.js'
 const CHECK_PASSWORD_JS = 'checkPassword.js'
 
 const userController = {
-  /* admin 登入 */
-  adminSignin: (req, res, next) => {
-    try {
-      return res.redirect('/admin/tweets')
-    } catch (error) {
-      return next(error)
-    }
-  },
-  getAdminSignInPage: (req, res, next) => {
-    try {
-      if (helpers.ensureAuthenticated(req)) return res.redirect('/admin')
-      return res.render('admin/signin')
-    } catch (error) {
-      return next(error)
-    }
-  },
-
-  adminLogout: (req, res, next) => {
-    try {
-      req.logout(function (err) {
-        if (err) {
-          return next(err)
-        }
-
-        res.redirect('/admin/signin')
-      })
-    } catch (error) {
-      return next(error)
-    }
-  },
-  /* admin登入結束 */
   /* user登入 */
-
   getLoginPage: (req, res, next) => {
     try {
-      if (helpers.ensureAuthenticated(req)) return res.redirect('/tweets') // 如果已經有user就轉去root
+      if (helpers.ensureAuthenticated(req)) {
+        return res.redirect('/tweets')
+      }
+
       return res.render('login/signin')
     } catch (error) {
       return next(error)
     }
   },
+
   postLogin: (req, res, next) => {
     try {
       return res.redirect('/tweets')
@@ -121,7 +93,7 @@ const userController = {
 
       const salt = await bcrypt.genSalt(10)
       const hash = await bcrypt.hash(password, salt)
-      const newUser = await User.create({
+      await User.create({
         account,
         name,
         email,
@@ -133,6 +105,7 @@ const userController = {
       return next(error)
     }
   },
+
   getLogout: (req, res, next) => {
     try {
       req.logout(function (err) {
@@ -147,23 +120,30 @@ const userController = {
     }
   },
   /* user登入結束 */
-  getUserTweets: async (req, res, next) => {
-    try {
-      const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
 
+  getUserTweets: async (req, res, next) => {
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+    const viewingUserId = req.params.id
+    const loggingUserId = helpers.getUser(req).id
+
+    try {
       const viewingUser = await userHelper.getUserInfo(req)
+
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
 
       const tweets = await Tweet.findAll({
         include: [
-          User
+          {
+            model: User,
+            required: true
+          }
         ],
-        where: { UserId: req.params.id },
+        where: { UserId: viewingUserId },
         attributes: {
           include: [
             [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
             [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
-            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${helpers.getUser(req).id})`), 'isLiked']
+            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
           ]
         },
         order: [['createdAt', 'DESC']],
@@ -176,17 +156,19 @@ const userController = {
       return res.render('user/tweets', {
         route: 'user',
         userTab: 'tweets',
+        javascripts,
         tweets,
         viewingUser,
-        recommendUser,
-        javascripts
+        recommendUser
       })
     } catch (error) {
       next(error)
     }
   },
+
   getUserEditPage: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, CHECK_PASSWORD_JS]
+
     await userService.getUserEditPage(req, (error, data) => {
       if (error) return next(error)
 
@@ -196,51 +178,69 @@ const userController = {
       }
 
       res.render('user/setting', {
-        javascripts,
-        ...data,
         isSettingPage: true,
-        route: 'setting'
+        route: 'setting',
+        javascripts,
+        ...data
       })
     })
   },
-  getFollowings: async (req, res, next) => { // 取得正在追蹤的人
-    const [followings, recommendUser] = await Promise.all([
-      userHelper.getFollowings(req),
-      recommendUserHelper.topFollowedUser(req)
-    ])
-    return res.render('user/followings', { followings, recommendUser, userTab: 'followings' })
-  },
-  getFollowers: async (req, res, next) => { // 取得在追蹤我的人
-    const [followers, recommendUser] = await Promise.all([
-      userHelper.getFollowers(req),
-      recommendUserHelper.topFollowedUser(req)
-    ])
-    return res.render('user/followers', { followers, recommendUser, userTab: 'followers' })
-  },
+
   postUserInfo: async (req, res, next) => {
-    await userService.postUserInfo(req, (err, data) => err ? next(err) : res.redirect('back'))
+    await userService.postUserInfo(req, (err, data) => err
+      ? next(err)
+      : res.redirect('back'))
   },
+
+  getFollowings: async (req, res, next) => {
+    const followings = await userHelper.getFollowings(req)
+    const recommendUser = await recommendUserHelper.topFollowedUser(req)
+
+    return res.render('user/followings', {
+      userTab: 'followings',
+      followings,
+      recommendUser
+    })
+  },
+
+  getFollowers: async (req, res, next) => {
+    const followers = await userHelper.getFollowers(req)
+    const recommendUser = await recommendUserHelper.topFollowedUser(req)
+
+    return res.render('user/followers', {
+      userTab: 'followers',
+      followers,
+      recommendUser
+    })
+  },
+
   getLikeTweets: async (req, res, next) => {
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+    const viewingUserId = req.params.id
+    const loggingUserId = helpers.getUser(req).id
+
     try {
-      const userId = req.params.id
       const viewingUser = await userHelper.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
       const recommendUser = await recommendUserHelper.topFollowedUser(req)
 
       const tweets = await Tweet.findAll({
         include: [
-          User,
+          {
+            model: User,
+            required: true
+          },
           {
             model: Like,
-            where: { UserId: userId }
+            where: { UserId: viewingUserId }
           }
         ],
         attributes: {
           include: [
             [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
-            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike']
+            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
+            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
           ]
         },
         order: [[Like, 'createdAt', 'DESC']],
@@ -261,26 +261,32 @@ const userController = {
     }
   },
   getUserReplies: async (req, res, next) => {
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+    const viewingUserId = req.params.id
+    const loggingUserId = helpers.getUser(req).id
+
     try {
-      const userId = req.params.id
       const viewingUser = await userHelper.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
       const recommendUser = await recommendUserHelper.topFollowedUser(req)
 
       const tweets = await Tweet.findAll({
         include: [
-          User,
+          {
+            model: User,
+            required: true
+          },
           {
             model: Reply,
-            where: { UserId: userId }
+            where: { UserId: viewingUserId }
           }
         ],
         attributes: {
           include: [
-            [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
-            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike']
+            [sequelize.literal('(SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
+            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
+            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
           ]
         },
         order: [[Reply, 'createdAt', 'DESC']],

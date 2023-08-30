@@ -1,4 +1,3 @@
-/* test檔案 followship 是 自己一個route@@ */
 const { Followship, User } = require('../../models')
 const { FollowshipError } = require('../../helpers/errors-helpers')
 const helpers = require('../../_helpers')
