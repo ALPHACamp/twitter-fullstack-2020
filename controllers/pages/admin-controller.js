@@ -82,6 +82,7 @@ const adminController = {
           'account',
           'avatar',
           'role',
+          'cover',
           [sequelize.literal('( SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetCount'],
           [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'followerCount'],
           [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'followingCount'],
@@ -105,6 +106,7 @@ const adminController = {
           id: tweetId
         }
       })
+      req.flash('success_messages', '刪除成功！')
       return res.redirect('back')
     } catch (error) {
       return next(error)
