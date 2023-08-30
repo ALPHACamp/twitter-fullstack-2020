@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const userController = require('../../controllers/pages/user-controller')
+const { userController } = require('../../controllers/pages/user-controller')
 const cpUpload = require('../../middlewares/multer')
 
 router.get('/:id/likes', userController.getLikeTweets)

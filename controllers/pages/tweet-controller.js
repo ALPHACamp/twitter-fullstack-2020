@@ -1,5 +1,5 @@
 const { Tweet, Reply, Like } = require('../../models')
-const { topFollowedUser } = require('../../helpers/recommand-followship-helper')
+const { userHelper } = require('./user-controller')
 const { followingUsersTweets, isValidWordsLength } = require('../../helpers/tweets-helper')
 const { getTweetReplies } = require('../../helpers/replies-helper')
 const errorHandler = require('../../helpers/errors-helpers')
@@ -20,7 +20,7 @@ const tweetController = {
         throw new errorHandler.TweetError('Can not fount any tweet')
       }
 
-      const recommendUser = await topFollowedUser(req) // 給右邊的渲染用
+      const recommendUser = await userHelper.topFollowedUser(req) // 給右邊的渲染用
 
       if (!recommendUser) {
         throw new errorHandler.TweetError('Can not fount any recomend users')
@@ -63,7 +63,7 @@ const tweetController = {
     try {
       const javascripts = [TWEET_MODAL_JS]
 
-      const recommendUser = await topFollowedUser(req) // 給右邊的渲染用
+      const recommendUser = await userHelper.topFollowedUser(req) // 給右邊的渲染用
 
       if (!recommendUser) {
         throw new errorHandler.TweetError('Can not fount any recomend users')
