@@ -250,9 +250,9 @@ a:hover {
 }
 
 
-/* ---------- User / Admin Signin ---------- */
+/* ---------- Signin / Signup ---------- */
 
-.signin-container {
+.signin-container, .signup-container {
   height: 100vh;
   max-width: 356px;
   display: flex;
@@ -260,7 +260,7 @@ a:hover {
   margin: 0 auto;
 }
 
-.signin-logo-container {
+.signin-logo-container, .signup-logo-container {
   position: relative;
   margin: 0 auto;
   top: 64px;
@@ -269,8 +269,8 @@ a:hover {
   padding: 5px;
 }
 
-.signin-logo {
-  position: absolute;
+.signin-logo, .signup-logo {
+  position: absolute; 
   top: 5px;
   left: 5px;
   width: 40px;
@@ -287,18 +287,18 @@ a:hover {
   line-height: 26px;
 }
 
-.admin-signin-title {
-  position: sticky;
+.signup-title {
+  position: relative;
   margin: 0 auto;
-  top: 138px;
-  width: 112px;
+  top: 88px;
+  width: 168px;
   height: 26px;
   font-weight: 700;
   line-height: 26px;
 }
 
 .form-item-account {
-  position: sticky;
+  position: absolute;
   margin: 0 auto;
   width: 356px;
   top: 204px;
@@ -307,22 +307,33 @@ a:hover {
   background-color: var(--form-gray);
 }
 
+.signup-container
 .form-item-password {
-  position: relative;
+  position: absolute;
   margin: 0 auto;
   width: 356px;
-  top: 86px;
+  top: 462px;
+  margin-bottom: 32px;
+  border-radius: 2px;
+  background-color: var(--form-gray);
+}
+
+.form-item-checkPassword {
+  position: absolute;
+  margin: 0 auto;
+  width: 356px;
+  top: 548px;
   margin-bottom: 32px;
   border-radius: 2px;
   background-color: var(--form-gray);
 }
 
 .form-label {
-  height: 22px;
-  width: 356px;
   margin-left: 10.55px;
   color: #696974;
   font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
 }
 
 .form-input {
@@ -330,10 +341,12 @@ a:hover {
   width: 356px;
   padding: 0 0 0 10px;
   background-color: var(--form-gray);
-  /* border */
   border-radius: 2px;
   border-width: 0;
   border-bottom: 2px solid #657786;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
 }
 
 .form-input::placeholder,
@@ -354,7 +367,7 @@ a:hover {
   border-bottom: 2px solid var(--danger);
 } */
 
-.invalid-feedback {
+/* .invalid-feedback {
   background-color: white;
   width: 270px;
   font-size: 12px;
@@ -363,9 +376,14 @@ a:hover {
   line-height: 20px;
   letter-spacing: 0px;
   text-align: left;
-}
+} */
 
-.input-minmax,
+/* .invalid-feedback {
+  margin: 0;
+  background-color: white;
+} */
+
+/* .input-minmax,
 .textarea-minmax {
   position: absolute;
   right: 0;
@@ -378,23 +396,37 @@ a:hover {
   color: #696974;
   line-height: 20px;
   letter-spacing: 0px;
-}
+} */
 
 .btn-submit {
   display: flex;
   justify-content: center;
   padding: 8px 24px;
-  position: relative;
+  position: absolute;
   width: 356px;
   height: 46px;
-  top: 94px;
+  top: 384px;
   margin: 0 auto;
   border-radius: 50px;
   background: #FF6600;
   border: none;
 }
 
-.btn-signin-text {
+.btn-signup {
+  display: flex;
+  justify-content: center;
+  padding: 8px 24px;
+  position: absolute;
+  width: 356px;
+  height: 46px;
+  top: 642px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background: #FF6600;
+  border: none;
+}
+
+.btn-signin-text, .btn-signup-text {
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
@@ -404,9 +436,8 @@ a:hover {
 }
 
 .sub-btn {
-  text-align: right;
   position: relative;
-  top: 120px;
+  top: 368px;
   left: 180px;
   width: 160px;
   height: 36px;
@@ -419,17 +450,18 @@ a:hover {
   letter-spacing: 0px;
 }
 
-.admin-sub-btn {
+.btn-cancel {
   position: relative;
-  top: 120px;
-  left: 268px;
-  width: 88px;
+  top: 622px;
+  margin: 0 auto;
+  width: 56px;
   height: 36px;
   padding: 6px 12px;
-  font-size: 16px;
   font-weight: 400;
+  font-size: 16px;
   line-height: 24px;
-  letter-spacing: 0px;
+  color: #0062FF;
+  text-decoration:underline;
 }
 
 

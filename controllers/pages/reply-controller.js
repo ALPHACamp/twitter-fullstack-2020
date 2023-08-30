@@ -15,6 +15,7 @@ const replyController = {
       comment
     })
       .then(() => {
+        console.log('ok')
         res.redirect('/tweets')
       })
       .catch(err => next(err))

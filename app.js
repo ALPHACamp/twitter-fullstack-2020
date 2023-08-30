@@ -14,16 +14,22 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 const app = express()
 const port = process.env.PORT || 3000
-const SESSION_SECRET = 'secret'
+const SESSION_SECRET = process.env.SESSION_SECRET || 'twitterSECRET'
+
+require('./models/index')
 
 // handlebars
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
-// Body-parser
+// public
+app.use(express.static('public'))
+
+// body-parser
 app.use(express.urlencoded({ extended: true }))
 
-app.use(express.static('public'))
+// json
+app.use(express.json())
 
 // session
 app.use(session({

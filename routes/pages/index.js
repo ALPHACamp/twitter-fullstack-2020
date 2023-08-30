@@ -1,50 +1,45 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../../config/passport')
+
 const admin = require('./modules/admin')
 const users = require('./modules/users')
-
+const tweets = require('./modules/tweets')
+const replies = require('./modules/replies')
 // Controllers
-const tweetController = require('../../controllers/pages/tweet-controller')
+const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
-const replyController = require('../../controllers/pages/reply-controller')
 
 // middleware
 const { generalErrorHandler } = require('../../middleware/error-handler')
-const { authenticated } = require('../../middleware/auth')
+const { authenticated, adminAuthenticated } = require('../../middleware/auth')
 
-// Admin
-router.use('/admin', admin)
+// admin signin
+router.get('/admin/signin', adminController.signInPage)
+router.post('/admin/signin', passport.authenticate('adminSignin', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
+router.use('/admin', adminAuthenticated, admin)
 
-// Sign up
+// user signup
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
-// Sign in
+// user signin
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('userSignin', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
-// Log out
+// user logout
 router.get('/logout', userController.logout)
 
-// admin route
-router.use('/admin', admin)
+// tweets route
+router.use('/tweets', authenticated, tweets)
+
+// replies route
+router.use('/replies', authenticated, replies)
 
 // users route
 router.use('/users', authenticated, users)
 
-// Tweets
-router.get('/tweets', authenticated, tweetController.getTweets)
-router.post('/tweets', authenticated, tweetController.postTweet)
-router.post('/tweets/:id/like', authenticated, tweetController.addLike)
-router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
-
-// Reply
-router.post('/replies', authenticated, replyController.postReply)
-
 router.use('/', (req, res) => res.redirect('/tweets'))
-router.use('/', generalErrorHandler)
-
 router.use('/', generalErrorHandler)
 
 module.exports = router
