@@ -166,7 +166,7 @@ const tweetController = {
         comment
       })
 
-      req.flash('success_messages', '推文發送成功')
+      req.flash('success_messages', '回覆成功')
 
       const referer = req.get('Referer') || '/signin'
       return res.redirect(referer) // 回到上一頁

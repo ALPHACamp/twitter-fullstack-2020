@@ -98,8 +98,22 @@
 ## 功能展示
 
 ### 登入
+使用非admin帳號登入前台
+![](./README/demo_gif/login.gif)
+
+帳號或密碼錯誤會有通知
+![](./README/demo_gif/login_fail.gif)
+
+admin帳號不可以登入前台
+![](./README/demo_gif/login_admin_ban.gif)
+
 ### 註冊
+使用註冊頁面註冊，需要提供用戶名稱、帳號、密碼、密碼確認與信箱，註冊後頭項與背景為預設值
+![](./README/demo_gif/signup.gif)
+
 ### 首頁
+
+![](./README/demo_gif/homepage.gif)
 ### 發送推文
 ### 回復推文
 ### 對貼文按Like/Unlike
