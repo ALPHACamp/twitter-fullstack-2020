@@ -72,7 +72,6 @@ const tweetController = {
           likesCount: LikedUsers.filter(likedUser => likedUser.isLike).length,
           isLiked: LikedUsers.some(likedUser => likedUser.UserId === currentUser.id && likedUser.isLike)
         }
-        console.log(Replies)
         res.render('tweet', { tweet, personalTweetRoute, currentUser })
       })
   }
