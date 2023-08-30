@@ -1,6 +1,6 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Like, Followship } = db
+const { User, Tweet, Like, Followship, Reply } = db
 const helper = require('../_helpers')
 
 const userController = {
@@ -249,6 +249,52 @@ const userController = {
       })
       .then(() => {
         return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  getLikes: (req, res, next) => {
+    const userId = req.params.id
+    return User.findByPk(userId, {
+      include: [
+        {
+          model: Like,
+          as: 'LikedTweets',
+          include: [
+            {
+              model: Tweet,
+              include: [
+                {
+                  model: User
+                },
+                {
+                  model: Like,
+                  as: 'LikedUsers'
+                },
+                {
+                  model: Reply
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      order: [[{ model: Like, as: 'LikedTweets' }, 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        const likedTweets = user.LikedTweets.map(like => {
+          const likedTweet = like.Tweet
+          const tweetAuthor = likedTweet.User.dataValues
+          return {
+            avatar: tweetAuthor.avatar,
+            name: tweetAuthor.name,
+            account: tweetAuthor.account,
+            tweetDescription: likedTweet.dataValues.description,
+            tweetCreatedAt: likedTweet.dataValues.createdAt,
+            likesCount: likedTweet.LikedUsers.length,
+            repliesCount: likedTweet.Replies.length
+          }
+        })
+        res.render('userLikes', { likedTweets })
       })
       .catch(err => next(err))
   }

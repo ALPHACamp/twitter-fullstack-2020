@@ -1,0 +1,13 @@
+<h1>要抓的資料</h1>
+
+{{#each likedTweets}}
+<div class="tweet">
+  User avatar:{{this.avatar}}
+  User name:{{this.name}}
+  User account: {{this.account}}
+  Description: {{this.tweetDescription}}
+  Created At: {{this.tweetCreatedAt}}
+  Likes: {{this.likesCount}}
+  Replies: {{this.repliesCount}}
+</div>
+{{/each}}
