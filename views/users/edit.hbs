@@ -1,67 +1,79 @@
 {{>navs/user-left-column route='edit'}}
 <div style="position: absolute; left: 332px; width: 641px; height: 100%" class="border border-top border-end">
   {{>header route='main' title='帳戶設定'}}
-  <form action="/api/users/{{user.id}}" method="POST">
-    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
+  <form class="needs-validation" action="/api/users/{{user.id}}" method="POST" novalidate>
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
       <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
         name="account" style="background-color: #f5f8fa !important;" value="{{user.account}}">
       <label for="account">帳號</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
-    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
       <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="name"
         name="name" style="background-color: #f5f8fa !important;" value="{{user.name}}">
       <label for="name">名稱</label>
+      <div class="invalid-feedback">
+        不可空白 且 字數不可超過50字！
+      </div>
     </div>
-    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
       <input type="email" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="email"
         name="email" style="background-color: #f5f8fa !important;" value="{{user.email}}">
       <label for="email">Email</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
     </div>
-    <div class="form-floating mb-4" style="width: 593px;height: 54px;margin: 24px auto;">
+    <div class="form-floating mb-4" style="width: 593px;height: 54px;margin: 32px auto;">
       <input type="password" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="password"
         name="password" style="background-color: #f5f8fa !important;">
-      <label for="password">密碼</label>
+      <label for="password" id="editForm">密碼</label>
     </div>
-    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 24px auto;">
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
       <input type="password" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="checkPassword"
         name="checkPassword" style="background-color: #f5f8fa !important;">
-      <label for="checkPassword">密碼再確認</label>
+      <label for="checkPassword" id="editForm">密碼再確認</label>
     </div>
-    <div class="d-flex justify-content-end" style="width: 593px;margin: 24px auto;">
+    <div class="d-flex justify-content-end" style="width: 593px;margin: 32px auto;">
       <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"
         style="background-color:#FF6600; color:white; border-radius: 30px">儲存</button>
     </div>
   </form>
 </div>
 
-{{!-- modal 主頁欄 --}}
-
+{{!-- tweet modal --}}
 <div class="modal" id="myModalmain" tabindex="-1">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content border-white d-flex flex-column" style="width:634px; height: 300px; top:56px">
       <div class="d-flex justify-content-start">
         <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <hr style="margin-top: 5px; margin-bottom: 5px;">
 
-      <form action="" method="POST">
-        <div class="ms-2">
+      <form action="/tweets" method="POST">
+        <div style="padding: 16px 24px" class="d-flex flex-column mx-auto">
           <div class="d-flex flex-row">
-            <a href="#">
-              <img class="" src="https://assets-lighthouse.alphacamp.co/uploads/image/file/14990/Bernard_keyer.png"
-                alt="" width="40px" height="40px" style="background-color:#FF6600; border-radius: 30px">
+            <a class="" href="/users/{{user.id}}/tweets">
+              <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                <img src={{#if user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                  style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+              </div>
             </a>
-
-            <textarea class="ms-1 mt-2" name="tweet" id="" cols="45" rows="6" placeholder="有什麼新鮮事"
-              style="border:none"></textarea>
+            <div style="margin-left: 8px" class="d-flex flex-column">
+              <textarea class="ms-1 mt-2" name="description" id="contentInput" rows="6" placeholder="有什麼新鮮事?"
+                style="border:none;width:528px"></textarea>
+            </div>
           </div>
         </div>
-
-        <div class="d-flex flex-row-reverse mb-3 me-2">
-          <button class="btn pt-1 pb-1 ps-3 pe-3" style="background-color:#FF6600; color:white; border-radius: 30px"
-            type="submit">
+        <div style="padding: 16px" class="d-flex flex-row-reverse align-items-center">
+          <button class="btn text-end my-auto py-1 px-3"
+            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" id="submitBtn">
             推文
           </button>
+          {{!-- DOM render --}}
+          <span id="emptyContentMessage" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
         </div>
       </form>
     </div>

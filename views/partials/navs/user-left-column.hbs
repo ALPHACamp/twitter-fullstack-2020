@@ -1,4 +1,5 @@
-<div style="width:178px; position:fixed; z-index:1; top:0; overflow-x:hidden; left:130px;" class="card border-white vh-100">  
+<div style="width:178px; position:fixed; z-index:1; top:0; overflow-x:hidden; left:130px;"
+  class="card border-white vh-100">
   <div style="width:50px; height:50px" class="m-2 p-1">
     {{>ac-logo}}
   </div>
@@ -44,7 +45,7 @@
   </div>
   {{/ifCond}}
 
-   {{#ifCond route 'edit'}}
+  {{#ifCond route 'edit'}}
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
     <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/">
       {{>icons/home-icon}}
@@ -76,5 +77,43 @@
       <span class="h5 ms-3">登出</span>
     </a>
   </div>
-  
+
+</div>
+
+
+{{!-- tweet modal --}}
+<div class="modal" id="myModalmain" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-white d-flex flex-column" style="width:634px; height: 300px; top:56px">
+      <div class="d-flex justify-content-start">
+        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr style="margin-top: 5px; margin-bottom: 5px;">
+
+      <form action="/tweets" method="POST">
+        <div style="padding: 16px 24px" class="d-flex flex-column mx-auto">
+          <div class="d-flex flex-row">
+            <a class="" href="/users/{{user.id}}/tweets">
+              <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                <img src={{#if user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                  style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+              </div>
+            </a>
+            <div style="margin-left: 8px" class="d-flex flex-column">
+              <textarea id="contentInput1" class="ms-1 mt-2" name="description"  rows="6" placeholder="有什麼新鮮事?"
+                style="border:none;width:528px"></textarea>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 16px" class="d-flex flex-row-reverse align-items-center">
+          <button id="submitBtn1" class="btn text-end my-auto py-1 px-3"
+            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" >
+            推文
+          </button>
+          {{!-- DOM render --}}
+          <span id="contentMessage1" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
