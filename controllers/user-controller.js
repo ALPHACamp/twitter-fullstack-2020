@@ -348,7 +348,7 @@ const userController = {
         followingCount,
         isFollowed,
         topUser,
-        likedTweets: tweets
+        tweets
       })
     })
     .catch(err => next(err))
