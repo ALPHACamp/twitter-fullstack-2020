@@ -389,7 +389,6 @@ const userController = {
   getUserReplies: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
     const viewingUserId = req.params.id
-    const loggingUserId = helpers.getUser(req).id
 
     try {
       const viewingUser = await userHelper.getUserInfo(req)
@@ -399,7 +398,7 @@ const userController = {
 
       const replies = await Reply.findAll({
         where: {
-          UserId: loggingUserId
+          UserId: viewingUserId
         },
         include: [
           {
