@@ -48,6 +48,7 @@ const tweetController = {
       return res.redirect('/tweets')
     } catch (err) {
       next(err)
+    }
   }
   // getTweet: (req, res, next) => {
   //   const currentUser = helper.getUser(req)
