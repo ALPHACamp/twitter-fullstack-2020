@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="pe-2 align-self-start" style="max-width: 528px; margin-left: 88px;">
-          <p >
+          <p class="text-break">
             {{this.description}}
           </p>
           <div class="d-flex align-items-baseline">
@@ -26,15 +26,15 @@
               class="me-1" data-bs-toggle="modal" data-bs-target="#replyTweet{{this.id}}">
             <p class="me-5">{{this.replyCount}}</p>
             {{#if isLiked}}
-            <form action="/users/{{this.User.id}}/unlike" method="POST">
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button class="btn btn-outline-light rounded-circle" type="submit" style="border:none;">
-                <i class="fa-solid fa-heart" style="color: #fc5a5a;"></i>
+                <img src="https://i.imgur.com/1JNr74p.png" title="source: imgur.com" style="width: 16px;height: 16px;margin-bottom:8px">
               </button>
             </form>
             {{else}}
-            <form action="/users/{{this.User.id}}/like" method="POST">
+            <form action="/tweets/{{this.id}}/like" method="POST">
               <button class="btn btn-outline rounded-circle" type="submit" style="border:none;">
-                <i class="fa-regular fa-heart"></i>
+                <img src="https://i.imgur.com/gdUkdVf.png" title="source: imgur.com" style="width: 16px;height: 16px;margin-bottom:8px" >
               </button>
             </form>
             {{/if}}
