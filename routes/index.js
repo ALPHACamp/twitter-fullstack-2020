@@ -19,6 +19,7 @@ router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedUserLogin, loginController.signIn)
 router.get('/logout', loginController.logout)
 
+router.get('/users/:id/edit', authenticated, userController.getEditPage)
 router.get('/users/:userId/tweets', authenticated, userController.getUserTweetsPage)
 router.get('/users/:userId/likes', authenticated, userController.getUserLikesPage)
 router.get('/users/:userId/replies', authenticated, userController.getUserRepliesPage)
