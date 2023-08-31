@@ -47,15 +47,6 @@ const adminController = {
 
   getTweets: async (req, res, next) => {
     try {
-      // let tweets = await Tweet.findAll({
-      //   include: {
-      //     model: User,
-      //     required: true
-      //   },
-      //   order: [['createdAt', 'DESC']],
-      //   raw: true,
-      //   nest: true
-      // })
       const tweets = await adminServices.getTweets(12, 0)
 
       res.render('admin/tweets', { tweets, route: 'tweets' })
