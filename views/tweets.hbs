@@ -41,7 +41,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-12 mt-1 me-0" onclick="javascript:location.href='/tweets/{{this.id}}'" style="cursor: pointer;">
+                  <div class="col-12 mt-1 me-0" onclick="javascript:location.href='/tweets/{{this.id}}/replies'" style="cursor: pointer;">
                     {{ this.description }}
                   </div>
                   <div class="tweets-icon-container d-flex flex-row mt-2">
@@ -75,5 +75,5 @@
           {{/each}}
     </div> 
   </div>
-  {{> right-sidebar}}
+  {{> right-sidebar topUsers=topUsers}}
 </div>

@@ -1,19 +1,19 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Like, Followship } = db
+const { User, Tweet, Like, Followship, Reply } = db
 const helper = require('../_helpers')
 
 const userController = {
   editUser: (req, res, next) => {
     const settingRoute = true
-    const user = req.user
+    const user = helper.getUser(req) || null
     User.findByPk(user.id, { raw: true, nest: true })
       .then(user => res.render('setting', { user, settingRoute, id: helper.getUser(req).id }))
       .catch(err => next(err))
   },
   putUser: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    const currentUser = helper.getUser(req)
+    const currentUser = helper.getUser(req) || null
     if (account.length > 50) throw new Error('字數超出上限！')
     if (name.length > 50) throw new Error('字數超出上限！')
     if (password !== checkPassword) throw new Error('密碼輸入不一致！')
@@ -53,28 +53,51 @@ const userController = {
     const currentUser = helper.getUser(req).id || null
     const selectedUser = req.params.id
     // 如果現在進入的個人頁面不是當前使用者
-    let profileRoute = true
-    let otherProfileRoute = false
-    if (currentUser !== Number(selectedUser)) {
-      profileRoute = false
-      otherProfileRoute = true
-    }
+    const profileRoute = Number(currentUser) === Number(selectedUser)
+    const otherProfileRoute = !profileRoute
     return Promise.all([
       Tweet.findAll({
-        // test for now
         where: { UserId: Number(selectedUser) },
-        raw: true,
-        nest: true,
-        include: User,
+        include: [
+          { model: User },
+          { model: Like, as: 'LikedUsers' },
+          { model: Reply }
+        ],
         order: [['createdAt', 'DESC']]
       }),
-      User.findByPk(currentUser, { raw: true })
+      User.findByPk(Number(selectedUser), {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
     ])
       .then(([tweets, user]) => {
-        const tweetsCount = tweets.length
-        // 當 user 為非使用者時
-        const tweetsUser = tweets[0].User
-        res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser })
+        if (!tweets.length) throw new Error('Tweets do not exist')
+        if (!user) throw new Error('This user does not exist')
+        const { Followers, Followings } = user.toJSON()
+        tweets = tweets.map(tweet => {
+          const { dataValues, LikedUsers, Replies, User } = tweet
+          return ({
+            ...dataValues,
+            user: User.dataValues,
+            likesCount: LikedUsers.length,
+            repliesCount: Replies.length,
+            isLiked: LikedUsers.some(likedUser => likedUser.dataValues.UserId === currentUser && likedUser.isLike)
+          })
+        })
+        const tweetsUser = (tweets.length > 0) ? tweets[0].user : {}
+        res.render('profile', {
+          tweets,
+          user,
+          profileRoute,
+          otherProfileRoute,
+          tweetsUser,
+          tweetsCount: tweets.length,
+          followersCount: Followers.length,
+          followingsCount: Followings.length,
+          topUsers: req.topFollowingsList
+        })
       })
       .catch(err => next(err))
   },
@@ -82,7 +105,7 @@ const userController = {
     res.render('signin')
   },
   signIn: (req, res, next) => {
-    if (req.user.role === 'admin') {
+    if (helper.getUser(req).role === 'admin') {
       req.flash('error_messages', '帳號不存在！')
       res.redirect('/signin')
     } else {
@@ -144,7 +167,7 @@ const userController = {
           self: currentUser.id === follower.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followers', { otherProfileRoute, tweetsCount, followers, user, tweetsUser: user.name, id: user.id })
+        res.render('followers', { otherProfileRoute, tweetsCount, followers, user: currentUser, tweetsUser: user.dataValues, id: user.id, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
@@ -167,27 +190,28 @@ const userController = {
           self: currentUser.id === following.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followings', { otherProfileRoute, tweetsCount, followings, user, tweetsUser: user.name, id: user.id })
+        console.log('req.topFollowingsList', req.topFollowingsList)
+        res.render('followings', { otherProfileRoute, tweetsCount, followings, user: currentUser, tweetsUser: user.dataValues, id: user.id, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
   addFollowing: (req, res, next) => {
     const userId = req.body.id
-    const loginUserId = helper.getUser(req).id
-    if (Number(loginUserId) === Number(userId)) {
+    const currentUserId = helper.getUser(req).id || null
+    if (Number(currentUserId) === Number(userId)) {
       req.flash('error_messages', 'cannot follow self')
       return res.redirect(200, 'back')
     }
     return Followship.findOne({
       where: {
-        followerId: loginUserId,
+        followerId: currentUserId,
         followingId: userId
       }
     })
       .then(followship => {
         if (followship) throw new Error('Your are already following this user!')
         return Followship.create({
-          followerId: loginUserId,
+          followerId: currentUserId,
           followingId: userId
         })
       })
@@ -196,10 +220,10 @@ const userController = {
   },
   deleteFollowing: (req, res, next) => {
     const userId = req.params.id
-    const loginUserId = helper.getUser(req).id
+    const currentUserId = helper.getUser(req).id || null
     return Followship.findOne({
       where: {
-        followerId: loginUserId,
+        followerId: currentUserId,
         followingId: userId
       }
     })
@@ -211,7 +235,7 @@ const userController = {
       .catch(err => next(err))
   },
   likeTweet: (req, res, next) => {
-    const currentUserId = helper.getUser(req).id
+    const currentUserId = helper.getUser(req).id || null
     const tweetId = req.params.id
 
     return Like.findOne({
@@ -237,7 +261,7 @@ const userController = {
       .catch(err => next(err))
   },
   unlikeTweet: (req, res, next) => {
-    const currentUserId = helper.getUser(req).id
+    const currentUserId = helper.getUser(req).id || null
     const tweetId = req.params.id
 
     return Like.findOne({
@@ -254,6 +278,140 @@ const userController = {
       })
       .then(() => {
         return res.redirect('back')
+      })
+      .catch(err => next(err))
+  },
+  getLikes: (req, res, next) => {
+    const userId = req.params.id
+    const currentUser = helper.getUser(req).id || null
+    const profileRoute = Number(userId) === Number(currentUser)
+    const otherProfileRoute = !profileRoute
+
+    return User.findByPk(userId, {
+      include: [
+        {
+          model: Like,
+          as: 'LikedTweets',
+          include: [
+            {
+              model: Tweet,
+              include: [
+                {
+                  model: User
+                },
+                {
+                  model: Like,
+                  as: 'LikedUsers'
+                },
+                {
+                  model: Reply
+                }
+              ]
+            }
+          ]
+        },
+        { model: Tweet },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      order: [[{ model: Like, as: 'LikedTweets' }, 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        if (!user) throw new Error('User does not exist!')
+        const tweetsCount = user.Tweets.length
+        const followersCount = user.dataValues.Followers.length
+        const followingsCount = user.dataValues.Followings.length
+        const likedTweets = user.LikedTweets.map(like => {
+          const likedTweet = like.Tweet
+          const tweetAuthor = likedTweet.User.dataValues
+          return {
+            id: tweetAuthor.id,
+            avatar: tweetAuthor.avatar,
+            name: tweetAuthor.name,
+            account: tweetAuthor.account,
+            tweetId: likedTweet.dataValues.id,
+            tweetDescription: likedTweet.dataValues.description,
+            tweetCreatedAt: likedTweet.dataValues.createdAt,
+            likesCount: likedTweet.LikedUsers.length,
+            repliesCount: likedTweet.Replies.length,
+            isLiked: likedTweet.LikedUsers.some(likedUser => likedUser.UserId === currentUser && likedUser.isLike)
+          }
+        })
+        res.render('userLikes', {
+          likedTweets,
+          user,
+          profileRoute,
+          otherProfileRoute,
+          tweetsCount,
+          followersCount,
+          followingsCount,
+          tweetsUser: user.dataValues
+        })
+      })
+      .catch(err => next(err))
+  },
+  getReplies: (req, res, next) => {
+    const currentUser = helper.getUser(req).id || null
+    const selectedUser = req.params.id
+
+    const profileRoute = Number(currentUser) === Number(selectedUser)
+    const otherProfileRoute = !profileRoute
+
+    return Promise.all([
+      Reply.findAll({
+        where: { UserId: Number(selectedUser) },
+        include: [
+          {
+            model: User,
+            include: [
+              { model: User, as: 'Followers' },
+              { model: User, as: 'Followings' }
+            ]
+          },
+          {
+            model: Tweet,
+            include: [
+              { model: User }
+            ]
+          }
+        ],
+        order: [['createdAt', 'DESC']]
+      }),
+      User.findByPk(Number(selectedUser), {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([replies, user]) => {
+        if (!replies.length) throw new Error('Replies do not exist for this user')
+        if (!user) throw new Error('This user does not exist')
+
+        const { Followers, Followings } = user.toJSON()
+        // console.log(replies)
+        // console.log(user)
+        const formattedReplies = replies.map(reply => {
+          const { dataValues, Tweet, User } = reply
+          return ({
+            ...dataValues,
+            tweet: Tweet.dataValues,
+            user: User.dataValues
+          })
+        })
+        // console.log(formattedReplies)
+        const repliesUser = (formattedReplies.length > 0) ? formattedReplies[0].user : {}
+
+        res.render('userReplies', {
+          replies: formattedReplies,
+          user,
+          profileRoute,
+          otherProfileRoute,
+          tweetsUser: repliesUser,
+          repliesCount: formattedReplies.length,
+          followersCount: Followers.length,
+          followingsCount: Followings.length
+        })
       })
       .catch(err => next(err))
   }

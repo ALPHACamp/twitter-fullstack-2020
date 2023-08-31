@@ -2,9 +2,8 @@
   {{> left-sidebar route="getUserTweets"}}
   <div class="main-middle border-start border-end" id="profile-page-container">
     {{> main-middle route="getUserTweets"}}
-    <h1>Profile</h1>
-    <a href="/users/4/tweets">4</a>
     {{> profile-middle-self route="getUserTweets"}}
+    
   </div>
-  {{> right-sidebar}}
+  {{> right-sidebar topUsers=topUsers}}
 </div>

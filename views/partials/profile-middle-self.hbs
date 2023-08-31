@@ -1,4 +1,4 @@
-<div class="self-profile-container" style="width: 639px; height: 378px; position: absolute;">
+<div class="self-profile-container" style="width: 639px; height: 378px; position: relative;">
   <img src="{{ tweetsUser.cover }}" alt="user-cover" style="width: 639px; height: 200px" class="img-fluid">
   <img src="{{ tweetsUser.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: relative; width: 140px; height: 140px; top: -70px; left: 16px; background-color: #FFFFFF;">
   <div class="user-info" style="position: absolute; top: 200px;">
@@ -18,14 +18,19 @@
       </p>
       <div class="followship-container">
         <span style="font-size: 14px; font-weight: 400; font-family: Noto Sans TC">
-          <span style="color: #171725">
-            個<span style="color: #6C757D">跟隨中</span>
+          <span class="followings-button me-3" style="color: #171725">
+            <a href="/users/{{tweetsUser.id}}/followings" class="text-dark text-decoration-none">
+              {{followingsCount}} 個<span style="color: #6C757D">跟隨中</span>
+            </a>
           </span>
-          <span style="color: #171725">
-            位<span style="color: #6C757D;">跟隨者</span>
+          <span class="followers-button me-3" style="color: #171725">
+            <a href="/users/{{tweetsUser.id}}/followers" class="text-dark text-decoration-none">
+              {{followersCount}} 位<span style="color: #6C757D;">跟隨者</span>
+            </a>
           </span>
         </span>
       </div>
     </div>
+    {{> user-info-tab}}
   </div>
 </div>
