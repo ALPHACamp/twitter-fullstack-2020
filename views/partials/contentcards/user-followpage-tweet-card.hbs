@@ -21,13 +21,13 @@
             <div class="ms-auto">
                 {{#ifCond route 'followings'}}
                 {{#if this.isFollowed }}
-                <form action="/following/{{this.followingId}}?_method=DELETE" method="POST">
+                <form action="/followships/{{this.followingId}}?_method=DELETE" method="POST">
                     <button type="submit"
                         style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
                         class="btn">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/following/{{this.followingId}}" method="POST">
+                <form action="/followships/{{this.followingId}}" method="POST">
                     <button type="submit"
                         style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
                         class="btn">跟隨</button>
@@ -36,13 +36,13 @@
                 {{/ifCond}}
                 {{#ifCond route 'followers'}}
                 {{#if this.isFollowed }}
-                <form action="/following/{{this.followerId}}?_method=DELETE" method="POST">
+                <form action="/followships/{{this.followerId}}?_method=DELETE" method="POST">
                     <button type="submit"
                         style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
                         class="btn">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/following/{{this.followerId}}" method="POST">
+                <form action="/followships/{{this.followerId}}" method="POST">
                     <button type="submit"
                         style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
                         class="btn">跟隨</button>
