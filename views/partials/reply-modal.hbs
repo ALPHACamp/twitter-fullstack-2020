@@ -149,11 +149,15 @@
                     {{else}} {{this.User.account}} {{/if}}</span></span>
               </div>
             </div>
-            <div class="mt-4">
+            <div class="mt-4 d-flex">
               <img src="{{user.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;"
-                class="ms-4 me-2 rounded-circle" />
-              <input type="text" placeholder="推你的回覆"
-                style="outline: none; border: none; box-shadow: none; width: 510px;" name="comment" required>
+
+                class="ms-4 me-2" />
+                <label for="comment">
+                  <textarea name="comment" id="comment" cols="60" rows="4"
+                    style="outline:none; border:none; box-shadow:none; margin-top:10px; margin-left:5px" maxlength="140"
+                    required placeholder="推你的回覆"></textarea>
+                </label>
             </div>
           </div>
           <input type="hidden" name="TweetId" value="{{#if tweet}} {{tweet.id}} {{else}} {{this.id}} {{/if}}">
