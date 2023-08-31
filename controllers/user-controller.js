@@ -307,6 +307,8 @@ const userController = {
   },
   putUserProfile: (req, res, next) => {
     const { name, introduction } = req.body
+    if (name.length > 50) throw new Error('名稱不可超過50字')
+    if (introduction.length > 160) throw new Error('自我介紹不可超過160字')
     const id = helpers.getUser(req).id
     if (!name) throw new Error('名稱不可空白')
     const cover = req.files['cover'] ? req.files['cover'][0] : null
