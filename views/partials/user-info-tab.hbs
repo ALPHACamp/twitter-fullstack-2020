@@ -95,6 +95,71 @@
       href="/users/{{tweetsUser.id}}/likes">喜歡的內容</a>
   </li>
 </ul>
+<div class="tweets-container border border-top-0">
+  {{#each replies}}
+  <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-bottom">
+    <div class="card-body col-12 p-3">
+      <div class="row p-1">
+        <div class="col-1 d-flex justify-content-center align-items-start">
+          <a href="/users/{{this.user.id}}/tweets">
+            <img src="{{#if this.user.avatar}}{{ this.user.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+              class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+          </a>
+        </div>
+        <div class="col-10 row">
+          <div class="col-12 d-inline-flex align-items-center">
+            <div style="height: 26px; font-size: 15px">
+              <a href="/users/{{this.user.id}}/tweets" class="text-dark"
+                style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">
+                {{ this.user.name }}
+              </a>
+              <span style="font-size: 14px; font-weight: 400">
+                @{{ this.user.account }}·{{ relativeTime this.createdAt }}
+              </span>
+            </div>
+          </div>
+          <div class="col-12 mt-3 me-0" style="font-size: 13px; font-weight: 500; font-family: Noto Sans TC;">
+            <span style="color: #657786;">回覆給</span>
+            <span style="color: #FF6600;">@{{this.tweet.User.dataValues.account}}</span>
+          </div>
+          <div class="col-12 mt-1 me-0" onclick="javascript:location.href='/tweets/{{this.tweet.id}}/replies'"
+            style="cursor: pointer;">
+            {{ this.comment }}
+          </div>
+          {{!-- <div class="tweets-icon-container d-flex flex-row mt-2">
+            <div class="reply">
+              <button class="reply bg-white" type="button" data-bs-toggle="modal"
+                data-bs-target="#reply-tweet-{{this.tweet.id}}">
+                <img src="/images/icons/reply.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                <span class="ms-1"
+                  style="height: 14px; width: 14px; font-family: Montserrat;">{{this.repliesCount}}</span>
+              </button>
+              {{> reply-modal}}
+            </div>
+            {{#if isLiked}}
+            <form action="/tweets/{{this.tweet.id}}/unlike" method="POST" class="like ms-4" style="background: none;">
+              <button type="submit" class="like-button" style="background-color: transparent;">
+                <img src="/images/icons/red-liked.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                <span class="ms-1"
+                  style="height: 14px; width: 14px; font-family: Montserrat;">{{this.likesCount}}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.tweet.id}}/like" method="POST" class="like ms-4" style="background: none;">
+              <button type="submit" class="like-button" style="background-color: transparent;">
+                <img src="/images/icons/like.png" alt="" style="height: 16px; width: 16px;" class="mb-1">
+                <span class="ms-1"
+                  style="height: 14px; width: 14px; font-family: Montserrat;">{{this.likesCount}}</span>
+              </button>
+            </form>
+            {{/if}}
+          </div> --}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
 {{/ifCond}}
 
 {{#ifCond route 'getLikes'}}

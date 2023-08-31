@@ -347,6 +347,71 @@ const userController = {
         })
       })
       .catch(err => next(err))
+  },
+  getReplies: (req, res, next) => {
+    const currentUser = helper.getUser(req).id || null
+    const selectedUser = req.params.id
+
+    const profileRoute = Number(currentUser) === Number(selectedUser)
+    const otherProfileRoute = !profileRoute
+
+    return Promise.all([
+      Reply.findAll({
+        where: { UserId: Number(selectedUser) },
+        include: [
+          {
+            model: User,
+            include: [
+              { model: User, as: 'Followers' },
+              { model: User, as: 'Followings' }
+            ]
+          },
+          {
+            model: Tweet,
+            include: [
+              { model: User }
+            ]
+          }
+        ],
+        order: [['createdAt', 'DESC']]
+      }),
+      User.findByPk(Number(selectedUser), {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([replies, user]) => {
+        if (!replies.length) throw new Error('Replies do not exist for this user')
+        if (!user) throw new Error('This user does not exist')
+
+        const { Followers, Followings } = user.toJSON()
+        // console.log(replies)
+        // console.log(user)
+        const formattedReplies = replies.map(reply => {
+          const { dataValues, Tweet, User } = reply
+          return ({
+            ...dataValues,
+            tweet: Tweet.dataValues,
+            user: User.dataValues
+          })
+        })
+        // console.log(formattedReplies)
+        const repliesUser = (formattedReplies.length > 0) ? formattedReplies[0].user : {}
+
+        res.render('userReplies', {
+          replies: formattedReplies,
+          user,
+          profileRoute,
+          otherProfileRoute,
+          tweetsUser: repliesUser,
+          repliesCount: formattedReplies.length,
+          followersCount: Followers.length,
+          followingsCount: Followings.length
+        })
+      })
+      .catch(err => next(err))
   }
 }
 
