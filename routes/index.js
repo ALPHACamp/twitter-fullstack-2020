@@ -16,6 +16,8 @@ router.put('/users/:id', authenticated, userController.putUser)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
+router.get('/users/:id/likes', authenticated, userController.getLikes)
+router.get('/users/:id/replies', authenticated, userController.getReplies)
 
 // followship related
 router.post('/followships', authenticated, userController.addFollowing)
