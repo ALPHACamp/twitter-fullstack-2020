@@ -63,7 +63,57 @@ const userController = {
       })
     
   },
-  
+  putUserSetting: (req, res, next) => {
+    const { account, name, email, password, passwordCheck } = req.body
+    const currentUserId = helpers.getUser(req).id
+    if (!account || !name || !email || !password || !passwordCheck) throw new Error('所有欄位都是必填')
+    if (password !== passwordCheck) throw new Error('密碼與確認密碼不相符')
+    if (name.length > 50) throw new Error('字數超出上限')
+    
+    Promise.all([
+      User.findOne({ 
+        raw: true,
+        nest: true,
+        where: {
+          [Op.and]: [
+              { account: account },
+              { account: { [Op.notLike]: helpers.getUser(req).account } }
+            ]
+        }
+      }),
+      User.findOne({
+        raw: true,
+        nest: true,
+        where: { 
+          [Op.and]: [
+            { email: email },
+            { email: { [Op.notLike]: helpers.getUser(req).email } }
+          ] 
+        } 
+      })
+    ])
+      .then(([findAccount, findEmail]) => {
+        if (findAccount) throw new Error('帳號 已重複註冊！')
+        if (findEmail) throw new Error('Email 已重複註冊！')
+        Promise.all([
+          User.findByPk(currentUserId),
+          bcrypt.hash(password, 10)
+        ])
+          .then(([user, hashPassword]) => {
+          return user.update({
+            account,
+            name,
+            email,
+            password: hashPassword
+          })
+        })
+        .then(() => {
+          req.flash('success_messages', '編輯成功!')
+          res.redirect(`/users/${currentUserId}/setting`)
+        })
+      })
+      .catch(err => next(err))
+  },
   getUserFollowings: (req, res, next) => {
     const userId = req.params.id
     const currentUserId = helpers.getUser(req).id
@@ -300,7 +350,7 @@ const userController = {
         followingCount,
         isFollowed,
         topUser,
-        likedTweets: tweets
+        tweets
       })
     })
     .catch(err => next(err))

@@ -4,8 +4,10 @@
     <div class="modal-content" style="width: 634px; height: 500px; border-radius: 14px;">
       <div class="modal-header" style="position: relative; height: 50px;">
 
-        <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"
-          style="position: absolute; left: 0; color: #FF6600;"></button>
+        <button type="button" class="btn btn-default m-3" data-bs-dismiss="modal" aria-label="Close"
+          style="position: absolute; left: 0;">
+            <i class="fa-solid fa-xmark fa-lg" style="color: #ff6600;"></i>
+          </button>
       </div>
       <div class="modal-body">
         <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}} method="POST">
@@ -13,7 +15,7 @@
 
             <div class="d-flex align-items-start flex-column" style="min-height: 130px;">
               <div class="align-self-start">
-                <img {{#if tweet}} src="{{tweet.User.avatar}}" {{else}} src="{{this.User.avatar}}" {{/if}}title="source: imgur.com" style="width: 50px;height: 50px;"
+                <img class="rounded-circle" {{#if tweet}} src="{{tweet.User.avatar}}" {{else}} src="{{this.User.avatar}}" {{/if}}title="source: imgur.com" style="width: 50px;height: 50px;"
                   class="ms-4">
                 <div class="d-inline-flex pt-3">
                   <h5 class="mx-2" style="color: #171725;">{{#if tweet}} {{tweet.User.name}} {{else}} {{this.User.name}} {{/if}}</h5>
@@ -26,11 +28,15 @@
                 <span style="color: #657786;">回覆給<span style="color: #FF6600;">@{{#if tweet}} {{tweet.User.account}} {{else}} {{this.User.account}} {{/if}}</span></span>
               </div>
             </div>
-            <div class="mt-4">
+            <div class="mt-4 d-flex">
               <img src="{{user.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;"
+
                 class="ms-4 me-2" />
-              <input type="text" placeholder="推你的回覆"
-                style="outline: none; border: none; box-shadow: none; width: 510px;" name="comment" required>
+                <label for="comment">
+                  <textarea name="comment" id="comment" cols="60" rows="4"
+                    style="outline:none; border:none; box-shadow:none; margin-top:10px; margin-left:5px" maxlength="140"
+                    required placeholder="推你的回覆"></textarea>
+                </label>
             </div>
           </div>
           <input type="hidden" name="TweetId" value="{{#if tweet}} {{tweet.id}} {{else}} {{this.id}} {{/if}}">

@@ -34,11 +34,12 @@ router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 router.get('/users/:id/followings',authenticated, userController.getUserFollowings)
 router.get('/users/:id/setting', authenticated, userController.getUserSetting)
+router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 router.put('/users/:id/edit', authenticated, upload.fields([ { name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putUserProfile)
-
 router.get('/api/users/:id', authenticated, apiController.editApi)
 router.post('/api/users/:id', authenticated, apiController.postApi)
 
+// 回覆和Like功能路由
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
