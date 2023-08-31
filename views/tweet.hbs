@@ -2,7 +2,7 @@
   {{> left-sidebar route="getTweet"}}
   <div class="main-middle border-start border-end" id="profile-page-container">
     {{> main-middle route="getTweet"}}
-    <div class="tweet-container" style="width: 639px; height: 351px;">
+    <div class="tweet-container" style="width: 639px; max-height: 401px;">
       <div class="tweet-content py-3 mx-3 border-bottom" style="width: 602px;">
         <div class="user-info mb-2 d-flex flex-row">
           <div class="avatar">
@@ -71,7 +71,40 @@
       </div>
     </div>
     <div class="tweet-replies-container">
-      
+      {{#each replies}}
+        <div class="card col-12 hovercard d-flex flex-row rounded-0 border-0 border-bottom">
+            <div class="card-body col-12 p-3">
+              <div class="row p-1">
+                <div class="col-1 d-flex justify-content-center align-items-start">
+                  <a href="/users/{{this.user.id}}/tweets">
+                    <img src="{{#if this.user.avatar}}{{ this.user.avatar }}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
+                      class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+                  </a>
+                </div>
+                <div class="col-10 row">
+                  <div class="col-12 d-inline-flex align-items-center">
+                    <div style="height: 26px; font-size: 14px; color: #6C757D; font-weight: 400;" class="d-flex flex-row mb-2">
+                      <a href="/users/{{ this.user.id }}/tweets" class="text-dark"
+                        style="font-size: 16px; font-weight: 700; margin-right: 8px; text-decoration: none;">
+                        {{ this.user.name }}
+                      </a>
+                      <span style="font-size: 14px; font-weight: 400; padding-top: 1px; font-family: Noto Sans TC;">
+                        @{{ this.user.account }}·{{ relativeTime this.createdAt }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-12 d-inline-flex align-items-center">
+                    <span style="font-size: 14px; font-weight: 400; padding-top: 1px; font-family: Noto Sans TC; color: #6C757D" class="mb-2">回覆</span>
+                    <span style="font-size: 14px; font-weight: 400; padding-top: 1px; font-family: Noto Sans TC; color: #FF6600;" class="mb-2">@{{ ../tweet.user.account }}</span>
+                  </div>
+                  <div class="col-12 mt-1 me-0" style="cursor: pointer; font-family: Noto Sans TC; font-size: 16px;">
+                    {{ this.comment }}
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      {{/each}}
     </div>
   </div>
   {{> right-sidebar topUsers=topUsers}}

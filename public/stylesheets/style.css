@@ -90,7 +90,7 @@ textarea {
 .main-middle {
   position: absolute;
   left: 333px;
-  height: 1200px;
+  min-height: 1200px;
 }
 
 .row-card {
