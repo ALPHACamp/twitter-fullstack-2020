@@ -234,17 +234,16 @@ const userController = {
       // followships area
       const followships = await Followship.findAll({
         where: { followerId: userId },
-        order: [['followingId', 'DESC']],
+        order: [['CreatedAt', 'DESC']],
         raw: true,
         nest: true
       })
       const followingsId = await followships.map(s => s.followingId)
-      const followingsUser = await User.findAll({ where: { id: followingsId }, order: [['id', 'DESC']], raw: true, nest: true })
+      const followingsUser = await User.findAll({ where: { id: followingsId }, order: [['CreatedAt', 'DESC']], raw: true, nest: true })
       for (let i = 0; i < followingsId.length; i++) {
         followships[i].followingUser = followingsUser[i]
         followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followingId)
       }
-      followships.sort((a, b) => b.createdAt - a.createdAt)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -278,17 +277,16 @@ const userController = {
       // followships area
       const followships = await Followship.findAll({
         where: { followingId: userId },
-        order: [['followerId', 'DESC']],
+        order: [['CreatedAt', 'DESC']],
         raw: true,
         nest: true
       })
       const followersId = await followships.map(s => s.followerId)
-      const followersUser = await User.findAll({ where: { id: followersId }, order: [['id', 'DESC']], raw: true, nest: true })
+      const followersUser = await User.findAll({ where: { id: followersId }, order: [['CreatedAt', 'DESC']], raw: true, nest: true })
       for (let i = 0; i < followersId.length; i++) {
         followships[i].followerUser = followersUser[i]
         followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followerId)
       }
-      followships.sort((a, b) => b.createdAt - a.createdAt)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
