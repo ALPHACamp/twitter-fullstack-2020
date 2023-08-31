@@ -33,7 +33,7 @@
 
       <div class="d-flex flex-row">
         <div class="me-5">
-          <button type="submit"
+          <button id="replyButton" type="submit"
             style="background-color:transparent; border-color:transparent; border: none; padding: 0;"
             data-bs-toggle="modal" data-bs-target="#ModaltweetsReplies">
             {{>icons/reply-icon}}
@@ -138,7 +138,7 @@
 
               <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
                 <div style="margin: 8px 0px" class="mx-auto">
-                  <p>{{tweet.description}}</p>
+                  <p class="text-break">{{tweet.description}}</p>
                 </div>
               </a>
 
@@ -163,8 +163,8 @@
               </div>
             </a>
             <div class="d-flex flex-row">
-              <textarea class="ms-1 mt-2" name="comment" id="contentInput2" rows="6" placeholder="推你的回覆"
-                style="border:none;width:528px"></textarea>
+              <textarea class="ms-1 mt-2 form-control border-3 border-top-0 border-start-0 border-end-0 border-bottom-0" id="contentInput2" name="comment" cols="30" rows="6" style="width:528px" placeholder="推你的回覆"></textarea>
+              <label for="contentInput2"></label>
             </div>
           </div>
         </div>
