@@ -124,6 +124,7 @@ const userController = {
         order:[['Followings', 'createdAt', 'Desc']]
       }),
       User.findAll({
+        where:{ role: 'user' },
         include: { model: User, as: 'Followers'}
       })
     ]) 
@@ -159,6 +160,7 @@ const userController = {
         order:[['Followers', 'createdAt', 'Desc']]
       }),
       User.findAll({
+        where:{ role: 'user' },
         include: { model: User, as: 'Followers'}
       })
     ]) 
@@ -210,6 +212,7 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
+        where:{ role: 'user' },
         include: { model: User, as: 'Followers'}
       })
     ]) 
@@ -264,6 +267,7 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
+        where:{ role: 'user' },
         include: { model: User, as: 'Followers'}
       })
     ])
@@ -313,6 +317,7 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
+        where:{ role: 'user' },
         include: { model: User, as: 'Followers'}
       })
     ])
