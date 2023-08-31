@@ -1,6 +1,6 @@
-const { User, Tweet, Like, sequelize } = require('../../models')
-const { Op } = require('sequelize')
+const { User, Tweet, sequelize } = require('../../models')
 const helpers = require('../../_helpers')
+const adminServices = require('../../service/admin-services')
 
 const adminController = {
   /* admin 登入 */
@@ -47,31 +47,39 @@ const adminController = {
 
   getTweets: async (req, res, next) => {
     try {
-      let tweets = await Tweet.findAll({
-        include: {
-          model: User,
-          required: true
-        },
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
-
-      tweets = tweets.map(tweet => {
-        if (tweet.description.length > 50) {
-          tweet.description = tweet.description.substring(0, 50) + '...'
-        } else {
-          tweet.description = tweet.description.substring(0, 50)
-        }
-        return tweet
-      })
+      // let tweets = await Tweet.findAll({
+      //   include: {
+      //     model: User,
+      //     required: true
+      //   },
+      //   order: [['createdAt', 'DESC']],
+      //   raw: true,
+      //   nest: true
+      // })
+      const tweets = await adminServices.getTweets(10, 0)
 
       res.render('admin/tweets', { tweets, route: 'tweets' })
     } catch (error) {
       return next(error)
     }
   },
+  getTweetsUnload: async (req, res, next) => {
+    try {
+      let { limit, page } = req.query
 
+      limit = parseInt(limit)
+      page = parseInt(page)
+
+      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
+      // 檢查是否有提供有效的 limit 和 page
+        return res.json({ message: 'error', data: {} })
+      }
+      const tweets = await adminServices.getTweets(limit, page)
+      return res.json({ message: 'success', data: tweets })
+    } catch (error) {
+      return next(error)
+    }
+  },
   getUsers: async (req, res, next) => {
     try {
       const backendUsers = await User.findAll({
