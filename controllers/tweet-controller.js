@@ -1,26 +1,27 @@
 const { User, Tweet, Reply, Like } = require('../models')
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res) => {
-    const user = req.user
+    const user = helpers.getUser(req)
     return Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [User, Reply, Like],
       nest: true
     })
       .then(tweets => {
-        const likedTweetsId = req.user && req.user.LikedTweets.map(t => t.id)
         tweets = tweets.map(tweet => ({
           replyCount: tweet.Replies.length,
           likeCount: tweet.Likes.length,
-          isLiked: likedTweetsId.includes(tweet.id),
+          isLiked: tweet.Likes.some(like => like.UserId === user.id),
           ...tweet.toJSON()
         }))
         res.render('tweets', { user, tweets, currentUserId: user.id})})   
   },
   postTweet: (req, res, next) => {
     const { description } = req.body
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
+    if (description.length > 140) throw new Error('超過字數上限')
     if (!description) throw new Error('內容不可空白')
     return Tweet.create({
       UserId,
@@ -28,18 +29,20 @@ const tweetController = {
     })
       .then(() => res.redirect('/tweets'))
       .catch(err => next(err))
-  }, 
+  },
   postReply: (req, res, next) => {
-    const { comment, TweetId } = req.body
-    const UserId = req.user.id
+    const { comment } = req.body
+    const TweetId = req.params.id
+    const UserId = helpers.getUser(req).id
     if (!comment) throw new Error('內容不可空白')
+    if (comment.length > 140) throw new Error('超過字數上限')
     return Promise.all([
       Tweet.findByPk(TweetId),
       User.findByPk(UserId)
     ])
       .then(([tweet, user]) => {
         if (!tweet) throw new Error('推文不存在')
-        if (!user) throw new Error ('使用者不存在') 
+        if (!user) throw new Error('使用者不存在')
         return Reply.create({
           UserId,
           TweetId,
@@ -51,12 +54,12 @@ const tweetController = {
   },
   getTweet: (req, res, next) => {
     const TweetId = req.params.id
-    const user = req.user
+    const user = helpers.getUser(req)
     return Promise.all([
       Tweet.findByPk(TweetId, {
         include: [
-          User, 
-          { model: User, as: 'LikedUsers'}
+          User,
+          { model: User, as: 'LikedUsers' }
         ],
         nest: true
       }),
@@ -77,18 +80,18 @@ const tweetController = {
         const isLiked = tweet.LikedUsers.some(u => u.id === req.user.id)
         res.render('tweet', {
           user,
-          tweet: tweet.toJSON(), 
-          replies: replies.rows, 
+          tweet: tweet.toJSON(),
+          replies: replies.rows,
           replyCount,
           likeCount,
-          isLiked     
+          isLiked
         })
       })
       .catch(err => next(err))
   },
   addLike: (req, res, next) => {
     const TweetId = req.params.id
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     return Promise.all([
       Tweet.findByPk(TweetId),
       Like.findOne({
@@ -111,7 +114,7 @@ const tweetController = {
   },
   removeLike: (req, res, next) => {
     const TweetId = req.params.id
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     return Like.findOne({
       where: {
         TweetId,
