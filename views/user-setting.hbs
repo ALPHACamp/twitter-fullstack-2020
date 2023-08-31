@@ -10,8 +10,7 @@
       </div>
   
       <hr class="mb-2">
-      {{>messages}}
-      <form class="px-3 border-left mt-5" action="/api/users/{{currentUserId}}?_method=PUT" method="POST">
+      <form class="px-3 border-left mt-5" action="/users/{{currentUserId}}/setting?_method=PUT" method="POST">
   
         <div class="form-group mt-3" style="height:78px; weight:593px">
           <div style="background-color:#F5F8FA">
@@ -20,7 +19,7 @@
             </label>
             <input type="text" class="form-control" id="account" name="account"
               style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA"
-              value="{{user.account}}" />
+              value="{{user.account}}" required/>
           </div>
         </div>
   
@@ -31,7 +30,7 @@
             </label>
             <input type="text" class="form-control" id="name" name="name"
               style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA"
-              value="{{user.name}}" />
+              value="{{user.name}}" required/>
           </div>
         </div>
   
@@ -42,7 +41,7 @@
             </label>
             <input type="text" class="form-control" id="email" name="email"
               style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA"
-              value="{{user.email}}" />
+              value="{{user.email}}" required/>
           </div>
         </div>
   
@@ -52,7 +51,7 @@
               <font color="#696974">密碼</font>
             </label>
             <input type="text" class="form-control" id="password" name="password"
-              style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA" />
+              style="border:none; border-bottom:2px solid #657786; outline: none;background-color:#F5F8FA"/>
           </div>
         </div>
   
