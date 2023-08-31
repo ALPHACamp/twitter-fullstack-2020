@@ -1,32 +1,20 @@
-for (let i = 1; i <= 2; i++) {
-  const submitBtn = document.getElementById(`submitBtn${i}`)
-  const contentInput = document.getElementById(`contentInput${i}`)
-  const contentMessage = document.getElementById(`contentMessage${i}`)
-  const replyButton = document.getElementById('replyButton')
-
-  if (submitBtn) {
-    submitBtn.addEventListener('click', function (event) {
-      if (contentInput.value.trim() === '') {
-        contentMessage.textContent = '內容不可空白'
-        event.preventDefault()
-      } else {
-        contentMessage.textContent = ''
-      }
-
-      if (replyButton) {
-        if (contentInput.value.length > 50) {
-          contentMessage.textContent = '字數不可超過 50 字'
-          event.preventDefault()
-        }
-      } else {
-        if (contentInput.value.length > 140) {
-          contentMessage.textContent = '字數不可超過 140 字'
-          event.preventDefault()
-        }
-      }
-    })
-  }
-}
+document.querySelectorAll('[id^=tweetBtn]').forEach(btn => {
+  const contentInput = document.querySelector('#contentInput1')
+  const contentMessage = document.querySelector('#contentMessage1')
+  const submitBtn1 = document.querySelector('#submitBtn1')
+  submitBtn1.addEventListener('click', function (event) {
+    if (contentInput.value.trim() === '') {
+      contentMessage.textContent = '內容不可空白'
+      event.preventDefault()
+    } else {
+      contentMessage.textContent = ''
+    }
+    if (contentInput.value.length > 50) {
+      contentMessage.textContent = '字數不可超過 140 字'
+      event.preventDefault()
+    }
+  })
+})
 
 document.querySelectorAll('[id^=submitBtn]').forEach(btn => {
   const id = btn.getAttribute('data-id')
