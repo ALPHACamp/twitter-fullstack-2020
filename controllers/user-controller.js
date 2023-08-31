@@ -53,28 +53,50 @@ const userController = {
     const currentUser = helper.getUser(req).id || null
     const selectedUser = req.params.id
     // 如果現在進入的個人頁面不是當前使用者
-    let profileRoute = true
-    let otherProfileRoute = false
-    if (currentUser !== Number(selectedUser)) {
-      profileRoute = false
-      otherProfileRoute = true
-    }
+    const profileRoute = Number(currentUser) === Number(selectedUser)
+    const otherProfileRoute = !profileRoute
     return Promise.all([
       Tweet.findAll({
-        // test for now
         where: { UserId: Number(selectedUser) },
-        raw: true,
-        nest: true,
-        include: User,
+        include: [
+          { model: User },
+          { model: Like, as: 'LikedUsers' },
+          { model: Reply }
+        ],
         order: [['createdAt', 'DESC']]
       }),
-      User.findByPk(currentUser, { raw: true })
+      User.findByPk(Number(selectedUser), {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
     ])
       .then(([tweets, user]) => {
-        const tweetsCount = tweets.length
-        // 當 user 為非使用者時
-        const tweetsUser = tweets[0].User
-        res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser })
+        if (!tweets.length) throw new Error('Tweets do not exist')
+        if (!user) throw new Error('This user does not exist')
+        const { Followers, Followings } = user.toJSON()
+        tweets = tweets.map(tweet => {
+          const { dataValues, LikedUsers, Replies, User } = tweet
+          return ({
+            ...dataValues,
+            user: User.dataValues,
+            likesCount: LikedUsers.length,
+            repliesCount: Replies.length,
+            isLiked: LikedUsers.some(likedUser => likedUser.dataValues.UserId === currentUser && likedUser.isLike)
+          })
+        })
+        const tweetsUser = (tweets.length > 0) ? tweets[0].user : {}
+        res.render('profile', {
+          tweets,
+          user,
+          profileRoute,
+          otherProfileRoute,
+          tweetsUser,
+          tweetsCount: tweets.length,
+          followersCount: Followers.length,
+          followingsCount: Followings.length
+        })
       })
       .catch(err => next(err))
   },
