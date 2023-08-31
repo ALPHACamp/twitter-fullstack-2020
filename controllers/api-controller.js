@@ -16,7 +16,10 @@ const apiController = {
     },
     postApi: (req, res, next) => {
         const { name } = req.body
-        const id = helper.getUser(req).id
+        const id = Number(helper.getUser(req).id)
+        if (id !== Number(req.params.id)) {
+            return res.json({ status: 'error' })
+        }
         return User.findByPk(id)
             .then(user => {
                 if (!user) throw new Error('使用者不存在')
