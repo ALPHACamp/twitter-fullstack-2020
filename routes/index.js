@@ -33,7 +33,7 @@ router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 router.get('/users/:id/followings',authenticated, userController.getUserFollowings)
 router.get('/users/:id/setting', authenticated, userController.getUserSetting)
-
+router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
