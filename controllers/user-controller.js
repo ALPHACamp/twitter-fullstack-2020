@@ -311,23 +311,24 @@ const userController = {
     }
   },
   addFollowing: (req, res, next) => {
-    const userId = req.params.id
+    // const userId = req.params.id
+    const { id } = req.body
     return Promise.all([
-      User.findByPk(userId),
+      User.findByPk(id),
       Followship.findOne({
         where: {
           followerId: helpers.getUser(req).id,
-          followingId: userId
+          followingId: id
         }
       })
     ])
       .then(([user, followship]) => {
         if (!user) throw new Error("User didn't exist!")
-        if (user.id === helpers.getUser(req).id) throw new Error('You are not allowed to follow yourself!')
+        if (Number(id) === helpers.getUser(req).id) throw new Error('You are not allowed to follow yourself!')
         if (followship) throw new Error('You are already following this user!')
         return Followship.create({
           followerId: helpers.getUser(req).id,
-          followingId: userId
+          followingId: id
         })
       })
       .then(() => res.redirect('back'))
