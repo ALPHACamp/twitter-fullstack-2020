@@ -1,17 +1,74 @@
-<div class="modal fade" id="edit-profile-{{ tweetsUser.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="edit-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
+    <div class="modal-content p-0" style="width:634px;height:610px;border-radius:14px;padding:0px 16px">
+      <form action="/tweets" class="border-0 p-0" method="POST">
+        <div class="header-container d-flex flex-row justify-content-between">
+          <div class="d-flex flex-row" style="height: 40px;">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="d-flex ms-4 mt-3">編輯個人資料</h5>
+          </div>
+          <div class="mt-2 me-2" style="height: 40px;">
+            <button typr="submit"
+              style="width: 64px; height: 40px; border-radius: 50px; background: #FF6600; color: #FFFFFF;">儲存</button>
+          </div>
+        </div>
+        <hr class="solid my-0 mt-2" style="color: #FFFFFF">
+        <div class="cover-avatar-container">
+          <div class="cover">
+            <img src="{{ user.cover }}" alt="user-cover"
+              style="position: absolute; width: 639px; height: 200px; z-index: 0;" class="img-fluid opacity-75">
+            <div class="cover-cover mx-auto" style="position: relative; width: 632px; height: 200px; background-color: #171725; opacity: 50%; z-index: 1;"></div>  
+          </div>
+          <div class="avatar" style="height: 80px;">
+            <img src="{{ user.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: absolute; width: 140px; height: 140px; top: 194px; left: 16px; background-color: #FFFFFF; z-index: 2;">
+            <div class="cover-cover mx-auto rounded-circle"
+              style="position: relative; top: -60px; left: -230px; width: 132px; height: 132px; background-color: #171725; opacity: 50%; z-index: 3;"></div>
+          </div>
+        </div>
+        <div class="replies-container mt-2" style="height: 78px;">
+          <div class="name d-flex flex-column mx-4 my-2">
+            <div class="label-input d-flex flex-column">
+              <label for="modalProfileName" class="px-2" style="color: #696974; font-size: 14px; font-family: Noto Sans TC;font-weight: 400; line-height: 22px; text-align: left; background-color: #F5F8FA;" required>名稱</label>
+              <input type="text" class="px-2 border-top-0 border-start-0 border-end-0" onkeyup="nameWordsCheck()" id="modal-profile-name" style="background-color: #F5F8FA; border-style: solid; border-bottom: 2px solid #657786; font-size: 16px; font-family: Noto Sans TC; font-weight: 400;" maxlength="50" value="{{user.name}}">
+              <div id="name-area">
+                <p class="text-end text-muted now1" style="font-size: 12px;">{{user.name.length}}/50</p>
+              </div>
+            </div>
+          </div>
+          <div class="introduction d-flex flex-column mx-4 mb-2" style="height: 170px;">
+            <label for="modalProfileIntro" class="px-2"
+              style="color: #696974; background-color: #F5F8FA; font-size: 14px; font-family: Noto Sans TC;font-weight: 400; line-height: 22px; text-align: left;">自我介紹</label>
+            <textarea class="px-2 modalProfileIntro border-top-0 border-start-0 border-end-0" name="modalProfileIntro" onkeyup="introWordsCheck()" id="modalProfileIntro"
+              style="font-size: 16px; outline: none; resize: none; height: 100px; font-weight: 400;line-height: 26px; color: #171725; border-bottom: 2px solid #657786; background-color: #F5F8FA;" value="{{user.introduction}}" id="modal-profile-intro" cols="65" rows="5" maxlength="160" required>{{user.introduction}}</textarea>
+            <div id="introduction-area">
+              <p class="text-end text-muted now2" style="font-size:12px;">{{user.introduction.length}}/160</p>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+<script>
+  // name 字數確認
+  const nameCount = document.querySelector('#name-area')
+  function nameWordsCheck() {
+    const content = document.querySelector('#modal-profile-name').value.trim().length
+    if (content === 50) {
+      nameCount.innerHTML = `<span style="font-weight: 500;font-size: 12px;color: #FC5A5A;">字數不可超過${content}字</span>`
+    } else {
+      nameCount.innerHTML = `<p class="text-end text-muted now1" style="font-size: 12px;">${content}/50</p>`
+    }
+  }
+  // intro 字數確認
+  const introductionCount = document.querySelector('#introduction-area')
+  function introWordsCheck() {
+    const content = document.querySelector('#modalProfileIntro').value.trim().length
+    if (content === 160) {
+      introductionCount.innerHTML = `<span style="font-weight: 500;font-size: 12px;color: #FC5A5A;">字數不可超過${content}字</span>`
+    } else {
+      introductionCount.innerHTML = `<p class="text-end text-muted now2" style="font-size:12px;">${content}/160</p>`
+    }
+  }  
+</script>

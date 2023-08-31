@@ -3,7 +3,7 @@
   <img src="{{ tweetsUser.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: relative; width: 140px; height: 140px; top: -70px; left: 16px; background-color: #FFFFFF;">
   <div class="user-info" style="position: absolute; top: 200px;">
     <div class="button d-flex justify-content-end" style="height: 70px; position: relative; width: 639px;">
-       <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="button" data-bs-toggle="modal" data-bs-target="#edit-profile-{{ tweetsUser.id }}">編輯個人資料</button>
+       <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="submit" data-bs-toggle="modal" data-bs-target="#edit-profile">編輯個人資料</button>
        {{> edit-user-modal}}
     </div>
     <div class="info my-3 ps-4" style="height: 108px; position: relative;">
