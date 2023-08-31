@@ -63,7 +63,7 @@ const tweetController = {
     }
     if (description.length > 140) {
       req.flash('error_messages', '推文字數限制在 140 以內!')
-      return res.redirect('/tweets')
+      return res.redirect('back')
     }
     Tweet.create({
       UserId,
@@ -116,6 +116,32 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getTweet: async (req, res, next) => {
+    const TweetId = req.params.id
+    const [tweet, replies, likes] = await Promise.all([
+      Tweet.findByPk(TweetId, {
+        include: [User],
+        nest: true
+      }),
+      Reply.findAll({
+        where: { TweetId },
+        include: [User],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Like.findAll({
+        where: { TweetId },
+        raw: true,
+        nest: true
+      })
+    ])
+
+    if (!tweet) throw new Error("Tweet didn't exist!")
+    const isLiked = likes.some(l => l.UserId === req.user.id)
+
+    res.render('tweet.hbs', { tweet: tweet.toJSON(), replies, isLiked, likeCount: likes.length, replyCount: replies.length })
   }
 }
 
