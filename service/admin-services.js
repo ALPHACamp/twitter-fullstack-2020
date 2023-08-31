@@ -1,5 +1,7 @@
 const { User, Tweet } = require('../models')
 const pagiHelper = require('../helpers/pagination-helper')
+const { relativeTimeFromNow } = require('../helpers/handlebars-helpers')
+
 const adminServices = {
   getTweets: async (limit = 10, page = 0) => {
     const offset = pagiHelper.getOffset(limit, page)
@@ -16,6 +18,7 @@ const adminServices = {
     })
 
     return tweets.map(tweet => {
+      tweet.createdAt = relativeTimeFromNow(tweet.createdAt)
       if (tweet.description.length > 50) {
         tweet.description = tweet.description.substring(0, 50) + '...'
       } else {

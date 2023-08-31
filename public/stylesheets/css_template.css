@@ -142,14 +142,19 @@
   display: none;
 }
 
+.tweet-display-admin .scrollbar-hidden{
+  height: 1124px;
+}
 /*Tweet-Component*/
 
 /*讓display area可以滾動*/
-.tweet-display{
+.tweet-display,
+.tweet-disply-admin{
     min-height: 0;
     overflow: hidden; /* 啟用捲軸 */
     margin-bottom: 4vh;
 }
+
 
 .tweet-card-link {
   display: block;

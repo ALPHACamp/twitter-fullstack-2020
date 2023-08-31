@@ -56,7 +56,7 @@ const adminController = {
       //   raw: true,
       //   nest: true
       // })
-      const tweets = await adminServices.getTweets(10, 0)
+      const tweets = await adminServices.getTweets(12, 0)
 
       res.render('admin/tweets', { tweets, route: 'tweets' })
     } catch (error) {
