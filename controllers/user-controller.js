@@ -126,7 +126,8 @@ const userController = {
         order: [['Followings', 'createdAt', 'Desc']]
       }),
       User.findAll({
-        include: { model: User, as: 'Followers' }
+        where:{ role: 'user' },
+        include: { model: User, as: 'Followers'}
       })
     ])
       .then(([user, followShips]) => {
@@ -161,7 +162,8 @@ const userController = {
         order: [['Followers', 'createdAt', 'Desc']]
       }),
       User.findAll({
-        include: { model: User, as: 'Followers' }
+        where:{ role: 'user' },
+        include: { model: User, as: 'Followers'}
       })
     ])
       .then(([user, followShips]) => {
@@ -213,7 +215,8 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
-        include: { model: User, as: 'Followers' }
+        where:{ role: 'user' },
+        include: { model: User, as: 'Followers'}
       })
     ])
 
@@ -267,7 +270,8 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
-        include: { model: User, as: 'Followers' }
+        where:{ role: 'user' },
+        include: { model: User, as: 'Followers'}
       })
     ])
       .then(([user, followShips]) => {
@@ -316,7 +320,8 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
-        include: { model: User, as: 'Followers' }
+        where:{ role: 'user' },
+        include: { model: User, as: 'Followers'}
       })
     ])
       .then(([user, followShips]) => {
@@ -368,7 +373,7 @@ const userController = {
           followerId: currentUserId,
           followingId: UserId
         }
-       })
+      })
     ])
       .then(([user, followship]) => {
         if (!user) throw new Error('使用者不存在')
@@ -379,7 +384,7 @@ const userController = {
         })
         .then(() => res.redirect('back'))
         .catch(err => next(err))
-      
+      })
   },
   putUserProfile: (req, res, next) => {
     const { name, introduction } = req.body
@@ -407,6 +412,7 @@ const userController = {
         res.redirect('back')
       })
       .catch(err => next(err))
+    })
   },
   removeFollowing: (req, res, next) => {
     const UserId = Number(req.params.id)
