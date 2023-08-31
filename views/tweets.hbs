@@ -140,10 +140,12 @@
             </div>
           </div>
           {{#if this.isFollowed}}
-          <form id="removefollow" name="removefollow" action="/following/{{this.id}}/removefollow" method="POST"
-            style="display: flex; align-items:center;">
-            <input type="image" img src="/stylesheets/icons/like_filled.svg" width="16" height="16"
+          <form id="removefollow" name="removefollow" action="/following/{{this.id}}/removefollow" method="POST">
+            <button type="button" id="btn-tweet"
+              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex;"
               onClick="document.removefollow.submit()">
+              正在跟隨
+            </button>
           </form>
           {{else}}
           <form id="follow" name="follow" action="/following/{{this.id}}/follow" method="POST">
