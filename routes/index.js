@@ -5,7 +5,7 @@ const upload = require('../middleware/multer')
 const passport = require('../config/passport')
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
-
+const apiController = require('../controllers/api-controller')
 // 使用Modules
 
 const { generalErrorHandler } = require('../middleware/error-handler')
@@ -34,8 +34,10 @@ router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 router.get('/users/:id/followings',authenticated, userController.getUserFollowings)
 router.get('/users/:id/setting', authenticated, userController.getUserSetting)
-// router.put('/api/users/:id', authenticated, userController.putUserSetting)
-router.put('/users/:id/edit', upload.fields([ { name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]) , authenticated, userController.putUserProfile)
+router.put('/users/:id/edit', authenticated, upload.fields([ { name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putUserProfile)
+
+router.get('/api/users/:id', authenticated, apiController.editApi)
+router.post('/api/users/:id', authenticated, apiController.postApi)
 
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
