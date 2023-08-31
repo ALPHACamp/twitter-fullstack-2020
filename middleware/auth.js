@@ -17,23 +17,8 @@ const authenticatedAdmin = (req, res, next) => {
   req.flash('error_messages', '請先登入管理員！')
   res.redirect('/admin/signin')
 }
-const authenticatedUserLogin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'user') return next()
-    req.flash('error_messages', '帳號不存在！')
-    res.redirect('/signin')
-  }
-}
-const authenticatedAdminLogin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') return next()
-    req.flash('error_messages', '帳號不存在！')
-    res.redirect('/admin/signin')
-  }
-}
+
 module.exports = {
   authenticated,
-  authenticatedAdmin,
-  authenticatedUserLogin,
-  authenticatedAdminLogin
+  authenticatedAdmin
 }

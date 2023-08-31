@@ -4,9 +4,15 @@ const adminController = {
   signInPage: (req, res) => {
     res.render('admins/signin')
   },
-  signIn: (req, res) => {
-    req.flash('success_messages', '管理員成功登入！')
-    res.redirect('/admin/tweets')
+  signIn: (req, res, next) => {
+    try {
+      const user = req.user.toJSON()
+      if (user.role === 'user') throw new Error('帳號不存在！')
+      req.flash('success_messages', '管理員成功登入！')
+      res.redirect('/admin/tweets')
+    } catch (err) {
+      next(err)
+    }
   },
   logout: (req, res) => {
     req.flash('success_messages', '管理員登出成功！')
