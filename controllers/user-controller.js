@@ -363,7 +363,6 @@ const userController = {
     if (!name) throw new Error('名稱不可空白')
     const cover = req.files['cover'] ? req.files['cover'][0] : null
     const avatar = req.files['avatar'] ? req.files['avatar'][0] : null
-    console.log(req.files)
     return Promise.all([User.findByPk(id),
       imgurFileHandler(cover),
       imgurFileHandler(avatar)
