@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const { User, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -350,6 +352,34 @@ const userController = {
         topUser,
         tweets
       })
+    })
+    .catch(err => next(err))
+  },
+  putUserProfile: (req, res, next) => {
+    const { name, introduction } = req.body
+    if (name.length > 50) throw new Error('名稱不可超過50字')
+    if (introduction.length > 160) throw new Error('自我介紹不可超過160字')
+    const id = helpers.getUser(req).id
+    if (!name) throw new Error('名稱不可空白')
+    const cover = req.files['cover'] ? req.files['cover'][0] : null
+    const avatar = req.files['avatar'] ? req.files['avatar'][0] : null
+    console.log(req.files)
+    return Promise.all([User.findByPk(id),
+      imgurFileHandler(cover),
+      imgurFileHandler(avatar)
+    ])
+    .then(([user, cover, avatar]) => {
+      if (!user) throw new Error('使用者不存在')
+      return user.update({
+        name,
+        introduction,
+        cover: cover || user.cover,
+        avatar: avatar || user.avatar
+      })
+    })
+    .then(() => {
+      req.flash('success_messages', '使用者資料編輯成功')
+      res.redirect('back')
     })
     .catch(err => next(err))
   }

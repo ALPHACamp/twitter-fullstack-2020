@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // 引入模組
 const express = require('express')
 const handlebars = require('express-handlebars')
@@ -23,6 +26,7 @@ const port = process.env.PORT || 3000
 app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(methodOverride('_method'))
 
 app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
