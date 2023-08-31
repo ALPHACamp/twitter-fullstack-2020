@@ -10,13 +10,15 @@ const adminController = {
   },
   getTweets: (req, res, next) => {
     Tweet.findAll({
-      raw: true,
-      nest: true,
       include: [User],
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
-        res.render('admin/tweets', { tweets })
+        const data = tweets.map(tweet => ({
+          ...tweet.toJSON(),
+          description: tweet.description.substring(0, 50)
+        }))
+        res.render('admin/tweets', { tweets: data, adminTweets: true })
       })
       .catch(err => next(err))
   },
@@ -91,7 +93,7 @@ const adminController = {
       // 依推文數量排序
       const sortedUser = userData.sort((a, b) => b.tweetsCount - a.tweetsCount)
 
-      res.render('admin/users', { user: sortedUser })
+      res.render('admin/users', { user: sortedUser, adminUsers: true })
     } catch (err) {
       next(err)
     }
