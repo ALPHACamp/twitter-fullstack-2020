@@ -281,8 +281,8 @@ const userController = {
   },
   getLikes: (req, res, next) => {
     const userId = req.params.id
-    const loginUserId = helper.getUser(req).id || null
-    const profileRoute = Number(userId) === Number(loginUserId)
+    const currentUser = helper.getUser(req).id || null
+    const profileRoute = Number(userId) === Number(currentUser)
     const otherProfileRoute = !profileRoute
 
     return User.findByPk(userId, {
@@ -332,11 +332,12 @@ const userController = {
             tweetCreatedAt: likedTweet.dataValues.createdAt,
             likesCount: likedTweet.LikedUsers.length,
             repliesCount: likedTweet.Replies.length,
-            isLiked: likedTweet.LikedUsers.some(likedUser => likedUser.UserId === loginUserId && likedUser.isLike)
+            isLiked: likedTweet.LikedUsers.some(likedUser => likedUser.UserId === currentUser && likedUser.isLike)
           }
         })
         res.render('userLikes', {
           likedTweets,
+          user,
           profileRoute,
           otherProfileRoute,
           tweetsCount,
