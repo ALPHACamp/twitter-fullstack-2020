@@ -25,7 +25,7 @@ const tweetController = {
             isLiked: LikedUsers.some(likedUser => likedUser.UserId === currentUser.id && likedUser.isLike)
           }
         })
-        res.render('tweets', { tweets, tweetRoute })
+        res.render('tweets', { tweets, tweetRoute, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
@@ -73,7 +73,7 @@ const tweetController = {
           isLiked: LikedUsers.some(likedUser => likedUser.UserId === currentUser.id && likedUser.isLike)
         }
         console.log(Replies)
-        res.render('tweet', { tweet, personalTweetRoute, currentUser })
+        res.render('tweet', { tweet, personalTweetRoute, currentUser, topUsers: req.topFollowingsList })
       })
   }
 }

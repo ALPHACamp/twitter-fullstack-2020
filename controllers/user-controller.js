@@ -6,7 +6,7 @@ const helper = require('../_helpers')
 const userController = {
   editUser: (req, res, next) => {
     const settingRoute = true
-    const user = req.user
+    const user = helper.getUser(req)
     User.findByPk(user.id, { raw: true, nest: true })
       .then(user => res.render('setting', { user, settingRoute, id: helper.getUser(req).id }))
       .catch(err => next(err))
@@ -74,7 +74,7 @@ const userController = {
         const tweetsCount = tweets.length
         // 當 user 為非使用者時
         const tweetsUser = tweets[0].User
-        res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser })
+        res.render('profile', { tweets, user, profileRoute, otherProfileRoute, tweetsCount, tweetsUser, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
@@ -144,7 +144,7 @@ const userController = {
           self: currentUser.id === follower.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followers', { otherProfileRoute, tweetsCount, followers, user, tweetsUser: user.name, id: user.id })
+        res.render('followers', { otherProfileRoute, tweetsCount, followers, user: currentUser, tweetsUser: user.dataValues, id: user.id, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
@@ -167,7 +167,8 @@ const userController = {
           self: currentUser.id === following.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followings', { otherProfileRoute, tweetsCount, followings, user, tweetsUser: user.name, id: user.id })
+        console.log('req.topFollowingsList', req.topFollowingsList)
+        res.render('followings', { otherProfileRoute, tweetsCount, followings, user: currentUser, tweetsUser: user.dataValues, id: user.id, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
