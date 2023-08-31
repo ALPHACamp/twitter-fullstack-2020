@@ -4,19 +4,34 @@ const helpers = require('../_helpers')
 const tweetController = {
   getTweets: (req, res) => {
     const user = helpers.getUser(req)
-    return Tweet.findAll({
+    return Promise.all([
+      Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [User, Reply, Like],
       nest: true
-    })
-      .then(tweets => {
+      }),
+      User.findAll({
+        where:{ role: 'user' },
+        include: { model: User, as: 'Followers'}
+      })
+    ])
+      .then(([tweets, followShips]) => {
         tweets = tweets.map(tweet => ({
           replyCount: tweet.Replies.length,
           likeCount: tweet.Likes.length,
           isLiked: tweet.Likes.some(like => like.UserId === user.id),
           ...tweet.toJSON()
         }))
-        res.render('tweets', { user, tweets, currentUserId: user.id})})   
+        // 推薦追隨
+        const topUser = followShips.map(followShip => ({
+          ...followShip.toJSON(),
+          followerCount: followShip.Followers.length,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+
+        res.render('tweets', { user, tweets, currentUserId: user.id, topUser})
+      })   
   },
   postTweet: (req, res, next) => {
     const { description } = req.body

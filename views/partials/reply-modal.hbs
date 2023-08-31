@@ -1,31 +1,153 @@
-<div class="modal fade" {{#if tweet}} id="replyTweet{{tweet.id}}" {{else}} id="replyTweet{{this.id}}" {{/if}}data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+
+{{#ifCond route "user-tweets"}}
+<div class="modal fade" {{#if tweet}} id="replyTweet{{tweet.id}}" {{else}} id="replyTweet{{this.id}}"
+  {{/if}}data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width: 634px; height: 500px; border-radius: 14px;">
       <div class="modal-header" style="position: relative; height: 50px;">
 
         <button type="button" class="btn btn-default m-3" data-bs-dismiss="modal" aria-label="Close"
           style="position: absolute; left: 0;">
-            <i class="fa-solid fa-xmark fa-lg" style="color: #ff6600;"></i>
-          </button>
+          <i class="fa-solid fa-xmark fa-lg" style="color: #ff6600;"></i>
+        </button>
       </div>
       <div class="modal-body">
-        <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}} method="POST">
+        <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}}
+          method="POST">
           <div class="form">
 
             <div class="d-flex align-items-start flex-column" style="min-height: 130px;">
               <div class="align-self-start">
-                <img class="rounded-circle" {{#if tweet}} src="{{tweet.User.avatar}}" {{else}} src="{{this.User.avatar}}" {{/if}}title="source: imgur.com" style="width: 50px;height: 50px;"
+                <img class="rounded-circle" {{#if tweet}} src="{{tweet.User.avatar}}" {{else}}
+                  src="{{this.User.avatar}}" {{/if}}title="source: imgur.com" style="width: 50px;height: 50px;"
                   class="ms-4">
                 <div class="d-inline-flex pt-3">
-                  <h5 class="mx-2" style="color: #171725;">{{#if tweet}} {{tweet.User.name}} {{else}} {{this.User.name}} {{/if}}</h5>
-                  <span style="color: #6C757D; font-weight: 400;">@{{#if tweet}}{{tweet.User.account}} · {{relativeTimeFromNow tweet.createdAt}}{{else}}{{this.User.account}} · {{relativeTimeFromNow this.createdAt}}{{/if}}</span>
+                  <h5 class="mx-2" style="color: #171725;">{{#if tweet}} {{tweet.User.name}} {{else}} {{this.User.name}}
+                    {{/if}}</h5>
+                  <span style="color: #6C757D; font-weight: 400;">@{{#if tweet}}{{tweet.User.account}} ·
+                    {{relativeTimeFromNow tweet.createdAt}}{{else}}{{this.User.account}} · {{relativeTimeFromNow
+                    this.createdAt}}{{/if}}</span>
+                </div>
+              </div>
+              <div style="max-width: 528px; margin-left: 85px;">
+                <p class="text-break">{{#if tweet}} {{tweet.description}} {{else}} {{this.description}} {{/if}}
+                </p>
+                <span style="color: #657786;">回覆給<span style="color: #FF6600;">@{{#if tweet}} {{tweet.User.account}}
+                    {{else}} {{this.User.account}} {{/if}}</span></span>
+              </div>
+            </div>
+            <div class="mt-4">
+              <img src="{{user.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;"
+                class="ms-4 me-2 rounded-circle" />
+              <input type="text" placeholder="推你的回覆"
+                style="outline: none; border: none; box-shadow: none; width: 510px;" name="comment" required>
+            </div>
+          </div>
+          <input type="hidden" name="TweetId" value="{{#if tweet}} {{tweet.id}} {{else}} {{this.id}} {{/if}}">
+          <button type="submit" class="btn btn-default position-absolute"
+            style="background-color: #FF6600;border-radius: 23px; color: white; right: 20px; bottom: 20px;width: 64px; height: 40px;">回覆</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{/ifCond}}
+
+
+
+{{#ifCond route "user-likes"}}
+<div class="modal fade" {{#if tweet}} id="replyTweet{{tweet.id}}" {{else}} id="replyTweet{{this.id}}"
+  {{/if}}data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 634px; height: 500px; border-radius: 14px;">
+      <div class="modal-header" style="position: relative; height: 50px;">
+
+        <button type="button" class="btn btn-default m-3" data-bs-dismiss="modal" aria-label="Close"
+          style="position: absolute; left: 0;">
+          <i class="fa-solid fa-xmark fa-lg" style="color: #ff6600;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}}
+          method="POST">
+          <div class="form">
+
+            <div class="d-flex align-items-start flex-column" style="min-height: 130px;">
+              <div class="align-self-start">
+                <img class="rounded-circle" {{#if tweet}} src="{{tweet.User.avatar}}" {{else}}
+                  src="{{this.User.avatar}}" {{/if}}title="source: imgur.com" style="width: 50px;height: 50px;"
+                  class="ms-4">
+                <div class="d-inline-flex pt-3">
+                  <h5 class="mx-2" style="color: #171725;">{{#if tweet}} {{tweet.User.name}} {{else}} {{this.User.name}}
+                    {{/if}}</h5>
+                  <span style="color: #6C757D; font-weight: 400;">@{{#if tweet}}{{tweet.User.account}} ·
+                    {{relativeTimeFromNow tweet.createdAt}}{{else}}{{this.User.account}} · {{relativeTimeFromNow
+                    this.createdAt}}{{/if}}</span>
                 </div>
               </div>
               <div style="max-width: 528px; margin-left: 85px;">
                 <p>{{#if tweet}} {{tweet.description}} {{else}} {{this.description}} {{/if}}
                 </p>
-                <span style="color: #657786;">回覆給<span style="color: #FF6600;">@{{#if tweet}} {{tweet.User.account}} {{else}} {{this.User.account}} {{/if}}</span></span>
+                <span style="color: #657786;">回覆給<span style="color: #FF6600;">@{{#if tweet}} {{tweet.User.account}}
+                    {{else}} {{this.User.account}} {{/if}}</span></span>
+              </div>
+            </div>
+            <div class="mt-4">
+              <img src="{{../user.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;"
+                class="ms-4 me-2 rounded-circle" />
+              <input type="text" placeholder="推你的回覆"
+                style="outline: none; border: none; box-shadow: none; width: 510px;" name="comment" required>
+            </div>
+          </div>
+          <input type="hidden" name="TweetId" value="{{#if tweet}} {{tweet.id}} {{else}} {{this.id}} {{/if}}">
+          <button type="submit" class="btn btn-default position-absolute"
+            style="background-color: #FF6600;border-radius: 23px; color: white; right: 20px; bottom: 20px;width: 64px; height: 40px;">回覆</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{/ifCond}}
+
+<div class="modal fade" {{#if tweet}} id="replyTweet{{tweet.id}}" {{else}} id="replyTweet{{this.id}}"
+  {{/if}}data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 634px; height: 500px; border-radius: 14px;">
+      <div class="modal-header" style="position: relative; height: 50px;">
+
+        <button type="button" class="btn btn-default m-3" data-bs-dismiss="modal" aria-label="Close"
+          style="position: absolute; left: 0;">
+          <i class="fa-solid fa-xmark fa-lg" style="color: #ff6600;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}}
+          method="POST">
+          <div class="form">
+
+            <div class="d-flex align-items-start flex-column" style="min-height: 130px;">
+              <div class="align-self-start">
+                <img class="rounded-circle" {{#if tweet}} src="{{tweet.User.avatar}}" {{else}}
+                  src="{{this.User.avatar}}" {{/if}}title="source: imgur.com" style="width: 50px;height: 50px;"
+                  class="ms-4">
+                <div class="d-inline-flex pt-3">
+                  <h5 class="mx-2" style="color: #171725;">{{#if tweet}} {{tweet.User.name}} {{else}} {{this.User.name}}
+                    {{/if}}</h5>
+                  <span style="color: #6C757D; font-weight: 400;">@{{#if tweet}}{{tweet.User.account}} ·
+                    {{relativeTimeFromNow tweet.createdAt}}{{else}}{{this.User.account}} · {{relativeTimeFromNow
+                    this.createdAt}}{{/if}}</span>
+                </div>
+              </div>
+              <div style="max-width: 528px; margin-left: 85px;">
+                <p class="text-break">
+                  {{#if tweet}} {{tweet.description}} {{else}} {{this.description}} {{/if}}
+                </p>
+                <span style="color: #657786;">回覆給<span style="color: #FF6600;">@{{#if tweet}} {{tweet.User.account}}
+                    {{else}} {{this.User.account}} {{/if}}</span></span>
               </div>
             </div>
             <div class="mt-4 d-flex">

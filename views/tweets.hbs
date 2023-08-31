@@ -39,7 +39,7 @@
         </a>
         <div style="max-width: 528px;">
           <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;">
-            <p style="margin-left: 85px; color: #171725;">{{this.description}}</p>
+            <p style="margin-left: 85px; color: #171725;" class="text-break">{{this.description}}</p>
           </a>
           <div class="d-flex align-items-baseline" style="margin-left: 85px;">
             <img src="https://i.imgur.com/AXqSL48.png" title="source: imgur.com" style="width: 16px;height: 16px;"
@@ -48,13 +48,13 @@
             {{#if this.isLiked}}
             <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button type="submit" style="background: none; border: none; cursor: pointer;">
-                <img src="https://i.imgur.com/1JNr74p.png" title="source: imgur.com" style="width: 16px;height: 16px;" class="me-1">
+                <img src="https://i.imgur.com/1JNr74p.png" title="source: imgur.com" style="width: 16px;height: 16px;margin-bottom:5px" class="me-1">
               </button>
             </form>
             {{else}}
             <form action="/tweets/{{this.id}}/like" method="POST">
               <button type="submit" style="background: none; border: none; cursor: pointer; padding-top:0px">
-                <img src="https://i.imgur.com/gdUkdVf.png" title="source: imgur.com" style="width: 16px;height: 16px;"
+                <img src="https://i.imgur.com/gdUkdVf.png" title="source: imgur.com" style="width: 16px;height: 16px;margin-bottom:5px"
                   class="me-1">
               </button>
             </form>
