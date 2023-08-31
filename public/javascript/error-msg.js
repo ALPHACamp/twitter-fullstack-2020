@@ -44,18 +44,6 @@ const email = document.querySelector('#email')
 const password = document.querySelector('#password')
 const checkPassword = document.querySelector('#checkPassword')
 const introduction = document.querySelector('#introduction')
-const nameLength = document.querySelector('#nameLength')
-const introLength = document.querySelector('#introLength')
-if (nameLength) {
-  name.addEventListener('change', event => {
-    nameLength.textContent = `${name.value.length}/50`
-  })
-}
-if (introLength) {
-  introduction.addEventListener('change', event => {
-    introLength.textContent = `${introduction.value.length}/160`
-  })
-}
 
 Array.from(forms).forEach(form => {
   form.addEventListener('submit', event => {

@@ -6,7 +6,7 @@ const { authenticatedAdmin, authenticatedAdminLogin } = require('../../middlewar
 
 router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdminLogin, adminController.signIn)
-router.get('/logout', authenticatedAdmin, adminController.logout)
+router.get('/logout', adminController.logout)
 router.get('/tweets', authenticatedAdmin, adminController.getAdminTweets)
 router.delete('/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
 router.get('/users', authenticatedAdmin, adminController.getAdminUsers)
