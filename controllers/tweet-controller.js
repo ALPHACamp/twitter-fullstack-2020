@@ -46,7 +46,6 @@ const tweetController = {
           }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
-        // console.log(req.user)
         res.render('tweet', { tweets: data, reqUser, topUsers, user: user.toJSON() })
       })
       .catch(err => next(err))
@@ -79,7 +78,6 @@ const tweetController = {
       })
     ])
       .then(([tweet, like]) => {
-        // console.log(like)
         if (!tweet) throw new Error('該推文不存在！')
         if (like) throw new Error('已經 like 過該貼文！')
 
@@ -100,7 +98,6 @@ const tweetController = {
     })
       .then(like => {
         if (!like) throw new Error('尚未 like 過該貼文！')
-        // console.log(like)
         return like.destroy()
       })
       .then(() => res.redirect('back'))

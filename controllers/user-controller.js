@@ -242,21 +242,14 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-
-      // followships area
-      const followships = await Followship.findAll({
-        where: { followerId: userId },
-        order: [['followingId', 'DESC']],
-        raw: true,
-        nest: true
-      })
-      const followingsId = await followships.map(s => s.followingId)
-      const followingsUser = await User.findAll({ where: { id: followingsId }, order: [['id', 'DESC']], raw: true, nest: true })
-      for (let i = 0; i < followingsId.length; i++) {
-        followships[i].followingUser = followingsUser[i]
-        followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followingId)
+      const followships = user.toJSON().Followings
+      if (followships) {
+        followships.forEach(following => {
+          following.isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === following.id)
+        })
       }
-      followships.sort((a, b) => b.createdAt - a.createdAt)
+      followships.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
@@ -283,23 +276,20 @@ const userController = {
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
-        include: Tweet
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' }
+        ]
       })
 
-      // followships area
-      const followships = await Followship.findAll({
-        where: { followingId: userId },
-        order: [['followerId', 'DESC']],
-        raw: true,
-        nest: true
-      })
-      const followersId = await followships.map(s => s.followerId)
-      const followersUser = await User.findAll({ where: { id: followersId }, order: [['id', 'DESC']], raw: true, nest: true })
-      for (let i = 0; i < followersId.length; i++) {
-        followships[i].followerUser = followersUser[i]
-        followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followerId)
+      const followships = user.toJSON().Followers
+      if (followships) {
+        followships.forEach(follower => {
+          follower.isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === follower.id)
+        })
       }
-      followships.sort((a, b) => b.createdAt - a.createdAt)
+      followships.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
       const topUsers = await users
