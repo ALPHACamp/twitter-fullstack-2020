@@ -25,7 +25,7 @@
 
                 <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
                     <div style="margin: 8px 0px" class="mx-auto">
-                        <p>{{this.description}}</p>
+                        <p class="text-break">{{this.description}}</p>
                     </div>
                 </a>
 
@@ -101,7 +101,7 @@
 
                                 <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
                                     <div style="margin: 8px 0px" class="mx-auto">
-                                        <p>{{this.description}}</p>
+                                        <p class="text-break">{{this.description}}</p>
                                     </div>
                                 </a>
 
@@ -130,8 +130,8 @@
                                 </div>
                             </a>
                             <div class="d-flex flex-row">
-                                <textarea id="contentInput{{this.id}}" class="ms-1 mt-2" name="comment" rows="6" placeholder="推你的回覆"
-                                style="border:none;width:528px"></textarea>
+                                <textarea class="ms-1 mt-2 form-control border-3 border-top-0 border-start-0 border-end-0 border-bottom-0" id="contentInput{{this.id}}" name="comment" cols="30" rows="6" style="width:528px" placeholder="推你的回覆"></textarea>
+                                <label for="contentInput{{this.id}}"></label>
                             </div>
                         </div>
 
