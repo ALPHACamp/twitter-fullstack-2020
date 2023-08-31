@@ -6,14 +6,14 @@ const helper = require('../_helpers')
 const userController = {
   editUser: (req, res, next) => {
     const settingRoute = true
-    const user = req.user
+    const user = helper.getUser(req) || null
     User.findByPk(user.id, { raw: true, nest: true })
       .then(user => res.render('setting', { user, settingRoute, id: helper.getUser(req).id }))
       .catch(err => next(err))
   },
   putUser: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
-    const currentUser = helper.getUser(req)
+    const currentUser = helper.getUser(req) || null
     if (account.length > 50) throw new Error('字數超出上限！')
     if (name.length > 50) throw new Error('字數超出上限！')
     if (password !== checkPassword) throw new Error('密碼輸入不一致！')
@@ -104,7 +104,7 @@ const userController = {
     res.render('signin')
   },
   signIn: (req, res, next) => {
-    if (req.user.role === 'admin') {
+    if (helper.getUser(req).role === 'admin') {
       req.flash('error_messages', '帳號不存在！')
       res.redirect('/signin')
     } else {
@@ -195,21 +195,21 @@ const userController = {
   },
   addFollowing: (req, res, next) => {
     const userId = req.body.id
-    const loginUserId = helper.getUser(req).id
-    if (Number(loginUserId) === Number(userId)) {
+    const currentUserId = helper.getUser(req).id || null
+    if (Number(currentUserId) === Number(userId)) {
       req.flash('error_messages', 'cannot follow self')
       return res.redirect(200, 'back')
     }
     return Followship.findOne({
       where: {
-        followerId: loginUserId,
+        followerId: currentUserId,
         followingId: userId
       }
     })
       .then(followship => {
         if (followship) throw new Error('Your are already following this user!')
         return Followship.create({
-          followerId: loginUserId,
+          followerId: currentUserId,
           followingId: userId
         })
       })
@@ -218,10 +218,10 @@ const userController = {
   },
   deleteFollowing: (req, res, next) => {
     const userId = req.params.id
-    const loginUserId = helper.getUser(req).id
+    const currentUserId = helper.getUser(req).id || null
     return Followship.findOne({
       where: {
-        followerId: loginUserId,
+        followerId: currentUserId,
         followingId: userId
       }
     })
@@ -233,7 +233,7 @@ const userController = {
       .catch(err => next(err))
   },
   likeTweet: (req, res, next) => {
-    const currentUserId = helper.getUser(req).id
+    const currentUserId = helper.getUser(req).id || null
     const tweetId = req.params.id
 
     return Like.findOne({
@@ -259,7 +259,7 @@ const userController = {
       .catch(err => next(err))
   },
   unlikeTweet: (req, res, next) => {
-    const currentUserId = helper.getUser(req).id
+    const currentUserId = helper.getUser(req).id || null
     const tweetId = req.params.id
 
     return Like.findOne({
