@@ -23,7 +23,7 @@
                 </div>
               </div>
               <div style="max-width: 528px; margin-left: 85px;">
-                <p>{{#if tweet}} {{tweet.description}} {{else}} {{this.description}} {{/if}}
+                <p class="text-break">{{#if tweet}} {{tweet.description}} {{else}} {{this.description}} {{/if}}
                 </p>
                 <span style="color: #657786;">回覆給<span style="color: #FF6600;">@{{#if tweet}} {{tweet.User.account}} {{else}} {{this.User.account}} {{/if}}</span></span>
               </div>

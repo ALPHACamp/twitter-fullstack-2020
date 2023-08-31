@@ -11,8 +11,7 @@
         style="min-height: 130px;">
         <div class="align-self-start">
           <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none;">
-            <img src="https://i.imgur.com/hpSLhnx.png" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4 rounded-circle">
-          
+            <img src="https://i.imgur.com/hpSLhnx.png" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4 rounded-circle">  
             <div class="d-inline-flex pt-3">
               <h5 class="mx-2" style="color: #171725;">{{this.User.name}}</h5>
               <span style="color: #6C757D;">@{{this.User.account}} · {{relativeTimeFromNow this.createdAt}}</span>
@@ -20,34 +19,29 @@
           </a>
         </div>
         <div class="pe-2 align-self-start" style="max-width: 528px; margin-left:88px;">
-          <p >
+          <p class="text-break">
             {{this.description}}
           </p>
           <div class="d-flex align-items-baseline">
             <img src="https://i.imgur.com/AXqSL48.png" title="source: imgur.com" style="width: 16px; height: 16px;"
               class="me-1" data-bs-toggle="modal" data-bs-target="#replyTweet{{this.id}}">
             <p class="me-5">{{this.replyCount}}</p>
-            {{#if isLiked}}
-              <form action="/users/{{this.Like.id}}/unlike" method="POST">
-                <button class="btn btn-outline-light rounded-circle" type="submit" style="border:none;">
-                  <i class="fa-solid fa-heart" style="color: #fc5a5a;"></i>
-                </button>
-              </form>
-            {{else}}
-              <form action="/users/{{this.Like.id}}/like" method="POST">
-                <button class="btn btn-outline rounded-circle" type="submit" style="border:none;">
-                  <i class="fa-regular fa-heart"></i>
-                </button>
-              </form>
-            {{/if}}
+
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
+              <button class="btn btn-outline-light rounded-circle" type="submit" style="border:none;">
+                <img src="https://i.imgur.com/1JNr74p.png" title="source: imgur.com"
+                  style="width: 16px;height: 16px;margin-bottom:8px">
+              </button>
+            </form>
+
             <p style="margin-left:-5px;">{{this.LikeCount}}</p>
           </div>
         </div>
       </div>
       {{>reply-modal}}
       {{/each}}
-      
-      
+
+
     </div>
     {{>right}}
   </div>
