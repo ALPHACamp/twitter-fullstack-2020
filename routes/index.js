@@ -7,15 +7,16 @@ const admin = require('./modules/admin')
 const passport = require('../config/passport')
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const { getTopUsers } = require('../middleware/top-users')
 
 router.use('/admin', admin)
 
 // user related
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, userController.putUser)
-router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-router.get('/users/:id/followers', authenticated, userController.getFollowers)
-router.get('/users/:id/followings', authenticated, userController.getFollowings)
+router.get('/users/:id/tweets', authenticated, getTopUsers, userController.getUserTweets)
+router.get('/users/:id/followers', authenticated, getTopUsers, userController.getFollowers)
+router.get('/users/:id/followings', authenticated, getTopUsers, userController.getFollowings)
 router.get('/users/:id/likes', authenticated, userController.getLikes)
 router.get('/users/:id/replies', authenticated, userController.getReplies)
 
@@ -31,7 +32,7 @@ router.post('/tweets/:id/unlike', authenticated, userController.unlikeTweet)
 
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweets', authenticated, getTopUsers, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)

@@ -95,7 +95,8 @@ const userController = {
           tweetsUser,
           tweetsCount: tweets.length,
           followersCount: Followers.length,
-          followingsCount: Followings.length
+          followingsCount: Followings.length,
+          topUsers: req.topFollowingsList
         })
       })
       .catch(err => next(err))
@@ -166,7 +167,7 @@ const userController = {
           self: currentUser.id === follower.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followers', { otherProfileRoute, tweetsCount, followers, user, tweetsUser: user.name, id: user.id })
+        res.render('followers', { otherProfileRoute, tweetsCount, followers, user: currentUser, tweetsUser: user.dataValues, id: user.id, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
@@ -189,7 +190,8 @@ const userController = {
           self: currentUser.id === following.id
         }))
           .sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        res.render('followings', { otherProfileRoute, tweetsCount, followings, user, tweetsUser: user.name, id: user.id })
+        console.log('req.topFollowingsList', req.topFollowingsList)
+        res.render('followings', { otherProfileRoute, tweetsCount, followings, user: currentUser, tweetsUser: user.dataValues, id: user.id, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },

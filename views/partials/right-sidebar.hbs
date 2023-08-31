@@ -3,23 +3,30 @@
     <div class="border-bottom d-flex"  style="width: 273px; height: 75px;">
       <h4 class="text-center" id="recommended-users">推薦跟隨</h4>
     </div>
-    <!--路由下一個 PR 再寫-->
-    <!--{{#each users}}
-    <div class="recommended-users-card">
-      <div class="user-avatar">
-        <img src="{{this.avatar}}" alt="">
+
+    {{#each topUsers}}
+    <div class=" d-flex align-items-center recommended-users-card" style="width: 273px; height: 82px">
+      <div class="user-avatar" style="margin-left: 16px">
+        <img src="{{this.avatar}}" alt="" style="width: 50px; height: 50px">
       </div>
-      <div class="user-info">
+      <div class="row d-flex-inline user-info text-start" style="width: 91px; height: 47px; padding-left: 8px; white-space: nowrap">
         <span class="top-user-name">{{this.name}}</span>
         <span class="top-user-account">{{this.account}}</span>
       </div>
-      <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-        <button type="submit" class="btn btn-danger">取消追蹤</button>
-      </form>
-      <form action="/following/{{this.id}}" method="POST" style="display: contents;">
-        <button type="submit" class="btn btn-primary">追蹤</button>
-      </form>
+      <div class="d-flex align-items-center" style="margin-left: auto; margin-right: 16px;">
+        {{#if this.followByMe}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents">
+          <button type="submit" class="btn btn-danger"
+            style="width:96px; height:40px; border: solid; border-radius: 50px; background-color:#FF6600; color: white;">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST" style="display: contents">
+          <button type="submit" class="btn btn-primary" name="id" value="{{this.id}}"
+            style="width:64px; height:40px; border: #FF6600 solid; border-radius: 50px; color: #FF6600; background-color: white">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
     </div>
-    {{/each}}-->
+    {{/each}}
   </div>
 </div>

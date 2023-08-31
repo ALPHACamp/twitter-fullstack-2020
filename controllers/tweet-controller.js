@@ -25,7 +25,7 @@ const tweetController = {
             isLiked: LikedUsers.some(likedUser => likedUser.UserId === currentUser.id && likedUser.isLike)
           }
         })
-        res.render('tweets', { tweets, tweetRoute })
+        res.render('tweets', { tweets, tweetRoute, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
@@ -48,7 +48,6 @@ const tweetController = {
       return res.redirect('/tweets')
     } catch (err) {
       next(err)
-    }
   }
   // getTweet: (req, res, next) => {
   //   const currentUser = helper.getUser(req)
