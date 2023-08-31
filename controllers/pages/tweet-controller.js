@@ -2,7 +2,7 @@ const { Tweet, User, Like, Reply } = require('../../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
-    const [tweets, likes, replies] = await Promise.all([
+    const [tweets, likes, replies, users] = await Promise.all([
       Tweet.findAll({
         include: [User],
         order: [['createdAt', 'DESC']],
@@ -16,7 +16,16 @@ const tweetController = {
       Reply.findAll({
         raw: true,
         nest: true
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
     const likedTweetsId = []
     likes.forEach(like => {
@@ -52,7 +61,7 @@ const tweetController = {
 
     const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
 
-    res.render('tweets', { tweets: sortedData, user: req.user })
+    res.render('tweets', { tweets: sortedData, user: req.user, users: usersSorted })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
