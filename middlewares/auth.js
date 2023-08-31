@@ -72,13 +72,11 @@ const authenticatedUser = (req, res, next) => {
 
         return next()
       } else {
-
         const referer = req.get('Referer') || '/admin/tweets' // 取得上一頁是從哪裡來
 
         req.flash('error_messages', '管理員不能訪問此區域')
 
         return res.redirect(referer) // 傳回上一頁
-
       }
     } else {
       return res.redirect('/signin')
@@ -103,7 +101,6 @@ const authenticatedAdmin = (req, res, next) => {
       req.flash('error_messages', '只有管理員可以訪問此區域')
 
       return res.redirect(referer) // 傳回上一頁
-
     }
   } else {
     return res.redirect('/admin/signin')

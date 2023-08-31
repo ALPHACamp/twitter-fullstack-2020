@@ -9,6 +9,7 @@ const router = express.Router()
 
 // Tweets page
 router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
+router.get('/tweetsUnload', authenticatedAdmin, adminController.getTweetsUnload)
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 
 // Users page
