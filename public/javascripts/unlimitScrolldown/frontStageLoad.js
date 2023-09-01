@@ -8,5 +8,7 @@ if (!isSettingPage) {
     const userTabHeight = document.querySelector('#user-tab').offsetHeight
     scrollHight = mainColHeight - titleHeight - userCardHeight - userTabHeight
     scrollContainer.style.height = scrollHight
+  } else if (isTweetPage) {
+
   }
-}
+} 
