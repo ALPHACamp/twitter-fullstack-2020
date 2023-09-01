@@ -1,7 +1,7 @@
 {{>navs/user-left-column route='edit'}}
 <div style="position: absolute; left: 332px; width: 641px; height: 100%" class="border border-top border-end">
   {{>header route='main' title='帳戶設定'}}
-  <form class="needs-validation" action="/api/users/{{user.id}}" method="POST" novalidate>
+  <form class="needs-validation" action="/users/{{user.id}}/edit" method="POST" novalidate>
     <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
       <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
         name="account" style="background-color: #f5f8fa !important;" value="{{user.account}}">

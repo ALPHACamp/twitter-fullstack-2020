@@ -34,7 +34,7 @@
 				</div>
 			</div>
 
-			<form class="needs-validation" id="editForm" style="margin: 40px auto; width: 90%;" action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data" novalidate>
+			<form class="needs-validation" id="editForm" style="margin: 40px auto; width: 90%;" action="/users/{{user.id}}/edit" method="POST" enctype="multipart/form-data" novalidate>
 				<div class="form-floating mb-3">
 					<input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" name="name" id="name" value="{{user.name}}" style="background-color: #f5f8fa !important;" maxlength="50" oninput="dynamicDisplay(event, 50)">
 					<label for="name">名稱</label>	

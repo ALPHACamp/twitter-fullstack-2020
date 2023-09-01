@@ -4,7 +4,7 @@ const userController = require('../../controllers/user-controller')
 const { authenticated } = require('../../middleware/auth')
 const upload = require('../../middleware/multer')
 
-router.get('/users/:id', authenticated, userController.editRequest)
-router.post('/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.editUser)
+router.get('/users/:id', authenticated, userController.getEditApi)
+router.post('/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postEditApi)
 
 module.exports = router

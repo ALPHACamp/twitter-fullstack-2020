@@ -4,7 +4,7 @@ const helpers = require('../_helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
-  editRequest: async (req, res, next) => {
+  getEditApi: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) {
         return res.json({ status: 'error' })
@@ -12,6 +12,58 @@ const userController = {
       const user = await User.findByPk(req.params.id, { raw: true })
       if (!user) throw new Error('使用者不存在！')
       res.send(user)
+    } catch (err) {
+      next(err)
+    }
+  },
+  postEditApi: async (req, res, next) => {
+    try {
+      if (Number(req.params.id) !== helpers.getUser(req).id) {
+        req.flash('error_messages', '沒有編輯權限！')
+        return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
+      }
+      const user = await User.findByPk(req.params.id)
+      if (!user) throw new Error('使用者不存在！')
+
+      const { name, account, email, password, checkPassword, introduction } = req.body
+      const updateInfo = {}
+      if (name) {
+        if (name.length > 50) throw new Error('名稱長度不可超過50個字！')
+        updateInfo.name = name
+      }
+      if (password) {
+        if (password !== checkPassword) throw new Error('密碼不相符！')
+        updateInfo.password = await bcrypt.hash(password, 10)
+      }
+      if (introduction !== undefined) { // 可以將 introduction 更新為空字串
+        if (introduction.length > 160) throw new Error('自我介紹長度不可超過160個字！')
+        updateInfo.introduction = introduction
+      }
+      if (account) {
+        const sameAccountUser = await User.findOne({ where: { account } })
+        if (sameAccountUser && sameAccountUser.id !== Number(req.params.id)) throw new Error('該帳號名稱已被使用！')
+        updateInfo.account = account
+      }
+      if (email) {
+        const sameEmailUser = await User.findOne({ where: { email } })
+        if (sameEmailUser && sameEmailUser.id !== Number(req.params.id)) throw new Error('該Email已被使用！')
+        updateInfo.email = email
+      }
+
+      if (req.files) {
+        const { avatar, cover } = req.files
+        if (avatar) {
+          const avatarFilePath = await imgurFileHandler(...avatar)
+          updateInfo.avatar = avatarFilePath
+        }
+        if (cover) {
+          const coverFilePath = await imgurFileHandler(...cover)
+          updateInfo.cover = coverFilePath
+        }
+      }
+      await user.update(updateInfo)
+      req.flash('success_messages', '使用者資料編輯成功！')
+      res.redirect(200, 'back')
     } catch (err) {
       next(err)
     }
@@ -76,7 +128,7 @@ const userController = {
       }
       await user.update(updateInfo)
       req.flash('success_messages', '使用者資料編輯成功！')
-      res.redirect(200, 'back')
+      res.redirect('back')
     } catch (err) {
       next(err)
     }
