@@ -85,6 +85,7 @@ a:hover {
 
 /* ---------- Navbar ---------- */
 
+
 .navbar-container {
   position: absolute;
   top: 0;
@@ -106,7 +107,7 @@ a:hover {
 .navbar-logo {
   width: 40px;
   height: 40px;
-} 
+}
 
 .main-navbar {
   position: fixed;
@@ -247,7 +248,7 @@ a:hover {
   height: 26px;
   font-weight: 700;
   line-height: 26px;
-} 
+}
 
 
 /* ---------- User / Admin Signin ---------- */
@@ -270,7 +271,7 @@ a:hover {
 }
 
 .signin-logo {
-  position: absolute; 
+  position: absolute;
   top: 5px;
   left: 5px;
   width: 40px;
@@ -287,7 +288,7 @@ a:hover {
   line-height: 26px;
 }
 
-.admin-signin-title{
+.admin-signin-title {
   position: sticky;
   margin: 0 auto;
   top: 138px;
@@ -556,7 +557,7 @@ a:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  height: 26px; 
+  height: 26px;
 }
 
 .user-name {
@@ -605,3 +606,27 @@ a:hover {
   color: #171725;
 }
 
+.btn-orange {
+  color: rgb(255, 106, 0);
+  border-color: rgb(255, 106, 0);
+}
+
+
+
+/* 默認狀態下的樣式 */
+.nav-link {
+  color: black;
+  /* 默認文字顏色 */
+}
+
+/* 鼠標懸停在連結上時的樣式 */
+.nav-link:hover {
+  color: rgb(255, 106, 0);
+  /* 鼠標懸停時的文字顏色 */
+}
+
+/* 選中連結時的樣式 */
+.nav-link:active {
+  color: rgb(255, 106, 0);
+  /* 選中時的文字顏色 */
+}
