@@ -22,7 +22,7 @@ body {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   min-width: 960px;
   max-width: 960px;
@@ -178,7 +178,7 @@ a:focus {
     color: #44444F;
   }
   .nav-tab-title {
-    color: #FF6600;
+    color: #FF6600
   }
   .nav-item-logout {
     display: flex;
@@ -464,6 +464,84 @@ header {
   }
 }
 
+/* .was-validated .form-input:invalid,
+.was-validated .form-textarea:invalid {
+  border-bottom: 2px solid var(--danger);
+} */
+
+/* .invalid-feedback {
+  background-color: white;
+  width: 270px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #696974;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+} */
+
+/* .invalid-feedback {
+  margin: 0;
+  background-color: white;
+} */
+
+/* .input-minmax,
+.textarea-minmax {
+  position: absolute;
+  right: 0;
+  top: 56px;
+  text-align: right;
+  background-color: white;
+  width: 270px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #696974;
+  line-height: 20px;
+  letter-spacing: 0px;
+} */
+
+/* .btn-signup {
+  display: flex;
+  justify-content: center;
+  padding: 8px 24px;
+  position: absolute;
+  width: 356px;
+  height: 46px;
+  top: 642px;
+  margin: 0 auto;
+  border-radius: 50px;
+  background: #FF6600;
+  border: none;
+} */
+
+/* .sub-btn {
+  position: relative;
+  top: 368px;
+  left: 180px;
+  width: 160px;
+  height: 36px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
+} */
+
+/* .btn-cancel {
+  position: relative;
+  top: 622px;
+  margin: 0 auto;
+  width: 56px;
+  height: 36px;
+  padding: 6px 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0062FF;
+  text-decoration:underline;
+} */
 
 
 /* ---------- Admin users ---------- */
