@@ -3,6 +3,7 @@ const router = express.Router()
 const passport = require('../config/passport')
 const { authenticated } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
+const upload = require('../middleware/multer')
 const admin = require('./modules/admin')
 const api = require('./modules/api')
 const tweetController = require('../controllers/tweet-controller')
@@ -20,6 +21,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', loginController.logout)
 
 router.get('/users/:id/edit', authenticated, userController.getEditPage)
+router.post('/users/:id/edit', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.editUser)
 router.get('/users/:userId/tweets', authenticated, userController.getUserTweetsPage)
 router.get('/users/:userId/likes', authenticated, userController.getUserLikesPage)
 router.get('/users/:userId/replies', authenticated, userController.getUserRepliesPage)
@@ -33,7 +35,8 @@ router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweets)
 
-router.post('/followships', authenticated, userController.addFollowing)
+router.post('/followships', authenticated, userController.followingApi)
+router.post('/followships/:id', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 router.get('/', (req, res) => res.redirect('/tweets'))
