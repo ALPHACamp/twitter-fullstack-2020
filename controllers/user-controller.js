@@ -4,11 +4,23 @@ const helpers = require('../_helpers')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
+  editRequest: async (req, res, next) => {
+    try {
+      if (Number(req.params.id) !== helpers.getUser(req).id) {
+        return res.json({ status: 'error' })
+      }
+      const user = await User.findByPk(req.params.id, { raw: true })
+      if (!user) throw new Error('使用者不存在！')
+      res.send(user)
+    } catch (err) {
+      next(err)
+    }
+  },
   getEditPage: async (req, res, next) => {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) {
         req.flash('error_messages', '沒有瀏覽權限！')
-        return res.redirect(`/api/users/${helpers.getUser(req).id}`)
+        return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
       }
       const user = await User.findByPk(req.params.id, { raw: true })
       if (!user) throw new Error('使用者不存在！')
@@ -21,7 +33,7 @@ const userController = {
     try {
       if (Number(req.params.id) !== helpers.getUser(req).id) {
         req.flash('error_messages', '沒有編輯權限！')
-        return res.redirect(`/api/users/${helpers.getUser(req).id}`)
+        return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
       }
       const user = await User.findByPk(req.params.id)
       if (!user) throw new Error('使用者不存在！')
@@ -64,7 +76,7 @@ const userController = {
       }
       await user.update(updateInfo)
       req.flash('success_messages', '使用者資料編輯成功！')
-      res.redirect('back')
+      res.redirect(200, 'back')
     } catch (err) {
       next(err)
     }
@@ -230,21 +242,13 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-
-      // followships area
-      const followships = await Followship.findAll({
-        where: { followerId: userId },
-        order: [['followingId', 'DESC']],
-        raw: true,
-        nest: true
-      })
-      const followingsId = await followships.map(s => s.followingId)
-      const followingsUser = await User.findAll({ where: { id: followingsId }, order: [['id', 'DESC']], raw: true, nest: true })
-      for (let i = 0; i < followingsId.length; i++) {
-        followships[i].followingUser = followingsUser[i]
-        followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followingId)
+      const followships = user.toJSON().Followings
+      if (followships) {
+        followships.forEach(following => {
+          following.isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === following.id)
+        })
       }
-      followships.sort((a, b) => b.createdAt - a.createdAt)
+      followships.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -272,23 +276,19 @@ const userController = {
       const { userId } = req.params
       // header area
       const user = await User.findByPk(userId, {
-        include: Tweet
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' }
+        ]
       })
 
-      // followships area
-      const followships = await Followship.findAll({
-        where: { followingId: userId },
-        order: [['followerId', 'DESC']],
-        raw: true,
-        nest: true
-      })
-      const followersId = await followships.map(s => s.followerId)
-      const followersUser = await User.findAll({ where: { id: followersId }, order: [['id', 'DESC']], raw: true, nest: true })
-      for (let i = 0; i < followersId.length; i++) {
-        followships[i].followerUser = followersUser[i]
-        followships[i].isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === followships[i].followerId)
+      const followships = user.toJSON().Followers
+      if (followships) {
+        followships.forEach(follower => {
+          follower.isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === follower.id)
+        })
       }
-      followships.sort((a, b) => b.createdAt - a.createdAt)
+      followships.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -311,23 +311,23 @@ const userController = {
     }
   },
   addFollowing: (req, res, next) => {
-    const userId = req.params.id
+    const { id } = req.body
     return Promise.all([
-      User.findByPk(userId),
+      User.findByPk(id),
       Followship.findOne({
         where: {
           followerId: helpers.getUser(req).id,
-          followingId: userId
+          followingId: id
         }
       })
     ])
       .then(([user, followship]) => {
         if (!user) throw new Error("User didn't exist!")
-        if (user.id === helpers.getUser(req).id) throw new Error('You are not allowed to follow yourself!')
-        if (followship) throw new Error('You are already following this user!')
+        if (Number(id) === helpers.getUser(req).id) return res.redirect(200, 'back') // throw new Error('You are not allowed to follow yourself!')
+        if (followship) throw new Error('您已經追隨該使用者！')
         return Followship.create({
           followerId: helpers.getUser(req).id,
-          followingId: userId
+          followingId: id
         })
       })
       .then(() => res.redirect('back'))
@@ -342,7 +342,7 @@ const userController = {
       }
     })
       .then(followship => {
-        if (!followship) throw new Error("You haven't followed this user!")
+        if (!followship) throw new Error('您尚未追隨該使用者！')
         return followship.destroy()
       })
       .then(() => res.redirect('back'))

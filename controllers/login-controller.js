@@ -33,9 +33,15 @@ const loginController = {
   signInPage: (req, res) => {
     res.render('logins/signin')
   },
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/tweets')
+  signIn: (req, res, next) => {
+    try {
+      const user = req.user.toJSON()
+      if (user.role === 'admin') throw new Error('帳號不存在！')
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/tweets')
+    } catch (err) {
+      next(err)
+    }
   },
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
