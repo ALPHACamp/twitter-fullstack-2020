@@ -89,7 +89,7 @@
       <div class="position-relative" style="margin:0 0 0 5px;">
         <span style=" font-size:18px;" id="name"><strong>{{this.User.name}} </strong></span>
 
-        <a href="/tweets/{{this.id}}" style="text-decoration:none; color:black;">
+        <a href="/tweets/{{this.id}}/replies" style="text-decoration:none; color:black;">
           <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
             this.createdAt}}</span>
           <div style="margin: 2px 0; word-break: break-all;">{{this.description}}
@@ -140,18 +140,16 @@
             </div>
           </div>
           {{#if this.isFollowed}}
-          <form id="removefollow" name="removefollow" action="/following/{{this.id}}/removefollow" method="POST">
-            <button type="button" id="btn-tweet"
-              style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex;"
-              onClick="document.removefollow.submit()">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" id="btn-tweet"
+              style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex; width:90px;">
               正在跟隨
             </button>
           </form>
           {{else}}
-          <form id="follow" name="follow" action="/following/{{this.id}}/follow" method="POST">
-            <button type="button" id="btn-tweet"
-              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex;"
-              onClick="document.follow.submit()">
+          <form action="/followships/{{this.id}}" method="POST" style="display: flex; align-items:center;">
+            <button type="submit" id="btn-tweet"
+              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
               跟隨
             </button>
           </form>
@@ -162,6 +160,7 @@
       </ul>
     </div>
   </div>
+
 </div>
 
 <!-- 推文Modal -->

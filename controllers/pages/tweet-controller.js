@@ -128,7 +128,7 @@ const tweetController = {
   },
   getTweet: async (req, res, next) => {
     const TweetId = req.params.id
-    const [tweet, replies, likes] = await Promise.all([
+    const [tweet, replies, likes, users] = await Promise.all([
       Tweet.findByPk(TweetId, {
         include: [User],
         nest: true
@@ -144,13 +144,22 @@ const tweetController = {
         where: { TweetId },
         raw: true,
         nest: true
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })
     ])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
     if (!tweet) throw new Error("Tweet didn't exist!")
     const isLiked = likes.some(l => l.UserId === req.user.id)
 
-    res.render('tweet.hbs', { tweet: tweet.toJSON(), replies, isLiked, likeCount: likes.length, replyCount: replies.length })
+    res.render('tweet.hbs', { tweet: tweet.toJSON(), replies, isLiked, likeCount: likes.length, replyCount: replies.length, users: usersSorted })
   }
 }
 

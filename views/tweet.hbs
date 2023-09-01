@@ -147,14 +147,39 @@
 
   <!-- 右側推薦跟隨 -->
   <div class=" col-4" style="padding: 12px 0 0 20px;">
-    <div class=" card" style="width: 18rem;">
-      <div class="card-header" style="display:flex;align-items:center;">
+    <div class=" card" style="width: 15rem; padding: 0 0 16px 0; background-color: #F5F5F5;">
+      <div class="card-header" style="display:flex;align-items:center; background-color: #F5F5F5;">
         <span style="font-size:22px;"><strong>推薦跟隨</strong></span>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">An item</li>
-        <li class=" list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A second item</li>
-        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A third item</li>
+        {{#each users}}
+        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5"></li>
+        <div style="display: flex; background-color: #F5F5F5; padding: 0 16px; justify-content:space-between;">
+          <div style="display: flex;">
+            <img src={{this.avatar}} width="50" height="50" style="border-radius: 99em">
+            <div style="padding:0 5px;">
+              <span style="font-size:18px; font-weight:bold;" id="name">{{this.name}} </span>
+              <div style="color:gray; font-size:14px;"> @{{this.account}}</div>
+            </div>
+          </div>
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" id="btn-tweet"
+              style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex; width:90px;">
+              正在跟隨
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships/{{this.id}}" method="POST" style="display: flex; align-items:center;">
+            <button type="submit" id="btn-tweet"
+              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
+              跟隨
+            </button>
+          </form>
+          {{/if}}
+        </div>
+        </li>
+        {{/each}}
       </ul>
     </div>
   </div>
