@@ -28,9 +28,12 @@
               <a href="/users/{{this.Tweet.UserId}}/tweets" style="text-decoration:none;">
                 <span style="color:#FF6600">@{{this.Tweet.User.account}}</span>
               </a>
-              <p class="mt-2 text-break">
-                {{this.comment}}
-              </p>
+              <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
+                <p class="mt-2 text-break" style="color:#171725">
+                  {{this.comment}}
+                </p>
+              </a>
+              
             </div>
 
           </div>
