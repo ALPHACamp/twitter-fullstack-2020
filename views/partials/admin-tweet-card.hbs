@@ -1,33 +1,33 @@
-<div class="admin-tweet-container">
-  <div class="admin-tweet-left">
-    <div class="admin-tweet-avatar">
-      {{#if this.User.avatar}}
-      <img class="avatar" src="{{this.User.avatar}}" alt="avatar" title="avatar">
-      {{else}}
-      <img class="default-avatar" src="/stylesheets/icons/profile-img.svg" alt="avatar" title="avatar">
-      {{/if}}
-    </div>
-    <div class="admin-tweet-right">
-      <div class="tweet-info">
-        <div class="user-info">
-          <div class="user-name">
-            {{this.User.name}}
-          </div>
-          <div class="user-sub-title">
-            <span class="user-aacount">＠{{this.User.account}}</span>
-            <span class="dot">•</span>
-            <span class="time">{{relativeTimeFromNow this.createdAt}}</span>
-          </div>
-        </div>
+<div class="card-avatar">
+  {{#if this.User.avatar}}
+  <img class="avatar" src="{{this.User.avatar}}" alt="avatar" title="avatar">
+  {{else}}
+  <img class="default-avatar" src="/stylesheets/icons/profile-img.svg" alt="avatar" title="avatar">
+  {{/if}}
+</div>
 
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-          <button type="submit" class="btn delete-icon" onclick="return confirm(`確定要刪除此推文嗎？`)">
-        </button>
-        </form>
-      </div>   
-      <div class="tweet-text">{{this.description}}
+<div class="card-content">
+  <div class="card-info">
+    <div class="user-info">
+      <div class="name">
+        {{this.User.name}}
+      </div>
+      <div class="sub-title">
+        <span class="aacount">＠{{this.User.account}}</span>
+        <span class="dot">•</span>
+        <span class="time">{{relativeTimeFromNow this.createdAt}}</span>
       </div>
     </div>
+
+    
+    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+      <button type="submit" class="delete-btn" onclick="return confirm(`確定要刪除此篇推文嗎？`)">
+        <img class="delete-icon" src="/stylesheets/icons/close.svg">
+    </button>
+    </form>
+  
+  </div>   
+  <div class="card-text">{{this.description}}
   </div>
 </div>
 

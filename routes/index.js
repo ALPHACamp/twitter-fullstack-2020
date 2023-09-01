@@ -1,8 +1,5 @@
-const express = require('express')
-const router = express.Router()
-const passport = require('../config/passport')
-const admin = require('./modules/admin')
-const users = require('./modules/users')
+const pages = require('./pages')
+const apis = require('./apis')
 
 // Controllers
 const tweetController = require('../controllers/tweet-controller')
@@ -30,7 +27,7 @@ router.get('/logout', userController.logout)
 router.use('/admin', admin)
 
 // users route
-
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.get('/users/:id', authenticated, userController.getUser)
 
 router.use('/users', authenticated, users)
@@ -48,3 +45,7 @@ router.use('/', generalErrorHandler)
 router.use('/', generalErrorHandler)
 
 module.exports = router
+module.exports = {
+  pages,
+  apis
+}

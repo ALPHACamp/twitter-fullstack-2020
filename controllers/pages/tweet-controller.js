@@ -1,8 +1,8 @@
-const { Tweet, User, Like } = require('../models')
+const { Tweet, User, Like, Reply } = require('../../models')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
-    const [tweets, likes] = await Promise.all([
+    const [tweets, likes, replies, users] = await Promise.all([
       Tweet.findAll({
         include: [User],
         order: [['createdAt', 'DESC']],
@@ -12,7 +12,20 @@ const tweetController = {
       Like.findAll({
         raw: true,
         nest: true
+      }),
+      Reply.findAll({
+        raw: true,
+        nest: true
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
     const likedTweetsId = []
     likes.forEach(like => {
@@ -20,7 +33,6 @@ const tweetController = {
         likedTweetsId.push(like.TweetId)
       }
     })
-    console.log(likedTweetsId)
 
     const tweetLikedMap = {}
     likes.forEach(like => {
@@ -31,12 +43,25 @@ const tweetController = {
       }
     })
 
+    const tweetRepliedMap = {}
+    replies.forEach(reply => {
+      if (!tweetRepliedMap[reply.TweetId]) {
+        tweetRepliedMap[reply.TweetId] = 1
+      } else {
+        tweetRepliedMap[reply.TweetId] = tweetRepliedMap[reply.TweetId] + 1
+      }
+    })
+
     const data = tweets.map(r => ({
       ...r,
       isLiked: likedTweetsId.includes(r.id),
-      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0
+      likeCount: tweetLikedMap[r.id] ? tweetLikedMap[r.id] : 0,
+      replyCount: tweetRepliedMap[r.id] ? tweetRepliedMap[r.id] : 0
     }))
-    res.render('tweets', { tweets: data })
+
+    const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
+
+    res.render('tweets', { tweets: sortedData, user: req.user, users: usersSorted })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
@@ -47,7 +72,7 @@ const tweetController = {
     }
     if (description.length > 140) {
       req.flash('error_messages', '推文字數限制在 140 以內!')
-      return res.redirect('/tweets')
+      return res.redirect('back')
     }
     Tweet.create({
       UserId,
@@ -100,6 +125,42 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getTweet: async (req, res, next) => {
+    const TweetId = req.params.id
+    const [tweet, replies, likes, users] = await Promise.all([
+      Tweet.findByPk(TweetId, {
+        include: [User],
+        nest: true
+      }),
+      Reply.findAll({
+        where: { TweetId },
+        include: [User],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Like.findAll({
+        where: { TweetId },
+        raw: true,
+        nest: true
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
+      })
+    ])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+
+    if (!tweet) throw new Error("Tweet didn't exist!")
+    const isLiked = likes.some(l => l.UserId === req.user.id)
+
+    res.render('tweet.hbs', { tweet: tweet.toJSON(), replies, isLiked, likeCount: likes.length, replyCount: replies.length, users: usersSorted })
   }
 }
+
 module.exports = tweetController
