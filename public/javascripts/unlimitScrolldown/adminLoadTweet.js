@@ -14,6 +14,11 @@ deleteTweetModal.addEventListener('hidden.bs.modal', function () {
   document.body.classList.remove('modal-open')
 })
 
+const deleteButtons = document.querySelectorAll('.admin-delete-btn')
+deleteButtons.forEach(button => {
+  button.removeEventListener('click', removeTweet)
+  button.addEventListener('click', removeTweet)
+})
 container.addEventListener('scroll', async () => {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 10) { // 拉到往上10公分時就會 reload
   // 這裡是到達底部時需要執行的代碼，例如發送請求從 DB 加載更多數據
