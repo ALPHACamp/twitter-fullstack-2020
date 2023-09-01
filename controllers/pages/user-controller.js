@@ -54,7 +54,9 @@ const userController = {
     res.redirect('/signin')
   },
   addFollowing: async (req, res, next) => {
-    if (req.user.id.toString() === req.params.id.toString()) throw new Error('can not follow self')
+    if (req.user.id.toString() === req.params.id.toString()) {
+      req.flash('error_messages', 'can not follow self')
+    }
 
     const [user, followship] = await Promise.all([
       User.findByPk(req.params.id),
