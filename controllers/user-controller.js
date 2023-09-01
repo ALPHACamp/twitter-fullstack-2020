@@ -73,7 +73,6 @@ const userController = {
       })
     ])
       .then(([tweets, user]) => {
-        if (!tweets.length) throw new Error('Tweets do not exist')
         if (!user) throw new Error('This user does not exist')
         const { Followers, Followings } = user.toJSON()
         tweets = tweets.map(tweet => {
@@ -86,10 +85,10 @@ const userController = {
             isLiked: LikedUsers.some(likedUser => likedUser.dataValues.UserId === currentUser && likedUser.isLike)
           })
         })
-        const tweetsUser = (tweets.length > 0) ? tweets[0].user : {}
+        const tweetsUser = tweets.length > 0 ? tweets[0].user : user.dataValues
         res.render('profile', {
           tweets,
-          user,
+          user: helper.getUser(req),
           profileRoute,
           otherProfileRoute,
           tweetsUser,
@@ -123,6 +122,11 @@ const userController = {
   },
   signUp: (req, res, next) => {
     const { account, name, email, password, checkPassword } = req.body
+    const userDefault = {
+      avatar: 'https://i.imgur.com/7sJckYK.png',
+      cover: 'https://i.imgur.com/f42NkFh.png',
+      role: 'user'
+    }
     if (account.length > 50) throw new Error('字數超出上限！')
     if (name.length > 50) throw new Error('字數超出上限！')
     if (password !== checkPassword) throw new Error('密碼輸入不一致！')
@@ -139,7 +143,10 @@ const userController = {
         account,
         name,
         email,
-        password: hash
+        password: hash,
+        avatar: userDefault.avatar,
+        cover: userDefault.cover,
+        role: userDefault.role
       }))
       .then(() => {
         req.flash('success_messages', '恭喜註冊成功！')
@@ -339,13 +346,14 @@ const userController = {
         })
         res.render('userLikes', {
           likedTweets,
-          user,
+          user: helper.getUser(req),
           profileRoute,
           otherProfileRoute,
           tweetsCount,
           followersCount,
           followingsCount,
-          tweetsUser: user.dataValues
+          tweetsUser: user.dataValues,
+          topUsers: req.topFollowingsList
         })
       })
       .catch(err => next(err))
@@ -385,12 +393,9 @@ const userController = {
       })
     ])
       .then(([replies, user]) => {
-        if (!replies.length) throw new Error('Replies do not exist for this user')
         if (!user) throw new Error('This user does not exist')
 
         const { Followers, Followings } = user.toJSON()
-        // console.log(replies)
-        // console.log(user)
         const formattedReplies = replies.map(reply => {
           const { dataValues, Tweet, User } = reply
           return ({
@@ -399,18 +404,18 @@ const userController = {
             user: User.dataValues
           })
         })
-        // console.log(formattedReplies)
-        const repliesUser = (formattedReplies.length > 0) ? formattedReplies[0].user : {}
+        const repliesUser = (formattedReplies.length > 0) ? formattedReplies[0].user : user.dataValues
 
         res.render('userReplies', {
           replies: formattedReplies,
-          user,
+          user: helper.getUser(req),
           profileRoute,
           otherProfileRoute,
           tweetsUser: repliesUser,
           repliesCount: formattedReplies.length,
           followersCount: Followers.length,
-          followingsCount: Followings.length
+          followingsCount: Followings.length,
+          topUsers: req.topFollowingsList
         })
       })
       .catch(err => next(err))
