@@ -1,25 +1,15 @@
-<div class="admin-tweets">
+<div class="container">
   {{> admin-navbar}}
-
-  <div class="admin-tweets-container">
-        
-    {{!-- Header --}}
-    <div class="admin-tweets-header">
-      <h4 class="main-title">推文清單</h4>
-    </div>
-    
-    {{!-- Tweets list --}}
-    <div class="admin-tweets-list-container">
+  <main class="main-content">
+    <header>
+      <h4 class="header-title">推文清單</h4>
+    </header>
+    <section class="card-list">
       {{#each tweets}}
-      <div class="admin-tweets-list">
-      {{>admin-tweet-card}}      
+      <div id="card">
+        {{>admin-tweet-card}}
       </div>
       {{/each}}
-    </div>
-
-    {{!-- Footer --}}
-    <div class="admin-tweets-footer">
-    </div>
-
-  </div>
-</div>
+    </section>
+  </main>
+</div> 

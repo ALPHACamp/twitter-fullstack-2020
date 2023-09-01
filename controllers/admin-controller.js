@@ -99,17 +99,19 @@ const adminController = {
     }
   },
   deleteTweet: async (req, res, next) => {
+    const TweetId = req.params.id
     try {
-      const TweetId = req.params.id
       const tweet = await Tweet.findByPk(TweetId)
-      if (!tweet) throw new Error("Tweet didn't exist!")
-      const deletedTweet = await tweet.destroy()
-      const reply = await Reply.destroy({ where: { TweetId } })
-      const like = await Like.destroy({ where: { TweetId } })
-      if (!deletedTweet || !reply || !like) throw new Error('發生錯誤，請稍後再試')
+      const replies = await Reply.findAll({ where: { TweetId } })
+      const likes = await Like.findAll({ where: { TweetId } })
+
+      if (!tweet) throw new Error('此篇推文不存在')
+      await tweet.destroy()
+      if (replies) await Reply.destroy({ where: { TweetId } })
+      if (likes) await Like.destroy({ where: { TweetId } })
 
       req.flash('success_messages', '成功刪除')
-      res.redirect('back')
+      return res.redirect('/admin/tweets')
     } catch (err) {
       next(err)
     }
