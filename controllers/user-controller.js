@@ -88,7 +88,7 @@ const userController = {
         const tweetsUser = tweets.length > 0 ? tweets[0].user : user.dataValues
         res.render('profile', {
           tweets,
-          user,
+          user: helper.getUser(req),
           profileRoute,
           otherProfileRoute,
           tweetsUser,
@@ -346,7 +346,7 @@ const userController = {
         })
         res.render('userLikes', {
           likedTweets,
-          user,
+          user: helper.getUser(req),
           profileRoute,
           otherProfileRoute,
           tweetsCount,
@@ -408,7 +408,7 @@ const userController = {
 
         res.render('userReplies', {
           replies: formattedReplies,
-          user,
+          user: helper.getUser(req),
           profileRoute,
           otherProfileRoute,
           tweetsUser: repliesUser,
