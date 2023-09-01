@@ -502,15 +502,17 @@ header {
 }
 
 
-/* ---------- Signin  ---------- */
 
-.signin-content {
+/* ---------- Signin / Signup  ---------- */
+
+.signin-content, .signup-content {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   max-width: 356px;
+  height: 1200px;
   background-color: white;
-  .signin-header {
+  .signin-header, .signup-header {
     position: relative;
     top: 64px;
     display: flex;
@@ -526,7 +528,7 @@ header {
         margin: 5px;
       }
     }
-    .signin-title {
+    .signin-title, .signup-title {
       position: relative;
       top: 24px;
       margin: 0 auto;
@@ -595,7 +597,7 @@ header {
     border-radius: 50px;
     background: #FF6600;
     border: none;
-    .signin-text {
+    .signin-text, .signup-text {
       font-family: "Noto Sans TC";
       font-size: 20px;
       font-weight: 400;
@@ -631,6 +633,20 @@ header {
   left: 225px;
   width: 178px;
   height: 36px;
+}
+
+.user-signup-sub-btn {
+  display: flex;
+  .sub-link {
+    margin: 40px auto;
+    text-decoration: underline; 
+    color: #0062FF;
+    font-family: "Noto Sans TC";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
+  }
 }
 
 /* .was-validated .form-input:invalid,
