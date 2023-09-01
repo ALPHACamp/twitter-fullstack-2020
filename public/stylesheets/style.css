@@ -515,7 +515,6 @@ header {
     top: 64px;
     display: flex;
     flex-direction: column;
-    width: 40%;
     margin: 0 auto;
     .brand-logo {
       width: 50px;
@@ -608,7 +607,7 @@ header {
   }
 }
 
-.sub-btn {
+.admin-signin-sub-btn {
   position: relative;
   top: 170px;
   left: 275px;
@@ -624,6 +623,14 @@ header {
     letter-spacing: 0px;
     text-align: right;
   }
+}
+
+.user-signin-sub-btn {
+  position: relative;
+  top: 170px;
+  left: 225px;
+  width: 178px;
+  height: 36px;
 }
 
 /* .was-validated .form-input:invalid,
@@ -704,5 +711,4 @@ header {
   color: #0062FF;
   text-decoration:underline;
 } */
-
 
