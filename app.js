@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const helpers = require('./_helpers')
 const exphbs = require('express-handlebars')
-const routes = require('./routes')
+const { pages, apis } = require('./routes')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
@@ -14,16 +14,22 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 
 const app = express()
 const port = process.env.PORT || 3000
-const SESSION_SECRET = 'secret'
+const SESSION_SECRET = process.env.SESSION_SECRET || 'twitterSECRET'
+
+require('./models/index')
 
 // handlebars
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
-// Body-parser
+// public
+app.use(express.static('public'))
+
+// body-parser
 app.use(express.urlencoded({ extended: true }))
 
-app.use(express.static('public'))
+// json
+app.use(express.json())
 
 // session
 app.use(session({
@@ -47,8 +53,8 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-
-app.use(routes)
+app.use('/api', apis)
+app.use(pages)
 
 app.listen(port, () => console.log(`App is running on http://localhost:${port}`))
 
