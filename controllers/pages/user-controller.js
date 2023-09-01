@@ -56,6 +56,7 @@ const userController = {
   addFollowing: async (req, res, next) => {
     if (req.user.id.toString() === req.params.id.toString()) {
       req.flash('error_messages', 'can not follow self')
+      return res.redirect('back')
     }
 
     const [user, followship] = await Promise.all([
