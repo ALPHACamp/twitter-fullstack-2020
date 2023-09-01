@@ -15,6 +15,7 @@ const adminController = {
     }
   },
   logOut: (req, res) => {
+    req.logout()
     req.flash('success_messages', '成功登出')
     res.redirect('/signin')
   },
