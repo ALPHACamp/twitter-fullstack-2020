@@ -47,7 +47,9 @@ const adminController = {
 
   getTweets: async (req, res, next) => {
     try {
-      const tweets = await adminServices.getTweets(12, 0)
+      const limit = 12
+      const firstPage = 0
+      const tweets = await adminServices.getTweets(limit, firstPage)
 
       res.render('admin/tweets', { tweets, route: 'tweets' })
     } catch (error) {
@@ -73,25 +75,28 @@ const adminController = {
   },
   getUsers: async (req, res, next) => {
     try {
-      const backendUsers = await User.findAll({
-        // 使用者需要看到所有用戶，包含root帳號
-        attributes: [
-          'id',
-          'name',
-          'account',
-          'avatar',
-          'role',
-          'cover',
-          [sequelize.literal('( SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetCount'],
-          [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'followerCount'],
-          [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'followingCount'],
-          [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.user_id = User.id)'), 'likeCount']
-        ],
-        order: [['tweetCount', 'DESC']],
-        raw: true
-      })
+      const limit = 16
+      const firstPage = 0
+      const backendUsers = await adminServices.getUsers(limit, firstPage)
 
       res.render('admin/users', { users: backendUsers, route: 'users' })
+    } catch (error) {
+      return next(error)
+    }
+  },
+  getUsersUnload: async (req, res, next) => {
+    try {
+      let { limit, page } = req.query
+
+      limit = parseInt(limit)
+      page = parseInt(page)
+
+      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
+      // 檢查是否有提供有效的 limit 和 page
+        return res.json({ message: 'error', data: {} })
+      }
+      const backendUsers = await adminServices.getUsers(limit, page)
+      return res.json({ message: 'success', data: backendUsers })
     } catch (error) {
       return next(error)
     }
