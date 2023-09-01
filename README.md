@@ -1,4 +1,4 @@
-#My Simple Twitter
+# My Simple Twitter
 ![image](public/photos/homepage.png)
 **可點擊[Demo](https://mighty-tundra-17871-5d8e08ab6f3e.herokuapp.com/signin) ，查看專案預覽！**
 
@@ -74,7 +74,7 @@ npm run start (node app.js)
 # 啟動方法2
 npm run dev (nodemon app.js)
 ```
-9. 在瀏覽器輸入**http://localhost:3000**，即可連線。
+9. 在瀏覽器輸入 http://localhost:3000 ，即可連線。
 
 ## 相關設計
 ### 系統流程
