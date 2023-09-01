@@ -175,6 +175,7 @@ a:focus {
     line-height: 26px;
     letter-spacing: 0px;
     text-align: left;
+    color: #44444F;
   }
   .nav-tab-title {
     color: #FF6600
@@ -541,7 +542,6 @@ header {
   color: #0062FF;
   text-decoration:underline;
 } */
-
 
 
 /* ---------- Admin users ---------- */

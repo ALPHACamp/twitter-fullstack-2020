@@ -12,7 +12,7 @@ passport.use('userSignin', new LocalStrategy(
   async (req, account, password, cb) => {
     try {
       const user = await User.findOne({ where: { account } })
-      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      if (!user) return cb(null, false, req.flash('error_messages', '此帳號不存在！'))
       if (user.role !== 'user') return cb(null, false, req.flash('error_messages', '此帳號不存在！'))
 
       const passwordCompare = await bcrypt.compare(password, user.password)
@@ -48,7 +48,12 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
+  User.findByPk(id, {
+    include: [
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' }
+    ]
+  }).then(user => {
     user = user.toJSON()
     return cb(null, user)
   })
