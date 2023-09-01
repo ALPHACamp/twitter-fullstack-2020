@@ -1,0 +1,9 @@
+diff a/controllers/user-controller.js b/controllers/user-controller.js	(rejected hunks)
+@@ -53,6 +53,7 @@
+     req.logout()
+     res.redirect('/signin')
+   },
++  getUser: async (req, res, next) => {
+     try {
+       const userId = req.params.id
+       const user = await User.findByPk(userId, {

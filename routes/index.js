@@ -30,6 +30,7 @@ router.get('/logout', userController.logout)
 router.use('/admin', admin)
 
 // users route
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 router.use('/users', authenticated, users)
 
 // Tweets

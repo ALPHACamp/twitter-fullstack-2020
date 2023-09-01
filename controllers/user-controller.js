@@ -1,7 +1,5 @@
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const { User } = db
-
+const { User, Tweet } = require('../models')
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -53,6 +51,21 @@ const userController = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     res.redirect('/signin')
+  },
+  getUserTweets: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const user = await User.findByPk(userId, {
+        include: [Tweet],
+        order: [['createdAt', 'DESC']]
+      })
+
+      if (!user) { throw new Error("User didn't exist!") }
+      console.log(user); // 在這裡添加這行
+      res.render('users/self', { user: user.toJSON()/*, myUser: req.user.id */ })
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
