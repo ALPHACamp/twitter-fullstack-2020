@@ -90,20 +90,37 @@ const tweetController = {
         include: User,
         nest: true,
         raw: true
+      }),
+      User.findAll({
+        where:{
+          role: 'user',
+           id: { [Op.not]: user.id }
+        },
+        include: { model: User, as: 'Followers'}
       })
     ])
-      .then(([tweet, replies]) => {
+      .then(([tweet, replies, followShips]) => {
         if (!tweet) throw new Error('推文不存在')
         const replyCount = replies.count
         const likeCount = tweet.LikedUsers.length
         const isLiked = tweet.LikedUsers.some(u => u.id === req.user.id)
+
+        // 推薦追隨
+        const topUser = followShips.map(followShip => ({
+          ...followShip.toJSON(),
+          followerCount: followShip.Followers.length,
+          isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+
         res.render('tweet', {
           user,
           tweet: tweet.toJSON(),
           replies: replies.rows,
           replyCount,
           likeCount,
-          isLiked
+          isLiked,
+          topUser
         })
       })
       .catch(err => next(err))
