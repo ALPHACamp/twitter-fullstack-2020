@@ -18,6 +18,7 @@ app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use(express.json())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,

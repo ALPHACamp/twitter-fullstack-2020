@@ -1,7 +1,7 @@
-<div class="modal fade" id="edit-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="edit-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-id="{{tweetsUser.id}}">
   <div class="modal-dialog">
     <div class="modal-content p-0" style="width:634px;height:610px;border-radius:14px;padding:0px 16px">
-      <form action="/tweets" class="border-0 p-0" method="POST">
+      <form action="/tweets" class="border-0 p-0" method="POST" enctype="multipart/form-data">
         <div class="header-container d-flex flex-row justify-content-between">
           <div class="d-flex flex-row" style="height: 40px;">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -15,23 +15,30 @@
         <hr class="solid my-0 mt-2" style="color: #FFFFFF">
         <div class="cover-avatar-container">
           <div class="cover">
-            <img src="{{ user.cover }}" alt="user-cover"
+            <img id="modal-profile-cover" src="{{ tweetsUser.cover }}" alt="user-cover"
               style="position: absolute; width: 639px; height: 200px; z-index: 0;" class="img-fluid opacity-75">
-            <div class="cover-cover mx-auto" style="position: relative; width: 632px; height: 200px; background-color: #171725; opacity: 50%; z-index: 1;"></div>  
+            <div class="cover-cover mx-auto" style="position: relative; width: 632px; height: 200px; background-color: #171725; opacity: 50%; z-index: 1;">
+              <img src="/images/icons/white-camera.png" alt="add-cover" style="height: 24px; width: 24px; margin-top: 88px; margin-left: 276px;">
+              <img src="/images/icons/white-cross.png" alt="delete-cover" style="height: 24px; width: 24px; margin-top: 88px; margin-left: 32px;">
+            </div>  
           </div>
           <div class="avatar" style="height: 80px;">
-            <img src="{{ user.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: absolute; width: 140px; height: 140px; top: 194px; left: 16px; background-color: #FFFFFF; z-index: 2;">
-            <div class="cover-cover mx-auto rounded-circle"
-              style="position: relative; top: -60px; left: -230px; width: 132px; height: 132px; background-color: #171725; opacity: 50%; z-index: 3;"></div>
+            <img id="modal-profile-avatar" src="{{ tweetsUser.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: absolute; width: 140px; height: 140px; top: 194px; left: 16px; background-color: #FFFFFF; z-index: 2;">
+            <label class="cover-cover mx-auto rounded-circle d-flex justify-content-center align-items-center"
+              style="position: relative; top: -60px; left: -230px; width: 132px; height: 132px; background-color: #171725; opacity: 50%; z-index: 3;">
+              <img src="/images/icons/white-camera.png" alt="add-avatar" id="upload-avatar"
+                style="height: 24px; width: 24px;">
+              <input name="avatar" type="file" id="upload-avatar" style="height: 24px; width: 24px; z-index: 1;">
+            </label>
           </div>
         </div>
         <div class="replies-container mt-2" style="height: 78px;">
           <div class="name d-flex flex-column mx-4 my-2">
             <div class="label-input d-flex flex-column">
               <label for="modalProfileName" class="px-2" style="color: #696974; font-size: 14px; font-family: Noto Sans TC;font-weight: 400; line-height: 22px; text-align: left; background-color: #F5F8FA;" required>名稱</label>
-              <input type="text" class="px-2 border-top-0 border-start-0 border-end-0" onkeyup="nameWordsCheck()" id="modal-profile-name" style="background-color: #F5F8FA; border-style: solid; border-bottom: 2px solid #657786; font-size: 16px; font-family: Noto Sans TC; font-weight: 400;" maxlength="50" value="{{user.name}}">
+              <input type="text" class="px-2 border-top-0 border-start-0 border-end-0" onkeyup="nameWordsCheck()" id="modal-profile-name" style="background-color: #F5F8FA; border-style: solid; border-bottom: 2px solid #657786; font-size: 16px; font-family: Noto Sans TC; font-weight: 400;" maxlength="50" value="{{tweetsUser.name}}">
               <div id="name-area">
-                <p class="text-end text-muted now1" style="font-size: 12px;">{{user.name.length}}/50</p>
+                <p class="text-end text-muted now1" style="font-size: 12px;">{{tweetsUser.name.length}}/50</p>
               </div>
             </div>
           </div>
@@ -39,9 +46,9 @@
             <label for="modalProfileIntro" class="px-2"
               style="color: #696974; background-color: #F5F8FA; font-size: 14px; font-family: Noto Sans TC;font-weight: 400; line-height: 22px; text-align: left;">自我介紹</label>
             <textarea class="px-2 modalProfileIntro border-top-0 border-start-0 border-end-0" name="modalProfileIntro" onkeyup="introWordsCheck()" id="modalProfileIntro"
-              style="font-size: 16px; outline: none; resize: none; height: 100px; font-weight: 400;line-height: 26px; color: #171725; border-bottom: 2px solid #657786; background-color: #F5F8FA;" value="{{user.introduction}}" id="modal-profile-intro" cols="65" rows="5" maxlength="160" required>{{user.introduction}}</textarea>
+              style="font-size: 16px; outline: none; resize: none; height: 100px; font-weight: 400;line-height: 26px; color: #171725; border-bottom: 2px solid #657786; background-color: #F5F8FA;" value="{{tweetsUser.introduction}}" id="modal-profile-intro" cols="65" rows="5" maxlength="160" required>{{tweetsUser.introduction}}</textarea>
             <div id="introduction-area">
-              <p class="text-end text-muted now2" style="font-size:12px;">{{user.introduction.length}}/160</p>
+              <p class="text-end text-muted now2" style="font-size:12px;">{{tweetsUser.introduction.length}}/160</p>
             </div>
           </div>
         </div>
@@ -49,6 +56,8 @@
     </div>
   </div>
 </div>
+
+<script src="/javascripts/index.js"></script>
 
 <script>
   // name 字數確認
@@ -71,4 +80,17 @@
       introductionCount.innerHTML = `<p class="text-end text-muted now2" style="font-size:12px;">${content}/160</p>`
     }
   }  
+</script>
+
+<script>
+  const uploadAvatar = document.querySelector('#upload-avatar');
+  const avatar = document.querySelector('#modal-profile-avatar');
+
+  function uploadAva(e) {
+    let uploadedAvatar = e.target.files || e.dataTransfer.files;
+    console.log(e.target)
+    return (avatar.src = window.URL.createObjectURL(uploadedAvatar[0]));
+  }
+
+  uploadAvatar.addEventListener('change', uploadAva); // Corrected event listener registration
 </script>

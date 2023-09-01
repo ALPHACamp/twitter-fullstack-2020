@@ -2,7 +2,7 @@ const { User } = require('../models')
 const helpers = require('../_helpers')
 
 const apiController = {
-  getUser: async (req, res, next) => {
+  apiEditUser: async (req, res, next) => {
     try {
       const currentUser = helpers.getUser(req).id
       const UserId = Number(req.params.id)

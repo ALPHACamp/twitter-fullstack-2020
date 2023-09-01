@@ -12,8 +12,8 @@ const { getTopUsers } = require('../middleware/top-users')
 
 router.use('/admin', admin)
 
-router.get('/api/users/:id', authenticated, apiController.getUser)
 // user related
+
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, userController.putUser)
 router.get('/users/:id/tweets', authenticated, getTopUsers, userController.getUserTweets)
@@ -34,11 +34,15 @@ router.post('/tweets/:id/unlike', authenticated, userController.unlikeTweet)
 
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+
 router.get('/tweets', authenticated, getTopUsers, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/logout', userController.logOut)
+
+router.get('/api/users/:id', authenticated, apiController.apiEditUser)
+
 router.get('/', (req, res) => { res.redirect('/tweets') })
 router.use('/', generalErrorHandler)
 
