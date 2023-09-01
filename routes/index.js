@@ -35,7 +35,8 @@ router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweets)
 
-router.post('/followships', authenticated, userController.addFollowing)
+router.post('/followships', authenticated, userController.followingApi)
+router.post('/followships/:id', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 router.get('/', (req, res) => res.redirect('/tweets'))

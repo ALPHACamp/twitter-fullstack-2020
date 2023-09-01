@@ -362,7 +362,7 @@ const userController = {
       next(err)
     }
   },
-  addFollowing: (req, res, next) => {
+  followingApi: (req, res, next) => {
     const { id } = req.body
     return Promise.all([
       User.findByPk(id),
@@ -376,6 +376,29 @@ const userController = {
       .then(([user, followship]) => {
         if (!user) throw new Error("User didn't exist!")
         if (Number(id) === helpers.getUser(req).id) return res.redirect(200, 'back') // throw new Error('You are not allowed to follow yourself!')
+        if (followship) throw new Error('您已經追隨該使用者！')
+        return Followship.create({
+          followerId: helpers.getUser(req).id,
+          followingId: id
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  addFollowing: (req, res, next) => {
+    const { id } = req.params
+    return Promise.all([
+      User.findByPk(id),
+      Followship.findOne({
+        where: {
+          followerId: helpers.getUser(req).id,
+          followingId: id
+        }
+      })
+    ])
+      .then(([user, followship]) => {
+        if (!user) throw new Error("User didn't exist!")
+        if (Number(id) === helpers.getUser(req).id) throw new Error('您不能追隨自己！')
         if (followship) throw new Error('您已經追隨該使用者！')
         return Followship.create({
           followerId: helpers.getUser(req).id,

@@ -35,8 +35,7 @@
                         class="btn">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/followships" method="POST">
-                    <input type="text" class="d-none" value={{user.id}} name="id">
+                <form action="/followships/{{user.id}}" method="POST">
                     <button type="submit"
                         style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
                         class="btn">跟隨</button>
