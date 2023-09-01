@@ -17,7 +17,7 @@
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
-    <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/api/users/{{ reqUser.id }}">
+    <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/users/{{ reqUser.id }}/edit">
       {{>icons/cog-icon}}
       <span class="h5 ms-3">設定</span>
     </a>
@@ -38,7 +38,7 @@
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
-    <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/api/users/{{ reqUser.id }}">
+    <a style="color:#171725" class="navbar-brand text-decoration-none mx-2 px-1" href="/users/{{ reqUser.id }}/edit">
       {{>icons/cog-icon}}
       <span class="h5 ms-3">設定</span>
     </a>
@@ -59,7 +59,7 @@
     </a>
   </div>
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1">
-    <a style="color:#FF6600" class="navbar-brand text-decoration-none mx-2 px-1" href="/api/users/{{ reqUser.id }}">
+    <a style="color:#FF6600" class="navbar-brand text-decoration-none mx-2 px-1" href="/users/{{ reqUser.id }}/edit">
       {{>icons/cog-icon active=true}}
       <span class="h5 ms-3">設定</span>
     </a>
@@ -68,7 +68,7 @@
 
 
 
-  <a href="#" style="background-color:#FF6600; color:#FFFFFF; border-radius: 30px" class="btn px-3"
+  <a id="tweetBtn" href="#" style="background-color:#FF6600; color:#FFFFFF; border-radius: 30px" class="btn px-3"
     data-bs-toggle="modal" data-bs-target="#myModalmain">推文</a>
 
   <div style="height:58px" class="d-flex align-items-center mx-2 mb-1 position-absolute bottom-0 start-0">
@@ -88,8 +88,7 @@
       <div class="d-flex justify-content-start">
         <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <hr style="margin-top: 5px; margin-bottom: 5px;">
-
+      <hr style="margin-top: 5px; margin-bottom: 5px; outline:#dee2e6 1px solid">
       <form action="/tweets" method="POST">
         <div style="padding: 16px 24px" class="d-flex flex-column mx-auto">
           <div class="d-flex flex-row">
@@ -100,8 +99,10 @@
               </div>
             </a>
             <div style="margin-left: 8px" class="d-flex flex-column">
-              <textarea id="contentInput1" class="ms-1 mt-2" name="description"  rows="6" placeholder="有什麼新鮮事?"
-                style="border:none;width:528px"></textarea>
+
+              <textarea class="ms-1 mt-2 form-control border-3 border-top-0 border-start-0 border-end-0 border-bottom-0" id="contentInput1" name="description" cols="30" rows="6" style="width:528px" placeholder="有什麼新鮮事?"></textarea>
+              <label for="contentInput1"></label>
+
             </div>
           </div>
         </div>

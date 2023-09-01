@@ -25,7 +25,7 @@
 
                 <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
                     <div style="margin: 8px 0px" class="mx-auto">
-                        <p>{{this.description}}</p>
+                        <p class="text-break">{{this.description}}</p>
                     </div>
                 </a>
 
@@ -101,7 +101,7 @@
 
                                 <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
                                     <div style="margin: 8px 0px" class="mx-auto">
-                                        <p>{{this.description}}</p>
+                                        <p class="text-break">{{this.description}}</p>
                                     </div>
                                 </a>
 
@@ -130,8 +130,8 @@
                                 </div>
                             </a>
                             <div class="d-flex flex-row">
-                                <textarea id="contentInput{{this.id}}" class="ms-1 mt-2" name="comment" rows="6" placeholder="推你的回覆"
-                                style="border:none;width:528px"></textarea>
+                                <textarea class="ms-1 mt-2 form-control border-3 border-top-0 border-start-0 border-end-0 border-bottom-0" id="contentInput{{this.id}}" name="comment" cols="30" rows="6" style="width:528px" placeholder="推你的回覆"></textarea>
+                                <label for="contentInput{{this.id}}"></label>
                             </div>
                         </div>
 
@@ -152,42 +152,5 @@
 </div>
 
 {{>top-users-bar}}
-
-{{!-- tweet modal --}}
-<div class="modal" id="myModalmain" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content border-white d-flex flex-column" style="width:634px; height: 300px; top:56px">
-      <div class="d-flex justify-content-start">
-        <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <hr style="margin-top: 5px; margin-bottom: 5px;">
-
-      <form action="/tweets" method="POST">
-        <div style="padding: 16px 24px" class="d-flex flex-column mx-auto">
-          <div class="d-flex flex-row">
-            <a class="" href="/users/{{user.id}}/tweets">
-              <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
-                <img src={{#if user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
-                  style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
-              </div>
-            </a>
-            <div style="margin-left: 8px" class="d-flex flex-column">
-              <textarea class="ms-1 mt-2" name="description" id="contentInput" rows="6" placeholder="有什麼新鮮事?"
-                style="border:none;width:528px"></textarea>
-            </div>
-          </div>
-        </div>
-        <div style="padding: 16px" class="d-flex flex-row-reverse align-items-center">
-          <button class="btn text-end my-auto py-1 px-3"
-            style="background-color:#FF6600; color:white; border-radius: 30px" type="submit" id="submitBtn">
-            推文
-          </button>
-          {{!-- DOM render --}}
-          <span id="emptyContentMessage" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 {{>personaldata-modal}}

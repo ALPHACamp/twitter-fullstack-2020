@@ -24,12 +24,13 @@
     </div>
     <div class="align-self-center ms-0 me-3 p-0 text-end">
       {{#if this.isFollowed }}
-      <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
         <button type="submit" style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
           class="btn">正在跟隨</button>
       </form>
       {{else}}
-      <form action="/following/{{this.id}}" method="POST">
+      <form action="/followships" method="POST">
+        <input type="text" class="d-none" value={{this.id}} name="id">
         <button type="submit" style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
           class="btn">跟隨</button>
       </form>
