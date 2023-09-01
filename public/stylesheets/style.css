@@ -106,7 +106,7 @@ a:hover {
 .navbar-logo {
   width: 40px;
   height: 40px;
-} 
+}
 
 .main-navbar {
   position: fixed;
@@ -247,12 +247,13 @@ a:hover {
   height: 26px;
   font-weight: 700;
   line-height: 26px;
-} 
+}
 
 
 /* ---------- Signin / Signup ---------- */
 
-.signin-container, .signup-container {
+.signin-container,
+.signup-container {
   height: 100vh;
   max-width: 356px;
   display: flex;
@@ -260,7 +261,8 @@ a:hover {
   margin: 0 auto;
 }
 
-.signin-logo-container, .signup-logo-container {
+.signin-logo-container,
+.signup-logo-container {
   position: relative;
   margin: 0 auto;
   top: 64px;
@@ -269,8 +271,9 @@ a:hover {
   padding: 5px;
 }
 
-.signin-logo, .signup-logo {
-  position: absolute; 
+.signin-logo,
+.signup-logo {
+  position: absolute;
   top: 5px;
   left: 5px;
   width: 40px;
@@ -333,8 +336,7 @@ a:hover {
   background-color: var(--form-gray);
 }
 
-.signup-container
-.form-item-password {
+.signup-container .form-item-password {
   position: absolute;
   margin: 0 auto;
   width: 356px;
@@ -452,7 +454,8 @@ a:hover {
   border: none;
 }
 
-.btn-signin-text, .btn-signup-text {
+.btn-signin-text,
+.btn-signup-text {
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;
@@ -487,13 +490,14 @@ a:hover {
   font-size: 16px;
   line-height: 24px;
   color: #0062FF;
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
 
 /* ---------- Admin tweets ---------- */
 
-.admin-tweets, .admin-users {
+.admin-tweets,
+.admin-users {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -615,7 +619,7 @@ a:hover {
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  height: 26px; 
+  height: 26px;
 }
 
 .user-name {
@@ -784,7 +788,7 @@ a:hover {
   color: #6C757D;
 }
 
-.card-foot{
+.card-foot {
   position: relative;
   bottom: 50px;
   display: flex;
@@ -807,7 +811,7 @@ a:hover {
   text-align: center;
   align-items: center;
   height: 24px;
-  gap: 8px;  
+  gap: 8px;
 }
 
 .post-icon {
@@ -864,7 +868,8 @@ a:hover {
   gap: 8px;
 }
 
-.follower, .following {
+.follower,
+.following {
   display: flex;
   height: 22px;
 }
@@ -885,4 +890,37 @@ a:hover {
   line-height: 22px;
   letter-spacing: 0px;
   color: #6C757D;
+}
+
+#btn-nav-tweet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  width: 156px;
+  height: 46px;
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+#btn-tweet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 35px;
+  background: #FF6600;
+  border: none;
+  border-radius: 50px;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
 }

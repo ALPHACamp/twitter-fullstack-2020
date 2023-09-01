@@ -63,58 +63,81 @@
 
   </div>
 
-  <!-- 中間首頁 -->
+  <!-- 中間貼文及回覆 -->
   <div class="col-5" style="padding:0;background-color:white; border:2px #ECECEC solid; border-top-color:white;">
-    <div style="padding:15px;height:50px;display: flex; align-items:center;">
-      <span style="font-size: 22px;"><strong>首頁</strong></span>
-    </div>
-    <div style="padding:15px; border-top:2px #ECECEC solid;">
-      <div class="position-relative" data-bs-toggle="modal" data-bs-target="#tweetModal" style="height:100px;">
-        <div style="margin: 0 10px;"></div>
-        <img src={{user.avatar}} width="50" height="50" style="border-radius: 99em">
-        <strong style="color:	#757676; font-size: 18px; margin:0 5px;">有什麼新鮮事?</strong>
-        <button type="button" id="btn-tweet" class="position-absolute bottom-0 end-0"
-          style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
-          <strong>推文</strong>
-        </button>
+    <a href="/tweets" style="text-decoration:none; color:black;">
+      <div style="padding:15px;height:50px;display: flex; align-items:center;">
+        <span style="font-size: 22px;"><strong> ← 推文</strong></span>
       </div>
-    </div>
+    </a>
 
-    <div style="margin: 0;height:7px;background-color: #ECECEC;"></div>
-
-    <!-- 中間推文 -->
-    {{#each tweets}}
-    <div style="padding:5px 15px; border-top:2px #ECECEC solid; display:flex;">
-      <img src={{this.User.avatar}} width="50" height="50" style="border-radius: 99em">
-      <div class="position-relative" style="margin:0 0 0 5px;">
-        <span style=" font-size:18px;" id="name"><strong>{{this.User.name}} </strong></span>
-
-        <a href="/tweets/{{this.id}}/replies" style="text-decoration:none; color:black;">
-          <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
-            this.createdAt}}</span>
-          <div style="margin: 2px 0; word-break: break-all;">{{this.description}}
+    <div style="padding:7px 15px 0 15px; border-top:2px #ECECEC solid;">
+      <div class="position-relative">
+        <div style="display: flex;">
+          <img src={{tweet.User.avatar}} width="50" height="50" style="border-radius: 99em">
+          <div style="padding:0 5px;">
+            <span style="font-size:18px; font-weight:bold;" id="name">{{tweet.User.name}} </span>
+            <div style="color:gray; font-size:14px;"> @{{tweet.User.account}}</div>
           </div>
-        </a>
-        <div id="icon-container" style="display: flex; align-items:center">
+        </div>
+        <p style="margin: 5px 0; word-break: break-all;">{{tweet.description}}</p>
+        <span style="color:gray; font-size:14px;">{{timeFormat this.createdAt}}</span>
+
+        <div style="padding:5px 15px; border-bottom:2px #ECECEC solid;"></div>
+
+        <div id="count-container" style="display: flex; align-items:center; height:40px;">
+          <span><strong>{{replyCount}}</strong></span>
+          <span style="color:gray; font-size:16px; margin: 0 30px 0 10px;">回覆</span>
+          <span><strong>{{likeCount}}</strong></span>
+          <span style="color:gray; font-size:16px; margin: 0 30px 0 10px;">喜歡次數</span>
+        </div>
+
+        <div style="border-bottom:2px #ECECEC solid;"></div>
+
+        <div id="icon-container" style="display: flex; align-items:center; height:40px;">
 
           <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal" style="margin: 0; cursor:pointer;"
-            src="/stylesheets/icons/reply_outlined.svg" width="16" height="16" href="#" alt="reply"
-            onclick="btnReply(`{{this.id}}`)">
-          <span style="margin:0 35px 0 8px;">{{this.replyCount}}</span>
-          {{#if this.isLiked}}
-          <form id="unlike" name="unlike" action="/tweets/{{this.id}}/unlike" method="POST"
+            src="/stylesheets/icons/reply_outlined.svg" width="25" height="25" href="#" alt="reply"
+            onclick="btnReply(`{{tweet.id}}`)">
+          <span style="margin:0 100px 0 8px;">{{tweet.replyCount}}</span>
+          {{#if isLiked}}
+          <form id="unlike" name="unlike" action="/tweets/{{tweet.id}}/unlike" method="POST"
             style="display: flex; align-items:center;">
-            <input type="image" img src="/stylesheets/icons/like_filled.svg" width="16" height="16"
+            <input type="image" img src="/stylesheets/icons/like_filled.svg" width="25" height="25"
               onClick="document.unlike.submit()">
           </form>
           {{else}}
-          <form id="like" name="like" action="/tweets/{{this.id}}/like" method="POST"
+          <form id="like" name="like" action="/tweets/{{tweet.id}}/like" method="POST"
             style="display: flex; align-items:center;">
-            <input type="image" img src="/stylesheets/icons/like_outlined.svg" width="16" height="16"
+            <input type="image" img src="/stylesheets/icons/like_outlined.svg" width="25" height="25"
               onClick="document.unlike.submit()">
           </form>
           {{/if}}
-          <span style="margin:0 8px;">{{this.likeCount}}</span>
+          <span style="margin:0 8px;">{{tweet.likeCount}}</span>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 中間回覆 -->
+    {{#each replies}}
+    <div style="padding:5px 15px; border-top:2px #ECECEC solid;">
+      <div style="display: flex;">
+        <img src={{this.User.avatar}} width="50" height="50" style="border-radius: 99em">
+        <div class="position-relative" style="margin: 0 5px;">
+          <span style="font-size:18px;" id="name"><strong>{{this.User.name}} </strong></span>
+          <span style="color:gray; font-size:14px;"> @{{this.User.account}}·{{relativeTimeFromNow
+            this.createdAt}}</span>
+
+          <div style="color:gray; font-size:12px;">回覆<span style=" color:rgb(255, 106, 0); font-size:14px;">
+              @{{../user.account}}</span></div>
+
+          <p style="margin: 2px 0; word-break: break-all;">{{this.comment}}</p>
+
+          <div id=" icon-container" style="display: flex; align-items:center">
+          </div>
+
         </div>
       </div>
     </div>
@@ -243,6 +266,10 @@
 </div>
 
 <script>
+  const dayjs = require('dayjs')
+  const relativeTime = require('dayjs/plugin/relativeTime')
+  dayjs.extend(relativeTime)
+
   function btnReply(id) {
     const replyModal = document.getElementById('replyModal')
 
@@ -256,7 +283,7 @@
             document.querySelector('#replyModalAvatar').src = result.avatar
             document.querySelector('#replyModalName').textContent = result.name
             document.querySelector('#replyModalAccount').innerHTML = `  @${result.account}·`
-            // document.querySelector('#replyModalFromNow').innerHTML = dayjs(${ result.createdAt }).fromNow()
+            // document.querySelector('#replyModalFromNow').textContent = dayjs(result.createdAt).fromNow()
             document.querySelector('#replyModalDescription').textContent = result.description
             document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
             document.querySelector('#userAvatar').src = result.loginUserAvatar
