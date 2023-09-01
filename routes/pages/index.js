@@ -5,7 +5,8 @@ const passport = require('../../config/passport')
 const admin = require('./modules/admin')
 const users = require('./modules/users')
 const tweets = require('./modules/tweets')
-
+const replies = require('./modules/replies')
+const followships = require('./modules/followships')
 // Controllers
 const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
@@ -32,6 +33,12 @@ router.get('/logout', userController.logout)
 
 // tweets route
 router.use('/tweets', authenticated, tweets)
+
+// replies route
+router.use('/replies', authenticated, replies)
+
+// followships route
+router.use('/followships', authenticated, followships)
 
 // users route
 router.use('/users', authenticated, users)
