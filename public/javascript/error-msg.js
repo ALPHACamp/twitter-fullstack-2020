@@ -9,7 +9,7 @@ document.querySelectorAll('[id^=tweetBtn]').forEach(btn => {
     } else {
       contentMessage.textContent = ''
     }
-    if (contentInput.value.length > 50) {
+    if (contentInput.value.length > 140) {
       contentMessage.textContent = '字數不可超過 140 字'
       event.preventDefault()
     }
