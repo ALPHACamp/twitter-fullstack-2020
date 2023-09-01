@@ -126,7 +126,10 @@ const userController = {
         order: [['Followings', 'createdAt', 'Desc']]
       }),
       User.findAll({
-        where:{ role: 'user' },
+        where:{
+          role: 'user',
+           id: { [Op.not]: currentUserId }
+        },
         include: { model: User, as: 'Followers'}
       })
     ])
@@ -162,7 +165,10 @@ const userController = {
         order: [['Followers', 'createdAt', 'Desc']]
       }),
       User.findAll({
-        where:{ role: 'user' },
+        where:{
+          role: 'user',
+           id: { [Op.not]: currentUserId }
+        },
         include: { model: User, as: 'Followers'}
       })
     ])
@@ -215,7 +221,10 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
-        where:{ role: 'user' },
+        where:{
+          role: 'user',
+           id: { [Op.not]: currentUserId }
+        },
         include: { model: User, as: 'Followers'}
       })
     ])
@@ -258,6 +267,7 @@ const userController = {
   },
   getUserReplies: (req, res, next) => {
     const userId = Number(req.params.id)
+    const currentUserId = helpers.getUser(req).id
     return Promise.all([
       User.findByPk(userId, {
         include: [
@@ -270,14 +280,16 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
-        where:{ role: 'user' },
+        where:{
+          role: 'user',
+           id: { [Op.not]: currentUserId }
+        },
         include: { model: User, as: 'Followers'}
       })
     ])
       .then(([user, followShips]) => {
         if (!user) throw new Error('使用者不存在')
         const userData = user.toJSON()
-        const currentUserId = helpers.getUser(req).id
         // Profile Data
         const isFollowed = helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(Fu => Fu.id).includes(userId) : []
         const tweetCount = userData.Tweets.length
@@ -320,7 +332,10 @@ const userController = {
       }),
       // 推薦追隨
       User.findAll({
-        where:{ role: 'user' },
+        where:{
+          role: 'user',
+           id: { [Op.not]: currentUserId }
+        },
         include: { model: User, as: 'Followers'}
       })
     ])

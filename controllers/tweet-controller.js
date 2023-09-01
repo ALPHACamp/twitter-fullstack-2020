@@ -1,5 +1,6 @@
 const { User, Tweet, Reply, Like } = require('../models')
 const helpers = require('../_helpers')
+const { Op } = require('sequelize')
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -11,7 +12,10 @@ const tweetController = {
       nest: true
       }),
       User.findAll({
-        where:{ role: 'user' },
+        where:{
+          role: 'user',
+           id: { [Op.not]: user.id }
+        },
         include: { model: User, as: 'Followers'}
       })
     ])
