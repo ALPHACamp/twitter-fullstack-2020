@@ -59,14 +59,24 @@
         {{#each replies}}
         <div class="d-flex align-items-start flex-column border-top" style="min-height: 130px;">
           <div class="align-self-start pt-2">
-            <img src="{{this.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+            <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
+              <img src="{{this.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+            </a>
             <div class="d-inline-flex pt-3">
-              <h5 class="mx-2" style="color: #171725; font-size: 16px; font-weight: 700">{{this.User.name}}</h5>
+              <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
+                <h5 class="mx-2" style="color: #171725; font-size: 16px; font-weight: 700">{{this.User.name}}</h5>
+              </a>
               <span style="color: #6C757D; font-weight: 400; font-size: 14px">@{{this.User.account}} · {{relativeTimeFromNow this.createdAt}}</span>
             </div>
           </div>
           <div style="max-width: 528px; margin-left: 85px;">
-            <span style="color: #657786; font-size: 14px">回覆 <span style="color: #FF6600; font-size: 14px">@{{this.User.account}}</span></span>
+            <span style="color: #657786; font-size: 14px">回覆 
+              <a href="/users/{{../tweet.User.id}}/tweets" style="text-decoration: none;">
+                <span style="color: #FF6600; font-size: 14px">
+                  @{{../tweet.User.account}}
+                </span>
+              </a>
+            </span>
             <p class="mb-3 text-break" style="font-size: 16px; margin-top: 10px">{{this.comment}}
             </p>
           </div>
