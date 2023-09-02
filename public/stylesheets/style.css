@@ -190,6 +190,11 @@ a:focus {
   }
 }
 
+.nav-item .nav-link:hover .nav-tab, .nav-item-logout .nav-link:hover .nav-tab {
+  text-decoration: none;
+  color: var(--brand-color);
+}
+
 .nav-link:hover .nav-icon .home-icon {
   background-image: url("/stylesheets/icons/home_filled.svg")
 }
@@ -218,7 +223,7 @@ a:focus {
   background-image: url("/stylesheets/icons/logout.svg")
 }
 
-.nav-link:hover .icon .logout-icon {
+.nav-link:hover .nav-icon .logout-icon {
   background-image: url("/stylesheets/icons/logout_colored.svg")
 }
 
