@@ -372,11 +372,19 @@ header {
   }
 }
 
-.card-top .card-cover, 
+.card-top .card-cover {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
 .card-top .default-cover {
   width: 210px;
   height: 140px;
   border-radius: 10px 10px 0px 0px;
+  background-image: url("/stylesheets/icons/cover.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .card-center {
