@@ -170,7 +170,8 @@
             </button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST" style="display: flex; align-items:center;">
+          <form action="/followships" method="POST" style="display: flex; align-items:center;">
+            <input type="hidden" name="id" value={{this.id}} />
             <button type="submit" id="btn-tweet"
               style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
               跟隨
@@ -222,7 +223,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form action="/replies" method="POST">
+      <form id="action" action="" method="POST">
         <div class="modal-body">
           <div style="display: flex;">
             <img id="replyModalAvatar" src="" width="50" height="50" style="border-radius: 99em">
@@ -247,8 +248,6 @@
               <span style="color:gray; font-size:14px;">推你的回覆</span>
             </div>
           </div>
-
-          <input id="TweetId" type="hidden" name="TweetId" value="" />
 
           <textarea class="form-control" id="comment" name="comment" rows="3" cols="140" style="margin: 10px 0 0 0;"
             required></textarea>
@@ -287,7 +286,7 @@
             document.querySelector('#replyModalDescription').textContent = result.description
             document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
             document.querySelector('#userAvatar').src = result.loginUserAvatar
-            document.querySelector('#TweetId').value = result.tweet_id
+            document.querySelector('#action').action = `/tweets/${result.tweet_id}/replies`
           })
           .catch(error => console.error("Error:", error))
       })
