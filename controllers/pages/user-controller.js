@@ -240,38 +240,15 @@ const userController = {
 
   getLikeTweets: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, LOAD_USER_LIKE_TWEET_JS]
-    const viewingUserId = req.params.id
-    const loggingUserId = helpers.getUser(req).id
-
+    const limit = 8
+    const page = 0
     try {
       const viewingUser = await userService.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
       const recommendUser = await userService.topFollowedUser(req)
 
-      const tweets = await Tweet.findAll({
-        include: [
-          {
-            model: User,
-            required: true
-          },
-          {
-            model: Like,
-            where: { UserId: viewingUserId }
-          }
-        ],
-        attributes: {
-          include: [
-            [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
-            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
-            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
-          ]
-        },
-        order: [[Like, 'createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
-
+      const tweets = await userService.getLikeTweets(req, limit, page)
       return res.render('user/tweets', {
         route: 'user',
         userTab: 'likes',
@@ -285,6 +262,23 @@ const userController = {
     }
   },
 
+  getLikeTweetsUnload: async (req, res, next) => {
+    try {
+      let { limit, page } = req.query
+      limit = parseInt(limit)
+      page = parseInt(page)
+
+      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
+      // 檢查是否有提供有效的 limit 和 page
+        return res.json({ message: 'error', data: {} })
+      }
+
+      const tweets = await userService.getLikeTweets(req, limit, page)
+      return res.json(tweets)
+    } catch (error) {
+      next(error)
+    }
+  },
   getUserReplies: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
     const viewingUserId = req.params.id

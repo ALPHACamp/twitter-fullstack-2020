@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 
 // sequelize
-const { User, Tweet, Reply, Followship, sequelize } = require('../models')
+const { User, Tweet, Reply, Like, Followship, sequelize } = require('../models')
 const { Op } = require('sequelize')
 
 // helpers
@@ -247,6 +247,47 @@ const userServices = {
       tweet.createdAt = relativeTimeFromNow(tweet.createdAt)
     })
     return tweets
+  },
+
+  getLikeTweets: async (req, limit = 8, page = 0) => {
+    const offset = getOffset(limit, page)
+    const viewingUserId = req.params.id
+    const loggingUserId = helpers.getUser(req).id
+
+    let tweets = await Tweet.findAll({
+      include: [
+        {
+          model: User,
+          required: true,
+          attributes: ['id', 'avatar', 'name', 'account']
+        },
+        {
+          model: Like,
+          required: true,
+          where: { UserId: viewingUserId },
+          attributes: []
+        }
+      ],
+      attributes: {
+        include: [
+          [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
+          [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
+          [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
+          //
+        ]
+      },
+      // order: [['likeCreatedAt', 'DESC']],
+      order: [[sequelize.literal(`(SELECT created_at FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${viewingUserId})`), 'DESC']],
+      offset,
+      limit
+    })
+    tweets = tweets.map(tweet => {
+      tweet = tweet.toJSON()
+      tweet.createdAt = relativeTimeFromNow(tweet.createdAt)
+      return tweet
+    })
+    return tweets
   }
+
 }
 module.exports = userServices

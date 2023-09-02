@@ -1,18 +1,19 @@
 const container = document.querySelector('.scrollbar-hidden')
 const userId = href[href.length - 2]
-const USER_TWEETS_LIMIT = 8
-let mainUserTweetsPage = 0
+const USER_LIKE_TWEETS_LIMIT = 8
+let mainUserLikeTweetsPage = 0
 
 container.addEventListener('scroll', async () => {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 100) {
-    mainUserTweetsPage += 1
-    const link = `/users/${userId}/tweetsUnload?limit=${USER_TWEETS_LIMIT}&page=${mainUserTweetsPage}`
-    let moreUserTweets = await loadMoreData(link)
-    if (!moreUserTweets.data) {
+    mainUserLikeTweetsPage += 1
+    const link = `/users/${userId}/likesUnload?limit=${USER_LIKE_TWEETS_LIMIT}&page=${mainUserLikeTweetsPage}`
+    let moreUserLikeTweets = await loadMoreData(link)
+    console.log(moreUserLikeTweets)
+    if (!moreUserLikeTweets) {
       return null
     }
 
-    moreUserTweets = moreUserTweets.data.map(tweet => {
+    moreUserLikeTweets = moreUserLikeTweets.map(tweet => {
       let likeBtn = ''
       if (tweet.isLiked) {
         likeBtn = `
@@ -76,6 +77,12 @@ container.addEventListener('scroll', async () => {
         `
       return html
     })
-    container.innerHTML += moreUserTweets.join('')
+    console.log(moreUserLikeTweets)
+    container.innerHTML += moreUserLikeTweets.join('')
+    tweets = document.querySelectorAll(TWEET_CARD_CLASS)
+    tweets.forEach(tweet => {
+      tweet.removeEventListener('click', tweetDirectToLink)
+      tweet.addEventListener('click', tweetDirectToLink)
+    })
   }
 })

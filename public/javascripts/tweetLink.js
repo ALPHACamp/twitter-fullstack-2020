@@ -1,10 +1,9 @@
 const TWEET_CARD_CLASS = '.tweet-card'
-const tweets = document.querySelectorAll(TWEET_CARD_CLASS)
-
+/* eslint-disable */
+let tweets = document.querySelectorAll(TWEET_CARD_CLASS)
+/* eslint-enable */
 tweets.forEach(tweet => {
-  tweet.addEventListener('click', event => {
-    tweetDirectToLink(event)
-  })
+  tweet.addEventListener('click', tweetDirectToLink)
 })
 function tweetDirectToLink (event) {
   /* 移轉tweet-card上面的連結 */
