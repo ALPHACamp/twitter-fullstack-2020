@@ -18,7 +18,7 @@
         <div class="modal-body p-0 row">
           <div class="col-12" style="position:relative">
             <div class="bg-holder" style="height: 200px;">
-              <img src="{{#if user.cover}}{{user.cover}}{{else}}https://i.imgur.com/yLZPe7q.jpg{{/if}}"
+              <img src="{{user.cover}}"
                 id="cover-preview" class="card-img-top img-fluid" alt="..." style="height:100%; object-fit: cover;">
             </div>
             <div class="cover-option" style="display:inline; position:absolute; left: 280px; top: 80px">
@@ -33,7 +33,7 @@
             </div>
 
             <div class="avatar-holder" style="margin-top:-65px; margin-left:20px; height:140px;">
-              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/TEssa4K.jpeg{{/if}}"
+              <img src=""
                 class="rounded-circle" alt="user_avatar" id="avatar-preview" style="border:4px #FFFFFF solid; height: 140px; width:140px; object-fit: cover;">
             </div>
             <label for="avatar" class="btn avatar-uploader" style=" position:absolute; left: 75px; top: 180px">
@@ -49,10 +49,10 @@
               </label>
               <input type="text" class="form-control nowcount1 mb-0" id="name" name="name" maxlength="50"
                 style="border:none; outline: none; font-size:16px; background-color:#F5F8FA; border-bottom:2px solid #657786; width:100%;"
-                aria-describedby="nameHelp" value="{{user.name}}" />
+                aria-describedby="nameHelp" value="" />
             </div>
             {{!-- 計算字數 --}}
-            <p class="text-end text-muted now1" style="font-size: 12px;">/50</p>
+            <p class="text-end text-muted now1" id="nameCount" style="font-size: 12px;">{{user.name.length}}/50</p>
           </div>
 
           <div style="height:171px; width:602px; margin: 10px auto 40px auto;">
@@ -63,15 +63,11 @@
               <textarea class="form-control nowcount2" id="introduction" name="introduction"
                 style="border:none; border-bottom:2px solid #657786;outline: none;background-color:#F5F8FA; font-size:16px;width:100%;"
                 maxlength="160" aria-describedby="descriptionHelp">
-                {{#if user.introduction}}
-                  {{user.introduction}}
-                {{else}}
-                  Lorem example text example text for AC simple twitter project practice
-                {{/if}}
+                
               </textarea>
             </div>
             {{!-- 計算字數 --}}
-            <p class="text-end text-muted now1" style="font-size: 12px;">/160</p>
+            <p class="text-end text-muted now1" id="introCount" style="font-size: 12px;">{{user.introduction.length}}/160</p>
           </div>
 
         </div>
@@ -79,35 +75,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  const coverAdd = document.getElementById('cover-add')
-  const avatarAdd = document.getElementById('avatar')
-  const coverPreview = document.getElementById('cover-preview')
-  const avatarPreview = document.getElementById('avatar-preview')
-  const coverDel = document.getElementById('cover-del')
-  const originalCover = coverPreview.src
-  coverAdd.addEventListener('change', function (event) {
-    const file = event.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = function (e) {
-        coverPreview.src = e.target.result
-      }
-      reader.readAsDataURL(file)
-    }
-  })
-  coverDel.addEventListener('click', function(event) {
-    coverPreview.src = originalCover
-  })
-  avatarAdd.addEventListener('change', function (event) {
-    const file = event.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = function (e) {
-        avatarPreview.src = e.target.result
-      }
-      reader.readAsDataURL(file)
-    }
-  })
-</script>

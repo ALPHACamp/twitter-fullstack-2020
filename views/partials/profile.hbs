@@ -13,7 +13,7 @@
 <div class="card-body col-12 d-flex justify-content-end" style="margin-top:-70px;">
   {{#ifCond user.id currentUserId}}
   <!-- Button trigger modal -->
-  <button type="submit" class="btn btn-default"
+  <button type="submit" class="btn btn-default" id="btnEdit" data-user-id="{{currentUserId}}"
     style="border-radius: 30px; height: 40px; font-weight: 400; color:#FF6600; border-color: #FF6600;"
     data-bs-toggle="modal" data-bs-target="#profileModal">編輯個人資料</button>
   {{else}}
@@ -53,3 +53,4 @@
       
 {{>profile-modal}}
 
+<script src="/javascripts/edit.js"></script>

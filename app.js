@@ -22,7 +22,7 @@ const port = process.env.PORT || 3000
 
 
 // Handlebars 設定
-
+app.use(express.static('public'))
 app.engine('hbs', handlebars({ extname: '.hbs', defaultLayout: 'main', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
