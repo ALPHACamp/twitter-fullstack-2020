@@ -3,7 +3,7 @@
     <div class="col-5">
       <div class="login-section">
         {{!-- logo --}}
-        <div class="text-center mb-4">
+        <div class="text-center mb-4" style="margin-top: 64px">
           <img src="/images/logo.png" alt="Icon" style="width: 50px">
         </div>
         {{!-- login Title --}}
@@ -14,28 +14,29 @@
             {{!-- account --}}
             <div class="form-group mb-4">
               <div class="label bg-light">
-                <label for="account" class="form-label bg-light">帳號</label>
+                <label for="account" class="form-label bg-light"
+                  style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">帳號</label>
               </div>
-              <input type="text" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="account"
-                name="account" placeholder="請輸入帳號">
+              <input type="text" class="form-control shadow-none bg-light" id="account" name="account" placeholder="請輸入帳號" required>
             </div>
             {{!-- password --}}
             <div class="form-group mb-4">
               <div class="label bg-light">
-                <label for="password" class="form-label bg-light">密碼</label>
+                <label for="password" class="form-label bg-light"
+                  style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼</label>
               </div>
-              <input type="password" class="form-control border-0 border-bottom border-primary shadow-none bg-light" id="password"
-                name="password" placeholder="請輸入密碼">
+              <input type="password" class="form-control shadow-none bg-light"
+                style="font-family: Noto Sans TC; font-size: 16px;font-weight: 400; line-height: 26px; letter-spacing: 0px; text-align: left;"
+                id="password" name="password" placeholder="請輸入密碼" required>
             </div>
             {{!-- submit button --}}
             <div class="text-center">
               <button class="btn btn-primary my-3"
-                style="width:356px; height:46px; border-radius: 50px; background-color:#FF6600; color: white;"
-                type="submit">登入</button>
+                style="width:356px; height:46px; border-radius: 50px; background-color:#FF6600; color: white; border-color: #FF6600" type="submit">登入</button>
             </div>
             {{!-- frontend login --}}
             <div class="d-flex justify-content-end">
-              <a href="/signin">前台登入</a>
+              <a href="/signin" style="font-family: Noto Sans TC; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: 0px; text-align: center; color: #0062FF;">前台登入</a>
             </div>
           </div>
         </form>
