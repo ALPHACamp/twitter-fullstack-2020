@@ -13,23 +13,33 @@
             <div class="form-row">
               <label for="account" class="form-label">帳號</label>
               <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{account}}" required />
+              <div class="invalid-feedback">請輸入10個字以內</div>
+              <div class="input-minmax"></div>
             </div>
             <div class="form-content">
             <div class="form-row">
               <label for="name" class="form-label">名稱</label>
               <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" class="form-input" value="{{name}}" required />
+              <div class="invalid-feedback">請輸入50個字以內</div>
+              <div class="input-minmax"></div>
             </div>
              <div class="form-row">
               <label for="email" class="form-label">Email</label>
               <input type="email" id="email" name="email" placeholder="請輸入 Email" class="form-input" value="{{email}}" required />
+              <div class="invalid-feedback">請輸入Email</div>
+              <div class="input-minmax"></div>
             </div>
             <div class="form-row">
               <label for="password" class="form-label">密碼</label>
               <input type="password" id="password" name="password" placeholder="請設定密碼" class="form-input" value="{{password}}" required />
+              <div class="invalid-feedback">請設定密碼</div>
+              <div class="input-minmax"></div>
             </div>
             <div class="form-row">
               <label for="checkPassword" class="form-label">密碼確認</label>
               <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" class="form-input" value="{{checkPassword}}" required />
+              <div class="invalid-feedback">與密碼不一致</div>
+              <div class="input-minmax"></div>
             </div>
           </div>
           <div id="btn-control" class="control-panel">
@@ -45,3 +55,5 @@
     </div>
   </div>
 </div>
+
+<script src="/javascripts/signup.js"></script>

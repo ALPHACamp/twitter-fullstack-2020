@@ -7,39 +7,42 @@ const userController = {
     res.render('signup')
   },
   signUp: async (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+
+    if (!account || !name || !email || !password) {
+      req.flash('error_messages', '所有欄位皆為必填')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+
+    if (password !== checkPassword) {
+      req.flash('error_messages', '密碼與密碼確認不相符')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+
     try {
-      const { account, name, email, password, checkPassword } = req.body
-      const errors = []
-
-      if (name.length > 50) {
-        errors.push('名稱不得超過 50 個字')
-      }
-
-      if (password !== checkPassword) {
-        errors.push('密碼與密碼確認不相符')
-      }
-
       const usedAccount = await User.findOne({ where: { account } })
       if (usedAccount) {
-        errors.push('此帳號已被註冊')
+        return res.render('signup', { account, name, email, password, checkPassword, message: '此帳號已被使用' })
       }
 
       const usedEmail = await User.findOne({ where: { email } })
       if (usedEmail) {
-        errors.push('此 Email 已被註冊')
+        req.flash('error_messages', '此 Email 已被使用')
+        return res.render('signup', { account, name, email, password, checkPassword, message: '此 Email 已被使用' })
       }
 
-      if (errors.length > 0) {
-        throw new Error(errors.join('\n & \n'))
-      }
-
-      const hash = await bcrypt.hash(req.body.password, 10)
-      await User.create({ account, name, email, password: hash })
-
-      req.flash('success_messages', '註冊成功！')
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+      await User.create({
+        account,
+        name,
+        email,
+        password: hashedPassword
+      })
+      req.flash('success_messages', '註冊成功')
       return res.redirect('/signin')
     } catch (err) {
-      next(err)
+      return next(err)
     }
   },
   signInPage: (req, res) => {
