@@ -555,7 +555,7 @@ header {
   max-width: 356px;
   height: 1200px;
   background-color: white;
-
+  
   .signin-header,
   .signup-header {
     position: relative;
@@ -601,7 +601,7 @@ header {
 }
 
 .form-row {
-  margin-bottom: 26px;
+  margin: 0 auto 26px auto;
   width: 100%;
   border-radius: 2px;
   background-color: var(--form-gray);
@@ -801,6 +801,73 @@ header {
   align-self: stretch;
   flex-grow: 0;
 }
+
+
+/* ---------- Messages ---------- */
+
+.msg-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+  width: 394px;
+  height: 96px;
+  z-index: 100;
+  background-color: #FFFFFF;
+  border: 0px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 16px 0px #33333314, 0px 4px 4px 0px #3333330A;
+  opacity: 0;
+}
+
+@keyframes toHidden {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.msg-container .msg {
+  margin-left: 24px;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.msg-container .btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.btn-container button {
+  margin-right: 24px;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+}
+
+.btn-container .btn-error {
+  border: 2px solid #fc5a5a;
+}
+
+.btn-container .btn-success {
+  border: 2px solid #82c43c;
+}
+
+.btn-container .btn-warning {
+  border: 2px solid #ffc542;
+}
+
+.btn-container .btn-info {
+  border: 2px solid #50b5ff;
+}
+
 
 #btn-tweet {
   display: flex;
