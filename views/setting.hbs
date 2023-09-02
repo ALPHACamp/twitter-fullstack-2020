@@ -54,16 +54,25 @@
                 <div class="label bg-light">
                   <label for="password" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼</label>
                 </div>
-                <input type="password" class="form-control shadow-none bg-light"
-                  id="password" name="password" placeholder="請設定密碼">
+                <input type="password" class="form-control shadow-none bg-light" id="password" name="password" placeholder="請設定密碼" onkeyup="passwordCheck()">
+                <div class="d-flex col justify-content-between">
+                  <span class="col"
+                    style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                    id="displayPassword"></span>
+                </div>
               </div>
               {{!-- check password --}}
               <div class="form-group mb-4" style="height:78px">
                 <div class="label bg-light">
                   <label for="checkPassword" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼確認</label>
                 </div>
-                <input type="password" class="form-control shadow-none bg-light"
-                  id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼">
+                <input type="password" class="form-control shadow-none bg-light" id="checkPassword" onkeyup="passwordCheck()"
+                  name="checkPassword" placeholder="請再次輸入密碼">
+                <div class="d-flex col justify-content-between">
+                  <span class="col"
+                    style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                    id="displayPassword"></span>
+                </div>
               </div>
               {{!-- submit button --}}
               <div class="text-end">
@@ -88,9 +97,9 @@
     let total = document.getElementById('account').value.length
     if (Number(total) > Number(50)) {
       document.getElementById('displayErr').textContent = '字數超出上限！'
-      input.style.borderBottom = '#FC5A5A 2px solid'
+      input.classList.add('custom-validation')
     } else {
-      input.style.borderBottom = '#50B5FF 2px solid'
+      input.classList.remove('custom-validation')
       document.getElementById('displayErr').textContent = ''
     }
     document.getElementById('display').textContent = total + ' / 50'
@@ -99,11 +108,27 @@
     let total = document.getElementById('name').value.length
     if (Number(total) > Number(50)) {
       document.getElementById('displayErr2').textContent = '字數超出上限！'
-      input2.style.borderBottom = '#FC5A5A 2px solid'
+      input2.classList.add('custom-validation')
     } else {
-      input2.style.borderBottom = '#50B5FF 2px solid'
+      input2.classList.remove('custom-validation')
       document.getElementById('displayErr2').textContent = ''
     }
     document.getElementById('display2').textContent = total + ' / 50'
   }
+  function passwordCheck() {
+      const password = document.getElementById('password')
+      const checkPassword = document.getElementById('checkPassword')
+      const displayPassword = document.querySelectorAll('[id = "displayPassword"]')
+      if (password.value !== checkPassword.value) {
+        displayPassword[0].textContent = '密碼輸入不一致！'
+        displayPassword[1].textContent = '密碼輸入不一致！'
+        password.classList.add('custom-validation')
+        checkPassword.classList.add('custom-validation')
+      } else {
+        displayPassword[0].textContent = ''
+        displayPassword[1].textContent = ''
+        password.classList.remove('custom-validation')
+        checkPassword.classList.remove('custom-validation')
+      }
+    }
 </script>

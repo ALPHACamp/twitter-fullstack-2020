@@ -60,9 +60,9 @@
     let total = document.getElementById('account').value.length
     if (Number(total) > Number(50)) {
       document.getElementById('displayErr').textContent = '字數超出上限！'
-      input.style.borderBottom = '#FC5A5A 2px solid'
+      input.classList.add('custom-validation')
     } else {
-      input.style.borderBottom = '#50B5FF 2px solid'
+      input.classList.remove('custom-validation')
       document.getElementById('displayErr').textContent = ''
     }
     document.getElementById('display').textContent = total + ' / 50'

@@ -269,3 +269,7 @@ textarea {
 .form-group input::placeholder {
   color: #B5B5BE
 }
+
+.custom-validation {
+  border-bottom: 2px solid #FC5A5A !important;
+}
