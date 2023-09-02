@@ -1,5 +1,5 @@
 const { User, Tweet, sequelize } = require('../models')
-const pagiHelper = require('../helpers/pagination-helper')
+const pagiHelper = require('../helpers/pagination-helpers')
 const { relativeTimeFromNow } = require('../helpers/handlebars-helpers')
 
 const adminServices = {
