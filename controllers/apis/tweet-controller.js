@@ -1,4 +1,5 @@
 const { Tweet, User } = require('../../models')
+const helpers = require('../../_helpers')
 
 const tweetController = {
   getTweet: (req, res, next) => {
@@ -20,7 +21,7 @@ const tweetController = {
               tweet_id: tweet.id,
               createdAt: tweet.createdAt,
               description: tweet.description,
-              loginUserAvatar: req.user.avatar
+              loginUserAvatar: helpers.getUser(req).avatar
             })
           })
       })
