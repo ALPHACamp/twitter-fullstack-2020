@@ -4,7 +4,7 @@
   <div class="user-info" style="position: absolute; top: 200px;">
     <div class="button d-flex justify-content-end" style="height: 70px; position: relative; width: 639px;">
       {{#if profileRoute}}
-      <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="button" data-bs-toggle="modal" data-bs-target="#edit-profile-{{ tweetsUser.id }}">編輯個人資料</button>
+      <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="button" data-bs-toggle="modal" data-bs-target="#edit-profile">編輯個人資料</button>
       {{> edit-user-modal}}
       {{else}}
         {{#if followByMe}}

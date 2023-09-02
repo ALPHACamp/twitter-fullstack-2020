@@ -14,7 +14,7 @@ const helpers = require('./_helpers')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
+app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))

@@ -2,6 +2,7 @@ const db = require('../models')
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Like, Followship, Reply } = db
 const helper = require('../_helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const userController = {
   editUser: (req, res, next) => {
@@ -421,6 +422,30 @@ const userController = {
           followingsCount: Followings.length,
           topUsers: req.topFollowingsList
         })
+      })
+      .catch(err => next(err))
+  },
+  postUser: (req, res, next) => {
+    const { name, introduction } = req.body
+    const { file } = req
+    const currentUser = helper.getUser(req) || null
+    return Promise.all([
+      User.findByPk(currentUser.id),
+      imgurFileHandler(file)
+    ])
+      .then(([user, filePath]) => {
+        console.log(filePath)
+        if (!user) throw new Error('使用者不存在！')
+        return user.update({
+          name,
+          introduction,
+          cover: filePath || user.cover,
+          avatar: filePath || user.avatar
+        })
+      })
+      .then(user => {
+        req.flash('success_messages', '使用者資料編輯成功')
+        res.redirect(`/users/${currentUser.id}/tweets`)
       })
       .catch(err => next(err))
   }
