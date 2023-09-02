@@ -16,9 +16,14 @@
                 </div>
                 <input type="text" class="form-control shadow-none bg-light"
                   id="account" name="account" placeholder="請輸入帳號" value='{{user.account}}' onkeyup="wordsTotal()">
+                <div class="d-flex col justify-content-between">
+                  <span class="col"
+                    style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                    id="displayErr"></span>
                   <span
                     style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; text-align: right; text-align: end; display: block; color: #696974"
-                    id="display"></span>
+                    id="display"> 0 / 50</span>
+                </div>
               </div>
               {{!-- name --}}
               <div class="form-group mb-4" style="height:78px">
@@ -27,9 +32,14 @@
                 </div>
                 <input type="text" class="form-control shadow-none bg-light" id="name"
                   name="name" placeholder="請輸入使用者名稱" value='{{user.name}}' onkeyup="wordsTotal2()">
+                <div class="d-flex col justify-content-between">
+                  <span class="col"
+                    style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                    id="displayErr2"></span>
                   <span
                     style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; text-align: right; text-align: end; display: block; color: #696974"
-                    id="display2"></span>
+                    id="display2"> 0 / 50</span>
+                </div>
               </div>
               {{!-- email --}}
               <div class="form-group mb-4" style="height:78px">
@@ -70,16 +80,30 @@
 </div>
 
 <script type="text/javascript">
-  let totalAccount = document.getElementById('account').value.length
-  document.getElementById('display').textContent = totalAccount + ' / 50'
-  let totalName = document.getElementById('name').value.length
-  document.getElementById('display2').textContent = totalName + ' / 50'
+  const input = document.getElementById('account')
+  const input2 = document.getElementById('name')
+  document.getElementById('display').textContent = input.value.length + ' / 50'
+  document.getElementById('display2').textContent = input2.value.length + ' / 50'
   function wordsTotal() {
-    let totalAccount = document.getElementById('account').value.length;
-    document.getElementById('display').textContent = totalAccount + ' / 50'
+    let total = document.getElementById('account').value.length
+    if (Number(total) > Number(50)) {
+      document.getElementById('displayErr').textContent = '字數超出上限！'
+      input.style.borderBottom = '#FC5A5A 2px solid'
+    } else {
+      input.style.borderBottom = '#50B5FF 2px solid'
+      document.getElementById('displayErr').textContent = ''
+    }
+    document.getElementById('display').textContent = total + ' / 50'
   }
   function wordsTotal2() {
-    let totalName = document.getElementById('name').value.length;
-    document.getElementById('display2').textContent = totalName  + ' / 50'
+    let total = document.getElementById('name').value.length
+    if (Number(total) > Number(50)) {
+      document.getElementById('displayErr2').textContent = '字數超出上限！'
+      input2.style.borderBottom = '#FC5A5A 2px solid'
+    } else {
+      input2.style.borderBottom = '#50B5FF 2px solid'
+      document.getElementById('displayErr2').textContent = ''
+    }
+    document.getElementById('display2').textContent = total + ' / 50'
   }
 </script>
