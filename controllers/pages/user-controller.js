@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Followship } = require('../../models')
+<<<<<<< HEAD
 const helpers = require('../../_helpers')
+=======
+>>>>>>> master
 
 const userController = {
   signUpPage: (req, res) => {
@@ -111,6 +114,42 @@ const userController = {
     })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+<<<<<<< HEAD
+=======
+  },
+  removeFollowing: async (req, res, next) => {
+    const [user, followship] = await Promise.all([
+      User.findByPk(req.params.id),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.id
+        }
+      })
+    ])
+
+    if (!user) throw new Error("User didn't exist!")
+    if (!followship) throw new Error("You haven't following this user!")
+
+    followship.destroy()
+    return res.redirect('back')
+  },
+  getUserTweets: async (req, res, next) => {
+    try {
+      const userId = req.params.id
+      const user = await User.findByPk(userId, {
+        include: [Tweet],
+        order: [['createdAt', 'DESC']]
+      })
+
+      if (!user) { throw new Error("User didn't exist!") }
+      console.log(user); // 在這裡添加這行
+      res.render('users/self', { user: user.toJSON()/*, myUser: req.user.id */ })
+    } catch (err) {
+      next(err)
+    }
+>>>>>>> master
   }
+
 }
 module.exports = userController
