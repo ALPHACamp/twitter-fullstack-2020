@@ -46,11 +46,11 @@ const userController = {
     res.render('signin')
   },
   signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
+    req.flash('success_messages', '成功登入')
     res.redirect('/tweets')
   },
   logout: (req, res) => {
-    req.flash('success_messages', '成功登出！')
+    req.flash('success_messages', '成功登出')
     req.logout()
     res.redirect('/signin')
   },

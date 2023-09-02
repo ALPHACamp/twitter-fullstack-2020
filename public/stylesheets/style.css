@@ -202,8 +202,9 @@ a:focus {
   }
 }
 
-.nav-link:hover .nav-tab {
-  color: #FF6600;
+.nav-item .nav-link:hover .nav-tab, .nav-item-logout .nav-link:hover .nav-tab {
+  text-decoration: none;
+  color: var(--brand-color);
 }
 
 .nav-link:hover .nav-icon .home-icon {
@@ -234,7 +235,7 @@ a:focus {
   background-image: url("/stylesheets/icons/logout.svg")
 }
 
-.nav-link:hover .icon .logout-icon {
+.nav-link:hover .nav-icon .logout-icon {
   background-image: url("/stylesheets/icons/logout_colored.svg")
 }
 
@@ -398,11 +399,19 @@ header {
   }
 }
 
-.card-top .card-cover,
+.card-top .card-cover {
+  width: 210px;
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
 .card-top .default-cover {
   width: 210px;
   height: 140px;
   border-radius: 10px 10px 0px 0px;
+  background-image: url("/stylesheets/icons/cover.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .card-center {
@@ -556,9 +565,7 @@ header {
   height: 1200px;
   background-color: white;
   
-
   .signin-header,
- 
   .signup-header {
     position: relative;
     top: 64px;
