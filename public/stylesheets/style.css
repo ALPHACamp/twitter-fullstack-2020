@@ -502,20 +502,20 @@ header {
 }
 
 
-/* ---------- Signin  ---------- */
+/* ---------- Signin / Signup  ---------- */
 
-.signin-content {
+.signin-content, .signup-content {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   max-width: 356px;
+  height: 1200px;
   background-color: white;
-  .signin-header {
+  .signin-header, .signup-header {
     position: relative;
     top: 64px;
     display: flex;
     flex-direction: column;
-    width: 40%;
     margin: 0 auto;
     .brand-logo {
       width: 50px;
@@ -527,7 +527,7 @@ header {
         margin: 5px;
       }
     }
-    .signin-title {
+    .signin-title, .signup-title {
       position: relative;
       top: 24px;
       margin: 0 auto;
@@ -550,7 +550,7 @@ header {
 }
 
 .form-row {
-  margin-bottom: 26px;
+  margin: 0 auto 26px auto;
   width: 100%;
   border-radius: 2px;
   background-color: var(--form-gray);
@@ -596,7 +596,7 @@ header {
     border-radius: 50px;
     background: #FF6600;
     border: none;
-    .signin-text {
+    .signin-text, .signup-text {
       font-family: "Noto Sans TC";
       font-size: 20px;
       font-weight: 400;
@@ -608,7 +608,7 @@ header {
   }
 }
 
-.sub-btn {
+.admin-signin-sub-btn {
   position: relative;
   top: 170px;
   left: 275px;
@@ -623,6 +623,28 @@ header {
     line-height: 24px;
     letter-spacing: 0px;
     text-align: right;
+  }
+}
+
+.user-signin-sub-btn {
+  position: relative;
+  top: 170px;
+  left: 225px;
+  width: 178px;
+  height: 36px;
+}
+
+.user-signup-sub-btn {
+  display: flex;
+  .sub-link {
+    margin: 40px auto;
+    text-decoration: underline; 
+    color: #0062FF;
+    font-family: "Noto Sans TC";
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0px;
   }
 }
 
@@ -706,3 +728,67 @@ header {
 } */
 
 
+/* ---------- Messages ---------- */
+
+.msg-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+  width: 394px;
+  height: 96px;
+  z-index: 100;
+  background-color: #FFFFFF;
+  border: 0px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 16px 0px #33333314, 0px 4px 4px 0px #3333330A;
+  opacity: 0;
+}
+
+@keyframes toHidden {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.msg-container .msg {
+  margin-left: 24px;
+  font-family: 'Roboto';
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.msg-container .btn-container {
+  display: flex;
+  align-items: center;
+}
+
+.btn-container button {
+  margin-right: 24px;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+}
+
+.btn-container .btn-error {
+  border: 2px solid #fc5a5a;
+}
+
+.btn-container .btn-success {
+  border: 2px solid #82c43c;
+}
+
+.btn-container .btn-warning {
+  border: 2px solid #ffc542;
+}
+
+.btn-container .btn-info {
+  border: 2px solid #50b5ff;
+}
