@@ -5,22 +5,42 @@ const adminController = {
     return res.render('admin/signin')
   },
   signIn: async (req, res) => {
-    req.flash('success_messages', '成功登入！')
+    req.flash('success_messages', '成功登入後台')
     return res.redirect('/admin/tweets')
   },
-  getTweets: (req, res, next) => {
-    Tweet.findAll({
-      include: [User],
-      order: [['createdAt', 'DESC']]
-    })
-      .then(tweets => {
-        const data = tweets.map(tweet => ({
-          ...tweet.toJSON(),
-          description: tweet.description.substring(0, 50)
-        }))
-        res.render('admin/tweets', { tweets: data, adminTweets: true })
+  getTweets: async (req, res, next) => {
+    try {
+      let tweets = await Tweet.findAll({
+        order: [['updatedAt', 'DESC']],
+        include: User
       })
-      .catch(err => next(err))
+      tweets = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        simpleText: tweet.description.substring(0, 50)
+      })
+      )
+      return res.render('admin/tweets', { tweets })
+    } catch (err) {
+      next(err)
+    }
+  },
+  deleteTweet: async (req, res, next) => {
+    const TweetId = req.params.id
+    try {
+      const tweet = await Tweet.findByPk(TweetId)
+      const replies = await Reply.findAll({ where: { TweetId } })
+      const likes = await Like.findAll({ where: { TweetId } })
+
+      if (!tweet) throw new Error('此篇推文不存在')
+      await tweet.destroy()
+      if (replies) await Reply.destroy({ where: { TweetId } })
+      if (likes) await Like.destroy({ where: { TweetId } })
+
+      req.flash('success_messages', '成功刪除')
+      return res.redirect('/admin/tweets')
+    } catch (err) {
+      next(err)
+    }
   },
   getUsers: async (req, res, next) => {
     try {
@@ -94,24 +114,6 @@ const adminController = {
       const sortedUser = userData.sort((a, b) => b.tweetsCount - a.tweetsCount)
 
       res.render('admin/users', { user: sortedUser, adminUsers: true })
-    } catch (err) {
-      next(err)
-    }
-  },
-  deleteTweet: async (req, res, next) => {
-    const TweetId = req.params.id
-    try {
-      const tweet = await Tweet.findByPk(TweetId)
-      const replies = await Reply.findAll({ where: { TweetId } })
-      const likes = await Like.findAll({ where: { TweetId } })
-
-      if (!tweet) throw new Error('此篇推文不存在')
-      await tweet.destroy()
-      if (replies) await Reply.destroy({ where: { TweetId } })
-      if (likes) await Like.destroy({ where: { TweetId } })
-
-      req.flash('success_messages', '成功刪除')
-      return res.redirect('/admin/tweets')
     } catch (err) {
       next(err)
     }
