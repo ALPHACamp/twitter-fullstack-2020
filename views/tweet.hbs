@@ -16,7 +16,9 @@
         {{!-- 貼文 --}}
         <div class="d-flex flex-column border-bottom m-3">
           <div class="d-flex">
-            <img class="rounded-circle" src="{{tweet.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" />
+            <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration: none;">
+              <img class="rounded-circle" src="{{tweet.User.avatar}}" style="width: 50px;height: 50px;" />
+            </a>
             <div class="ms-2">
               <h5 style="color: #171725; font-size: 16px; margin-bottom: 0px">{{tweet.User.name}}</h5>
               <span style="color: #6C757D; font-size: 14px">@ {{tweet.User.account}}
@@ -60,13 +62,12 @@
         <div class="d-flex align-items-start flex-column border-top" style="min-height: 130px;">
           <div class="align-self-start pt-2">
             <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
-              <img src="{{this.User.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" class="ms-4">
+              <img src="{{this.User.avatar}}" style="width: 50px;height: 50px;" class="ms-4">
             </a>
             <div class="d-inline-flex pt-3">
-              <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
-                <h5 class="mx-2" style="color: #171725; font-size: 16px; font-weight: 700">{{this.User.name}}</h5>
-              </a>
-              <span style="color: #6C757D; font-weight: 400; font-size: 14px">@{{this.User.account}} · {{relativeTimeFromNow this.createdAt}}</span>
+              <h5 class="mx-2" style="color: #171725; font-size: 16px; font-weight: 700">{{this.User.name}}</h5>
+              <span style="color: #6C757D; font-weight: 400; font-size: 14px">@{{this.User.account}} ·
+                {{relativeTimeFromNow this.createdAt}}</span>
             </div>
           </div>
           <div style="max-width: 528px; margin-left: 85px;">
