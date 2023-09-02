@@ -376,7 +376,7 @@ const userController = {
       .then(([user, followship]) => {
         if (!user) throw new Error("User didn't exist!")
         if (Number(id) === helpers.getUser(req).id) return res.redirect(200, 'back') // throw new Error('You are not allowed to follow yourself!')
-        if (followship) throw new Error('您已經追隨該使用者！')
+        if (followship) throw new Error('您已經跟隨該使用者！')
         return Followship.create({
           followerId: helpers.getUser(req).id,
           followingId: id
@@ -398,8 +398,8 @@ const userController = {
     ])
       .then(([user, followship]) => {
         if (!user) throw new Error("User didn't exist!")
-        if (Number(id) === helpers.getUser(req).id) throw new Error('您不能追隨自己！')
-        if (followship) throw new Error('您已經追隨該使用者！')
+        if (Number(id) === helpers.getUser(req).id) throw new Error('您不能跟隨自己！')
+        if (followship) throw new Error('您已經跟隨該使用者！')
         return Followship.create({
           followerId: helpers.getUser(req).id,
           followingId: id
@@ -417,7 +417,7 @@ const userController = {
       }
     })
       .then(followship => {
-        if (!followship) throw new Error('您尚未追隨該使用者！')
+        if (!followship) throw new Error('您尚未跟隨該使用者！')
         return followship.destroy()
       })
       .then(() => res.redirect('back'))
