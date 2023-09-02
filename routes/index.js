@@ -28,7 +28,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/logout', userController.logout)
 
 // 使用者功能路由
-router.post('/followships/:id', authenticated, userController.addFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 router.get('/users/:id/replies', authenticated, userController.getUserReplies)

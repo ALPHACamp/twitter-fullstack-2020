@@ -8,7 +8,11 @@ dayjs.extend(localeData)
 dayjs.extend(relativeTime)
 
 module.exports = {
-  relativeTimeFromNow: a => dayjs(a).fromNow(),
+  relativeTimeFromNow: a => {
+    const time = dayjs(a).fromNow()
+    const timeWithoutSuffix = time.replace('前', '').trim()
+    return timeWithoutSuffix
+  },
   ifCond: function (a, b, options) {
     return a === b ? options.fn(this) : options.inverse(this)
   },
