@@ -1,8 +1,8 @@
 <div class="row">
   <!-- 左側nav bar -->
-  <div class="col-3" style="padding:0 0 0 70px;">
+  <div class="col-3" style="padding:0 0 0 70px;position:relative;">
 
-    <div class=" container" style="padding: 0;">
+    <div class="nav-container" style="padding: 0;">
 
       <nav class="navbar">
         <div class="container-fluid">
@@ -51,7 +51,7 @@
 
     </div>
 
-    <nav class="navbar">
+    <nav class="navbar-logout" style="position:absolute; bottom:0;margin:0 0 10px 0;">
       <div class="container-fluid">
         <a class="navbar-brand" href="/logout" style="color: black;font-size:18px;">
           <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/logout.svg" width="18" height="18" href="#"
@@ -81,7 +81,7 @@
           </div>
         </div>
         <p style="margin: 5px 0; word-break: break-all;">{{tweet.description}}</p>
-        <span style="color:gray; font-size:14px;">{{timeFormat this.createdAt}}</span>
+        <span style="color:gray; font-size:14px;">{{normalHourForm this.createdAt}}</span>
 
         <div style="padding:5px 15px; border-bottom:2px #ECECEC solid;"></div>
 
@@ -170,7 +170,8 @@
             </button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST" style="display: flex; align-items:center;">
+          <form action="/followships" method="POST" style="display: flex; align-items:center;">
+            <input type="hidden" name="id" value={{this.id}} />
             <button type="submit" id="btn-tweet"
               style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
               跟隨
@@ -222,7 +223,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form action="/replies" method="POST">
+      <form id="action" action="" method="POST">
         <div class="modal-body">
           <div style="display: flex;">
             <img id="replyModalAvatar" src="" width="50" height="50" style="border-radius: 99em">
@@ -230,8 +231,6 @@
               <strong><span style="font-size:18px;" id="replyModalName"></span></strong>
 
               <span style="color:gray; font-size:14px;" id="replyModalAccount"></span>
-
-              {{!-- <sapn style="color:gray; font-size:14px;" id="replyModalFromNow"></span> --}}
 
                 <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
 
@@ -247,8 +246,6 @@
               <span style="color:gray; font-size:14px;">推你的回覆</span>
             </div>
           </div>
-
-          <input id="TweetId" type="hidden" name="TweetId" value="" />
 
           <textarea class="form-control" id="comment" name="comment" rows="3" cols="140" style="margin: 10px 0 0 0;"
             required></textarea>
@@ -283,11 +280,10 @@
             document.querySelector('#replyModalAvatar').src = result.avatar
             document.querySelector('#replyModalName').textContent = result.name
             document.querySelector('#replyModalAccount').innerHTML = `  @${result.account}·`
-            // document.querySelector('#replyModalFromNow').textContent = dayjs(result.createdAt).fromNow()
             document.querySelector('#replyModalDescription').textContent = result.description
             document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
             document.querySelector('#userAvatar').src = result.loginUserAvatar
-            document.querySelector('#TweetId').value = result.tweet_id
+            document.querySelector('#action').action = `/tweets/${result.tweet_id}/replies`
           })
           .catch(error => console.error("Error:", error))
       })

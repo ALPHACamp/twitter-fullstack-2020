@@ -1,74 +1,47 @@
-<div class="signup-container">
-
-  {{!-- Logo --}}
-  <div class="signup-logo-container">
-    <img src="/stylesheets/icons/logo.svg" alt="logo" class="signup-logo">
-  </div>
-
-  {{!-- Title --}}
-  <h3 class="signup-title">建立你的帳號</h3>
-  
-  {{!-- {{#if message}}
-  <div class="message-wrapper">
-    <div class="danger-message mx-auto my-4">
-      <div class="message-text">
-        {{ message }}
+<div class="container">
+  <div class="signup-content">
+    <div class="signup-header">
+      <div class="brand-logo">
+        <img src="/stylesheets/icons/logo.svg" alt="logo" class="logo">
       </div>
-      <div class="danger-icon"><img src="/stylesheets/icons/x.png" alt="x icon"></div>
+      <h3 class="signup-title">建立你的帳號</h3>
+    </div>
+    <div class="form-panel">
+      <div class="form-container">
+        <form action="/signup" method="POST" id="form" class="needs-validation" novalidate>
+          <div class="form-content">
+            <div class="form-row">
+              <label for="account" class="form-label">帳號</label>
+              <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{account}}" required />
+            </div>
+            <div class="form-content">
+            <div class="form-row">
+              <label for="name" class="form-label">名稱</label>
+              <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" class="form-input" value="{{name}}" required />
+            </div>
+             <div class="form-row">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" placeholder="請輸入 Email" class="form-input" value="{{email}}" required />
+            </div>
+            <div class="form-row">
+              <label for="password" class="form-label">密碼</label>
+              <input type="password" id="password" name="password" placeholder="請設定密碼" class="form-input" value="{{password}}" required />
+            </div>
+            <div class="form-row">
+              <label for="checkPassword" class="form-label">密碼確認</label>
+              <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" class="form-input" value="{{checkPassword}}" required />
+            </div>
+          </div>
+          <div id="btn-control" class="control-panel">
+            <button type="submit" class="btn btn-signup" id="submit">
+              <span class="signup-text">註冊</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="user-signup-sub-btn">
+      <a href="/signin" class="sub-link">取消</a>
     </div>
   </div>
-  {{/if}} --}}
-
-  {{!-- Form --}}
-  <form action="/signup" method="POST" id="form" class="needs-validation" novalidate>
-
-    {{!-- 帳號 --}}
-    <div class="form-item-account">
-      <label for="account" class="form-label">帳號</label>
-      <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{ account }}" required />
-      {{!-- <div class="invalid-feedback">請輸入10個字以內</div> --}}
-      {{!-- <div class="input-minmax"></div> --}}
-    </div>
-
-    {{!-- 名稱 --}}
-    <div class="form-item-name">
-      <label for="name" class="form-label">名稱</label>
-      <input type="text" id="name" name="name" placeholder="請輸入使用者名稱" class="form-input" value="{{ name }}" required />
-      {{!-- <div class="invalid-feedback">請輸入50個字以內</div> --}}
-      {{!-- <div class="input-minmax"></div> --}}
-    </div>
- 
-    {{!-- Email --}}
-    <div class="form-item-email">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" id="email" name="email" placeholder="請輸入Email" class="form-input" value="{{ email }}" required />
-      {{!-- <div class="invalid-feedback">請輸入Email</div> --}}
-      {{!-- <div class="input-minmax"></div> --}}
-    </div>
-
-    {{!-- 密碼 --}}
-    <div class="form-item-password">
-      <label for="password" class="form-label">密碼</label>
-      <input type="password" id="password" name="password" placeholder="請設定密碼" class="form-input" value="{{ password }}" required />
-      {{!-- <div class="invalid-feedback">請設定密碼</div>
-      <div class="input-minmax"></div> --}}
-    </div>
-
-    {{!-- 密碼確認 --}}
-    <div class="form-item-checkPassword">
-      <label for="checkPassword" class="form-label">密碼確認</label>
-      <input type="password" id="checkPassword" name="checkPassword" placeholder="請再次輸入密碼" class="form-input" value="{{ checkPassword }}" required />
-      {{!-- <div class="invalid-feedback">與密碼不相符</div>
-      <div class="input-minmax"></div> --}}
-    </div>
-
-    {{!-- 註冊 button --}}
-    <button type="submit" class="btn btn-info btn-signup" id="submit">
-      <span class="btn-signup-text">註冊</span>
-    </button>
-  </form>
-
-  {{!-- 取消 Link --}}
-  <a class="btn-cancel" href="/signin">取消</a>
-
 </div>

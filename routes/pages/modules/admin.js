@@ -1,11 +1,7 @@
 const express = require('express')
 const router = express.Router()
-
-// controllers
-const adminController = require('../../../controllers/pages/admin-controller')
-
-// middleware
 const { adminAuthenticated } = require('../../../middleware/auth')
+const adminController = require('../../../controllers/pages/admin-controller')
 
 // admin tweets
 router.get('/tweets', adminAuthenticated, adminController.getTweets)
