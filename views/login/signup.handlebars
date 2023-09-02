@@ -25,8 +25,7 @@
           </div>
       <div class="mb-4 position-relative">
         <label for="email" class="form-label position-absolute font-size-sm">Email</label>
-        <input type="text" class="form-control fs-6" name="email" id="email" placeholder="請輸入Email" value="{{email}}"
-          required>
+        <input type="email" class="form-control fs-6" name="email" id="email" placeholder="請輸入Email" value="{{email}}" pattern="^\w+((-|\.)\w+)*@[A-Za-z0-9]+((-|\.)[A-Za-z0-9]+)*\.[A-Za-z]+$" required>
         <div class="invalid-feedback">
           請輸入欲設定Email
         </div>
