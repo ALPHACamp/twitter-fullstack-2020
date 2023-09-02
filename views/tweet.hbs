@@ -232,8 +232,6 @@
 
               <span style="color:gray; font-size:14px;" id="replyModalAccount"></span>
 
-              {{!-- <sapn style="color:gray; font-size:14px;" id="replyModalFromNow"></span> --}}
-
                 <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
 
                 <span style="color:gray; font-size:14px;" id="replyModalAccount">回覆給</span>
@@ -282,7 +280,6 @@
             document.querySelector('#replyModalAvatar').src = result.avatar
             document.querySelector('#replyModalName').textContent = result.name
             document.querySelector('#replyModalAccount').innerHTML = `  @${result.account}·`
-            // document.querySelector('#replyModalFromNow').textContent = dayjs(result.createdAt).fromNow()
             document.querySelector('#replyModalDescription').textContent = result.description
             document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
             document.querySelector('#userAvatar').src = result.loginUserAvatar
