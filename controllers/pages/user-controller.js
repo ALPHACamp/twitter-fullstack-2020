@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Followship } = require('../../models')
+const { User, Tweet, Followship } = require('../../models')
 const helpers = require('../../_helpers')
 
 const userController = {
@@ -63,7 +63,7 @@ const userController = {
       })
 
       if (!user) { throw new Error("User didn't exist!") }
-      console.log(user); // 在這裡添加這行
+
       res.render('users/self', { user: user.toJSON()/*, myUser: req.user.id */ })
     } catch (err) {
       next(err)
