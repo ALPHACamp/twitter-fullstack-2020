@@ -19,7 +19,7 @@ const adminController = {
         simpleText: tweet.description.substring(0, 50)
       })
       )
-      return res.render('admin/tweets', { tweets })
+      return res.render('admin/tweets', { tweets, adminTweets: true })
     } catch (err) {
       next(err)
     }
