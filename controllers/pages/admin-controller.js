@@ -107,7 +107,7 @@ const adminController = {
         tweetsCount: tweetsMap[user.id] ? tweetsMap[user.id] : 0,
         followingsCount: followingsMap[user.id] ? followingsMap[user.id] : 0,
         followersCount: followersMap[user.id] ? followersMap[user.id] : 0,
-        likeCount: userLikedMap[user.id] ? userLikedMap[user.id] : 0
+        likesCount: userLikedMap[user.id] ? userLikedMap[user.id] : 0
       }))
 
       // 依推文數量排序

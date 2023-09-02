@@ -4,7 +4,6 @@ const passport = require('../../config/passport')
 
 const admin = require('./modules/admin')
 const followships = require('./modules/followships')
-const replies = require('./modules/replies')
 const tweets = require('./modules/tweets')
 const users = require('./modules/users')
 
@@ -36,9 +35,6 @@ router.use('/admin', adminAuthenticated, admin)
 
 // followship oute
 router.use('/followships', authenticated, followships)
-
-// reply route
-router.use('/replies', authenticated, replies)
 
 // tweets route
 router.use('/tweets', authenticated, tweets)
