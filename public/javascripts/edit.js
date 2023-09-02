@@ -36,7 +36,12 @@ avatarAdd.addEventListener('change', function (event) {
 
 btnEdit.addEventListener('click', function (event) {
     const userId = event.target.getAttribute("data-user-id")
-    fetch(`http://localhost:3000/api/users/${userId}`, {
+    const currentUrl = window.location.href //這會是 http://localhost:3000/users/2/tweets
+    //把倒數第三個 / 之後的字串消除改成api需要的路由
+    const parts = currentUrl.split('/')  
+    parts.splice(-3, 3)
+    const apiUrl = parts.join('/') + `/api/users/${userId}`
+    fetch(apiUrl, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
