@@ -1,12 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('../../../config/passport')
 const { adminAuthenticated } = require('../../../middleware/auth')
 const adminController = require('../../../controllers/pages/admin-controller')
-
-// admin signin
-router.get('/signin', adminController.signInPage)
-router.post('/signin', passport.authenticate('adminSignin', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
 
 // admin tweets
 router.get('/tweets', adminAuthenticated, adminController.getTweets)

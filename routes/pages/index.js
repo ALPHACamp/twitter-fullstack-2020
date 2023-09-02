@@ -9,11 +9,16 @@ const tweets = require('./modules/tweets')
 const users = require('./modules/users')
 
 // Controllers
+const adminController = require('../../controllers/pages/admin-controller')
 const userController = require('../../controllers/pages/user-controller')
 
 // middleware
 const { generalErrorHandler } = require('../../middleware/error-handler')
 const { authenticated, adminAuthenticated } = require('../../middleware/auth')
+
+// admin signin
+router.get('/admin/signin', adminController.signInPage)
+router.post('/admin/signin', passport.authenticate('adminSignin', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
 
 // user signup
 router.get('/signup', userController.signUpPage)
