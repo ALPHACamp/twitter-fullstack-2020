@@ -648,6 +648,7 @@ header {
 .form-input:focus {
   border-bottom: 2px solid var(--light-blue);
   outline-width: 0;
+  outline: none;
 }
 
 .was-validated .form-input:invalid {
