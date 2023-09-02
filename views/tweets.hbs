@@ -246,7 +246,7 @@
     if (replyModal) {
       replyModal.addEventListener('shown.bs.modal', event => {
         console.log("modal打開了")
-        fetch(`http://localhost:3000/api/tweets/${id}`)
+        fetch(`/api/tweets/${id}`)
           .then(res => {
             console.log(`fetch到http://localhost:3000/api/tweets/${id}`)
             return res.json();

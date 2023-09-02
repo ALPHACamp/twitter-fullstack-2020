@@ -232,11 +232,11 @@
 
               <span style="color:gray; font-size:14px;" id="replyModalAccount"></span>
 
-                <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
+              <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
 
-                <span style="color:gray; font-size:14px;" id="replyModalAccount">回覆給</span>
+              <span style="color:gray; font-size:14px;" id="replyModalAccount">回覆給</span>
 
-                <span style="color:rgb(255, 106, 0); font-size:14px;" id="replyModalAt"></span>
+              <span style="color:rgb(255, 106, 0); font-size:14px;" id="replyModalAt"></span>
             </div>
           </div>
 
@@ -272,7 +272,7 @@
 
     if (replyModal) {
       replyModal.addEventListener('shown.bs.modal', event => {
-        fetch(`http://localhost:3000/api/tweets/${id}`)
+        fetch(`/api/tweets/${id}`)
           .then(res => {
             return res.json();
           })
