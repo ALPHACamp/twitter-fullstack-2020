@@ -10,6 +10,7 @@ const USER_PAGE_JS = 'userPage.js'
 const CHECK_PASSWORD_JS = 'checkPassword.js'
 const LOAD_USER_TWEET_JS = 'unlimitScrolldown/loadUserTweet.js'
 const LOAD_USER_LIKE_TWEET_JS = 'unlimitScrolldown/loadUserLikeTweet.js'
+const LOAD_USER_REPLY_TWEET_JS = 'unlimitScrolldown/loadUserReplyTweet.js'
 const userController = {
   /* user登入 */
   getLoginPage: (req, res, next) => {
@@ -240,38 +241,15 @@ const userController = {
 
   getLikeTweets: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, LOAD_USER_LIKE_TWEET_JS]
-    const viewingUserId = req.params.id
-    const loggingUserId = helpers.getUser(req).id
-
+    const limit = 8
+    const page = 0
     try {
       const viewingUser = await userService.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
       const recommendUser = await userService.topFollowedUser(req)
 
-      const tweets = await Tweet.findAll({
-        include: [
-          {
-            model: User,
-            required: true
-          },
-          {
-            model: Like,
-            where: { UserId: viewingUserId }
-          }
-        ],
-        attributes: {
-          include: [
-            [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
-            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
-            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
-          ]
-        },
-        order: [[Like, 'createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
-
+      const tweets = await userService.getLikeTweets(req, limit, page)
       return res.render('user/tweets', {
         route: 'user',
         userTab: 'likes',
@@ -285,9 +263,27 @@ const userController = {
     }
   },
 
+  getLikeTweetsUnload: async (req, res, next) => {
+    try {
+      let { limit, page } = req.query
+      limit = parseInt(limit)
+      page = parseInt(page)
+
+      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
+      // 檢查是否有提供有效的 limit 和 page
+        return res.json({ message: 'error', data: {} })
+      }
+
+      const tweets = await userService.getLikeTweets(req, limit, page)
+      return res.json(tweets)
+    } catch (error) {
+      next(error)
+    }
+  },
   getUserReplies: async (req, res, next) => {
-    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
-    const viewingUserId = req.params.id
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, LOAD_USER_REPLY_TWEET_JS]
+    const limit = 8
+    const page = 0
 
     try {
       const viewingUser = await userService.getUserInfo(req)
@@ -295,31 +291,7 @@ const userController = {
 
       const recommendUser = await userService.topFollowedUser(req)
 
-      const replies = await Reply.findAll({
-        where: {
-          UserId: viewingUserId
-        },
-        include: [
-          {
-            model: Tweet,
-            include: [{
-              model: User,
-              attributes: ['account'],
-              require: true
-            }],
-            attributes: [],
-            required: true
-          },
-          {
-            model: User,
-            attributes: ['name', 'account', 'avatar'],
-            require: true
-          }
-        ],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
+      const replies = await userService.getUserReplies(req, limit, page)
 
       return res.render('user/tweets', {
         route: 'user',
@@ -330,6 +302,23 @@ const userController = {
         javascripts
       })
       // return res.json(replies)
+    } catch (error) {
+      next(error)
+    }
+  },
+  getUserRepliesUnload: async (req, res, next) => {
+    try {
+      let { limit, page } = req.query
+      limit = parseInt(limit)
+      page = parseInt(page)
+
+      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
+      // 檢查是否有提供有效的 limit 和 page
+        return res.json({ message: 'error', data: {} })
+      }
+
+      const replies = await userService.getUserReplies(req, limit, page)
+      return res.json(replies)
     } catch (error) {
       next(error)
     }

@@ -72,5 +72,10 @@ container.addEventListener('scroll', async () => {
       return html
     })
     container.innerHTML += moreTweets.join('')
+    tweets = document.querySelectorAll(TWEET_CARD_CLASS)
+    tweets.forEach(tweet => {
+      tweet.removeEventListener('click', tweetDirectToLink)
+      tweet.addEventListener('click', tweetDirectToLink)
+    })
   }
 })

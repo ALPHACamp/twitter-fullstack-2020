@@ -18,7 +18,7 @@ if (!isRepliesPage) {
       renderReplyModal(event)
     })
   })
-} else {
+} else if (!isUserReplyPage) {
   tweetReplyCard.addEventListener('click', event => {
     renderRepliesPageReplyModal(event)
   })
