@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('../../config/passport')
+
 
 // Controllers
-const adminController = require('../../controllers/admin-controller')
+const adminController = require('../../../middleware')
 
 // middleware
-const { adminAuthenticated } = require('../../middleware/auth')
+const { adminAuthenticated } = require('../../../middleware/auth')
 
 // Sign in
 router.get('/signin', adminController.signInPage)
