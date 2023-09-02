@@ -56,7 +56,7 @@ const userController = {
   },
   addFollowing: (req, res, next) => {
     if (req.body.id.toString() === helpers.getUser(req).id.toString()) {
-      res.status(200).json({ message: '不能追蹤自己' })
+      res.status(200).send('不能追蹤自己')
     } else {
       return Promise.all([
         User.findByPk(req.body.id),
