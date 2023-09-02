@@ -26,6 +26,8 @@ const userServices = {
   },
   postUserInfo: async (req, cb) => {
   // 兩個編輯的地方共用一個function， 分別是個人資訊頁的編輯model，跟帳戶設定頁
+    const emailRegex = /^\w+((-|\.)\w+)*@[A-Za-z0-9]+((-|\.)[A-Za-z0-9]+)*\.[A-Za-z]+$/
+
     try {
       const user = await User.findByPk(req.params.id)
       if (!user) throw new errorHandler.UserError("User didn't exist!")
@@ -36,6 +38,10 @@ const userServices = {
 
       if (!name || !name.trim().length) {
         errors.push({ messages: '暱稱不得為空白!' })
+      }
+
+      if (!emailRegex.test(email)) {
+        errors.push({ messages: 'Email格式不正確!' })
       }
 
       if (name.length > 50) {

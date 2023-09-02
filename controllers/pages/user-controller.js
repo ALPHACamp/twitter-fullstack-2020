@@ -155,6 +155,7 @@ const userController = {
   postSignup: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, CHECK_PASSWORD_JS]
     const { account, name, email, password, checkPassword } = req.body
+    const emailRegex = /^\w+((-|\.)\w+)*@[A-Za-z0-9]+((-|\.)[A-Za-z0-9]+)*\.[A-Za-z]+$/
     const errors = []
 
     if (!account || !name || !email || !password || !checkPassword) {
@@ -163,6 +164,10 @@ const userController = {
 
     if (name.length > 50) {
       errors.push({ messages: '暱稱不得超過50字' })
+    }
+
+    if (!emailRegex.test(email)) {
+      errors.push({ messages: 'Email格式不正確!' })
     }
 
     if (password !== checkPassword) {

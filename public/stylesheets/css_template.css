@@ -743,3 +743,7 @@
   top: 2px;
   right: 10.55px;
 }
+
+.partial-title img {
+  cursor: pointer;
+}
