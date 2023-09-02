@@ -246,11 +246,6 @@ a:focus {
 
 /* ---------- Admin tweets ---------- */
 
-
-
-
-/* ---------- Admin tweets ---------- */
-
 .tweet-main-content {
   margin-left: 24px;
   display: flex;
@@ -377,6 +372,7 @@ header {
     }
   }
 }
+
 
 /* ---------- Admin users ---------- */
 
@@ -553,6 +549,8 @@ header {
   }
 }
 
+
+
 /* ---------- Signin / Signup  ---------- */
 
 .signin-content,
@@ -714,27 +712,76 @@ header {
   }
 }
 
-.btn-orange {
-  color: rgb(255, 106, 0);
-  border-color: rgb(255, 106, 0);
+/* .was-validated .form-input:invalid,
+.was-validated .form-textarea:invalid {
+  border-bottom: 2px solid var(--danger);
+} */
+
+/* .invalid-feedback {
+  background-color: white;
+  width: 270px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #696974;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+} */
+
+/* .invalid-feedback {
+  margin: 0;
+  background-color: white;
+} */
+
+/* .input-minmax,
+.textarea-minmax {
+  position: absolute;
+  right: 0;
+  top: 56px;
+  text-align: right;
+  background-color: white;
+  width: 270px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #696974;
+  line-height: 20px;
+  letter-spacing: 0px;
+} */
+
+/* .btn-signup {
+  display: flex;
+  flex-direction: column;
+  min-width: 937px;
+  border-left: 1px solid #E6ECF0;
+  border-right: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
 }
 
+/* .sub-btn {
+  position: relative;
+  top: 368px;
+  left: 180px;
+  width: 160px;
+  height: 36px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0px;
+} */
 
-
-/* 默認狀態下的樣式 */
-.nav-link {
-  color: black;
-  /* 默認文字顏色 */
-}
-
-/* 鼠標懸停在連結上時的樣式 */
-.nav-link:hover {
-  color: rgb(255, 106, 0);
-  /* 鼠標懸停時的文字顏色 */
-}
-
-/* 選中連結時的樣式 */
-.nav-link:active {
-  color: rgb(255, 106, 0);
-  /* 選中時的文字顏色 */
-}
+/* .btn-cancel {
+  position: relative;
+  top: 622px;
+  margin: 0 auto;
+  width: 56px;
+  height: 36px;
+  padding: 6px 12px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0062FF;
+  text-decoration:underline;
+} */

@@ -122,9 +122,35 @@
         <span style="font-size:22px;"><strong>推薦跟隨</strong></span>
       </div>
       <ul class="list-group list-group-flush">
-        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">An item</li>
-        <li class=" list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A second item</li>
-        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5">A third item</li>
+        {{#each users}}
+        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5"></li>
+        <div style="display: flex; background-color: #F5F5F5; padding: 0 16px; justify-content:space-between;">
+          <div style="display: flex;">
+            <img src={{this.avatar}} width="50" height="50" style="border-radius: 99em">
+            <div style="padding:0 5px;">
+              <span style="font-size:18px; font-weight:bold;" id="name">{{this.name}} </span>
+              <div style="color:gray; font-size:14px;"> @{{this.account}}</div>
+            </div>
+          </div>
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" id="btn-tweet"
+              style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex; width:90px;">
+              正在跟隨
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST" style="display: flex; align-items:center;">
+            <input type="hidden" name="id" value={{this.id}} />
+            <button type="submit" id="btn-tweet"
+              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
+              跟隨
+            </button>
+          </form>
+          {{/if}}
+        </div>
+        </li>
+        {{/each}}
       </ul>
     </div>
   </div>
@@ -166,7 +192,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-      <form action="/tweets" method="POST">
+      <form id="action" action="" method="POST">
         <div class="modal-body">
 
           <strong><span id="modal-name" style="font-size:18px;"> </span></strong>
@@ -174,29 +200,63 @@
             this.createdAt}}</span>
           <p style="margin: 2px 0; word-break: break-all;">{{this.description}}</p> --}}
 
-          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="推你的回覆"
-            required></textarea>
+          {{!-- <sapn style="color:gray; font-size:14px;" id="replyModalFromNow"></span> --}}
+
+            <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
+
+            <span style="color:gray; font-size:14px;" id="replyModalAccount">回覆給</span>
+
+            <span style="color:rgb(255, 106, 0); font-size:14px;" id="replyModalAt"></span>
         </div>
-
-        <div class="modal-footer">
-          <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
-            <strong>回覆</strong>
-          </button>
-        </div>
-
-      </form>
-
     </div>
+
+    <div style="display: flex; margin:8px 0;">
+      <img id="userAvatar" src="" width="50" height="50" style="border-radius: 99em">
+      <div style="margin: 0 10px;">
+        <span style="color:gray; font-size:14px;">推你的回覆</span>
+      </div>
+    </div>
+
+    <textarea class="form-control" id="comment" name="comment" rows="3" cols="140" style="margin: 10px 0 0 0;"
+      required></textarea>
   </div>
+
+  <div class="modal-footer">
+    <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
+      <strong>回覆</strong>
+    </button>
+  </div>
+
+  </form>
+
+</div>
+</div>
 </div>
 
 <script>
-  const reply = document.getElementById('reply')
+  function btnReply(id) {
+    const replyModal = document.getElementById('replyModal')
 
-  reply.addEventListener('click', function () {
-    const name = document.querySelector("#name")
-    console.log(name)
-    document.querySelector("#modal-name").textContent = name
-  }, false);
+    if (replyModal) {
+      replyModal.addEventListener('shown.bs.modal', event => {
+        fetch(`http://localhost:3000/api/tweets/${id}`)
+          .then(res => {
+            return res.json();
+          })
+          .then(result => {
+            document.querySelector('#replyModalAvatar').src = result.avatar
+            document.querySelector('#replyModalName').textContent = result.name
+            document.querySelector('#replyModalAccount').innerHTML = `  @${result.account}·`
+            // document.querySelector('#replyModalFromNow').innerHTML = dayjs(${ result.createdAt }).fromNow()
+            document.querySelector('#replyModalDescription').textContent = result.description
+            document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
+            document.querySelector('#userAvatar').src = result.loginUserAvatar
+            document.querySelector('#action').action = `/tweets/${result.tweet_id}/replies`
+          })
+          .catch(error => console.error("Error:", error))
+      })
+
+    }
+  }
 
 </script>

@@ -1,4 +1,5 @@
 const { Tweet, User, Like, Reply } = require('../../models')
+const helpers = require('../../_helpers')
 
 const tweetController = {
   getTweets: async (req, res, next) => {
@@ -24,12 +25,12 @@ const tweetController = {
     const usersSorted = users.map(user => ({
       ...user.toJSON(),
       followerCount: user.Followers.length,
-      isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === user.id)
     })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
     const likedTweetsId = []
     likes.forEach(like => {
-      if (like.UserId === req.user.id) {
+      if (like.UserId === helpers.getUser(req).id) {
         likedTweetsId.push(like.TweetId)
       }
     })
@@ -61,11 +62,11 @@ const tweetController = {
 
     const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
 
-    res.render('tweets', { tweets: sortedData, user: req.user, users: usersSorted })
+    res.render('tweets', { tweets: sortedData, user: helpers.getUser(req), users: usersSorted })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
     if (!description.trim) {
       req.flash('error_messages', '內容不可空白')
       return res.redirect('back')
@@ -89,7 +90,7 @@ const tweetController = {
       Tweet.findByPk(TweetId),
       Like.findOne({
         where: {
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId
         }
       })
@@ -99,7 +100,7 @@ const tweetController = {
         if (like) throw new Error('You have liked this Tweet!')
 
         return Like.create({
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId
         })
       })
@@ -112,7 +113,7 @@ const tweetController = {
       Tweet.findByPk(TweetId),
       Like.findOne({
         where: {
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId
         }
       })
@@ -153,13 +154,32 @@ const tweetController = {
     const usersSorted = users.map(user => ({
       ...user.toJSON(),
       followerCount: user.Followers.length,
-      isFollowed: req.user && req.user.Followings.some(f => f.id === user.id)
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === user.id)
     })).sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
     if (!tweet) throw new Error("Tweet didn't exist!")
-    const isLiked = likes.some(l => l.UserId === req.user.id)
+    const isLiked = likes.some(l => l.UserId === helpers.getUser(req).id)
 
     res.render('tweet.hbs', { tweet: tweet.toJSON(), replies, isLiked, likeCount: likes.length, replyCount: replies.length, users: usersSorted })
+  },
+  postReply: (req, res, next) => {
+    const { comment } = req.body
+    const TweetId = req.params.id
+    const UserId = helpers.getUser(req).id
+    if (!comment.trim) {
+      req.flash('error_messages', '內容不可空白')
+      return res.redirect('back')
+    }
+
+    Reply.create({
+      UserId,
+      TweetId,
+      comment
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(err => next(err))
   }
 }
 
