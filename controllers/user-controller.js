@@ -363,9 +363,12 @@ const userController = {
     .catch(err => next(err))
   },
   addFollowing: (req, res, next) => {
-    const UserId = Number(req.params.id)
+    const UserId = Number(req.body.id)
     const currentUserId = helpers.getUser(req).id
-    if (Number(UserId) === currentUserId) throw new Error('不能追蹤自己！')
+    if (UserId === currentUserId) {
+      // 測試檔規定需回傳狀態碼 200
+      return res.redirect(200, 'back')
+    }
     Promise.all([
       User.findByPk(UserId),
       Followship.findOne({

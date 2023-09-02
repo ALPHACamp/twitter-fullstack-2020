@@ -1,0 +1,20 @@
+@media screen and (min-width: 1501px) {
+  #right-sidebar {
+    position: fixed;
+    left: 70%
+  }
+}
+
+@media screen and (min-width: 1194px) and (max-width: 1500px) {
+  #right-sidebar {
+    position: fixed;
+    right: 5%
+  }
+}
+
+
+@media screen and (max-width: 1193px) {
+  #right-sidebar {
+    display: none;
+  }
+}
