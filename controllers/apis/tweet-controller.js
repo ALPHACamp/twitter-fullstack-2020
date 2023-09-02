@@ -2,12 +2,13 @@ const { Tweet, User } = require('../../models')
 
 const tweetController = {
   getTweet: (req, res, next) => {
+    console.log('要抓API了')
     return Tweet.findByPk(req.params.id, {
       raw: true
     })
       .then(tweet => {
         if (!tweet) throw new Error("Tweet didn't exist!")
-
+        console.log(`fetch到http://localhost:3000/api/tweets/${req.params.id}`)
         User.findByPk(tweet.UserId, {
           raw: true
         })
