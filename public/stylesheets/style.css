@@ -253,3 +253,23 @@ textarea {
   font-weight: 500;
   line-height: 22px;
 }
+
+.form-group input {
+  border-bottom: #657786 solid 2px;
+}
+
+.form-group input:hover {
+  border-bottom: #50B5FF solid 2px;
+}
+
+.form-group input:focus {
+  border-bottom: #50B5FF solid 2px;
+}
+
+.form-group input::placeholder {
+  color: #B5B5BE
+}
+
+.custom-validation {
+  border-bottom: 2px solid #FC5A5A !important;
+}
