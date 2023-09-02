@@ -18,6 +18,7 @@ router.use('/admin', admin)
 
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, userController.putUser)
+router.post('/users/:id', authenticated, uploadImages, userController.postUser)
 router.get('/users/:id/tweets', authenticated, getTopUsers, userController.getUserTweets)
 router.get('/users/:id/followers', authenticated, getTopUsers, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, getTopUsers, userController.getFollowings)
