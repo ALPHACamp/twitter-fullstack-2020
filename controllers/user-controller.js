@@ -52,10 +52,10 @@ const userController = {
       .catch(err => next(err))
   },
   getUserTweets: (req, res, next) => {
-    const currentUser = helper.getUser(req).id || null
+    const currentUser = helper.getUser(req) || null
     const selectedUser = req.params.id
     // 如果現在進入的個人頁面不是當前使用者
-    const profileRoute = Number(currentUser) === Number(selectedUser)
+    const profileRoute = Number(currentUser.id) === Number(selectedUser)
     const otherProfileRoute = !profileRoute
     return Promise.all([
       Tweet.findAll({
@@ -84,10 +84,11 @@ const userController = {
             user: User.dataValues,
             likesCount: LikedUsers.length,
             repliesCount: Replies.length,
-            isLiked: LikedUsers.some(likedUser => likedUser.dataValues.UserId === currentUser && likedUser.isLike)
+            isLiked: LikedUsers.some(likedUser => likedUser.dataValues.UserId === currentUser.id && likedUser.isLike)
           })
         })
         const tweetsUser = tweets.length > 0 ? tweets[0].user : user.dataValues
+        const followByMe = Followers.some(follower => currentUser.id === follower.id)
         res.render('profile', {
           tweets,
           user: helper.getUser(req),
@@ -97,7 +98,8 @@ const userController = {
           tweetsCount: tweets.length,
           followersCount: Followers.length,
           followingsCount: Followings.length,
-          topUsers: req.topFollowingsList
+          topUsers: req.topFollowingsList,
+          followByMe
         })
       })
       .catch(err => next(err))
