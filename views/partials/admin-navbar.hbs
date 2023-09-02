@@ -1,50 +1,43 @@
-<nav class="navbar-container">
-
-  {{!-- Logo --}}
-  <div class="navbar-logo-container">
-    <a href="/admin/tweets">
-      <img src="/stylesheets/icons/logo.svg" alt="logo" class="navbar-logo">
-    </a>
+<nav class="nav">
+  <a href="/admin/tweets" class="navbar-brand">
+    <img src="/stylesheets/icons/logo.svg" alt="logo" class="logo">
+  </a>
+  <div class="nav-list">
+    <div class="nav-item">
+      <a class="nav-link" href="/admin/tweets">
+        <i class="nav-icon">
+          {{#if adminTweets}}
+          <div class="home-icon home-filled-icon background-image"></div>
+          {{else}}
+          <div class="home-icon home-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if adminTweets}}nav-tab-title{{/if}}">
+          推文清單
+        </span>
+      </a>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="/admin/users">
+        <i class="nav-icon">
+          {{#if adminUsers}}
+          <div class="user-icon user-filled-icon background-image"></div>
+          {{else}}
+          <div class="user-icon user-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if adminUsers}}nav-tab-title{{/if}}">
+          使用者列表
+        </span>
+      </a>
+    </div>
+    <div class="nav-item-logout">
+      <a class="nav-link" href="/admin/signin">
+        <i class="nav-icon">
+          <div class="logout-icon background-image"></div>
+        </i>
+        <span class="nav-tab">登出</span>
+      </a>
+    </div>
   </div>
-
-  <div class="main-navbar">
-
-    {{!-- Tweets tab --}}
-    <a class="nav-row {{#if tweets}}active{{/if}}" id="adminTweets" href="/admin/tweets">
-      <div class="nav-item-tweet">
-        <div class="nav-item-icon">
-          <div class="nav-item-home-icon">
-          </div>
-        </div>
-        <h5 class="nav-item-title-tweet">推文清單</h5>
-      </div>
-    </a>
-
-    {{!-- Users list --}}
-    <a class="nav-row {{#if users}}active{{/if}}" id="adminUsers" href="/admin/users">
-      <div class="nav-item-user">
-        <div class="nav-item-icon">
-          <div class="nav-item-user-icon">
-          </div>
-        </div>
-        <h5 class="nav-item-title-user">使用者列表</h5>
-      </div>
-    </a>
-  </div>
-
-  
-  {{!-- Log out --}}
-  <form action="/admin/signin" method="POST" class="logout-form">
-    <button type="submit" class="logout-btn" id="adminLogout">
-      <div class="nav-item-logout">
-        <div class="nav-item-icon">
-          <div class="nav-item-logout-icon">
-          </div>
-        </div>
-        <h5 class="nav-item-title-logout">登出</h5>
-      </div>
-    </button> 
-  </form>
-
-</nav>
-
+</nav>  

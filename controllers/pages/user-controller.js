@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { User, Followship } = require('../../models')
+const helpers = require('../../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -53,48 +54,47 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  addFollowing: async (req, res, next) => {
-    if (req.user.id.toString() === req.params.id.toString()) {
-      req.flash('error_messages', 'can not follow self')
-      return res.redirect('back')
+  addFollowing: (req, res, next) => {
+    if (req.body.id.toString() === helpers.getUser(req).id.toString()) {
+      res.status(200).json({ message: '不能追蹤自己' })
+    } else {
+      return Promise.all([
+        User.findByPk(req.body.id),
+        Followship.findOne({
+          where: {
+            followerId: helpers.getUser(req).id,
+            followingId: req.body.id
+          }
+        })
+      ])
+        .then(([user, followship]) => {
+          if (!user) throw new Error("User didn't exist!")
+          if (followship) throw new Error('You are already following this user!')
+          return Followship.create({
+            followerId: helpers.getUser(req).id,
+            followingId: req.body.id
+          })
+        })
+        .then(() => res.redirect('back'))
+        .catch(err => next(err))
     }
-
-    const [user, followship] = await Promise.all([
+  },
+  removeFollowing: (req, res, next) => {
+    return Promise.all([
       User.findByPk(req.params.id),
       Followship.findOne({
         where: {
-          followerId: req.user.id,
+          followerId: helpers.getUser(req).id,
           followingId: req.params.id
         }
       })
-    ])
-
-    if (!user) throw new Error("User didn't exist!")
-    if (followship) throw new Error('You are already following this user!')
-
-    await Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.id
+    ]).then(([user, followship]) => {
+      if (!user) throw new Error("User didn't exist!")
+      if (!followship) throw new Error("You haven't following this user!")
+      return followship.destroy()
     })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
-  },
-  removeFollowing: async (req, res, next) => {
-    const [user, followship] = await Promise.all([
-      User.findByPk(req.params.id),
-      Followship.findOne({
-        where: {
-          followerId: req.user.id,
-          followingId: req.params.id
-        }
-      })
-    ])
-
-    if (!user) throw new Error("User didn't exist!")
-    if (!followship) throw new Error("You haven't following this user!")
-
-    followship.destroy()
-    return res.redirect('back')
   }
 }
 

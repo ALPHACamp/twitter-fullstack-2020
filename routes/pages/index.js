@@ -43,6 +43,9 @@ router.use('/replies', authenticated, replies)
 // tweets route
 router.use('/tweets', authenticated, tweets)
 
+// followships route
+router.use('/followships', authenticated, followships)
+
 // users route
 router.use('/users', authenticated, users)
 

@@ -47,11 +47,11 @@ async (req, account, password, cb) => {
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
+
 passport.deserializeUser(async (id, cb) => {
   try {
     const user = await User.findByPk(id, {
       include: [
-        // 關聯資料
         { model: Like },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
