@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 
-const { User, Tweet, Reply, Like, Followship, sequelize } = require('../../models')
-const { Op } = require('sequelize')
+const { User, Tweet, Reply, Like, sequelize } = require('../../models')
 const helpers = require('../../_helpers')
 const userService = require('../../service/user-services')
 const errorHandler = require('../../helpers/errors-helpers')
@@ -9,117 +8,8 @@ const errorHandler = require('../../helpers/errors-helpers')
 const INPUT_LENGTH_JS = 'inputLength.js'
 const USER_PAGE_JS = 'userPage.js'
 const CHECK_PASSWORD_JS = 'checkPassword.js'
-
-const userHelper = {
-  getUserInfo: req => {
-    return User.findByPk(req.params.id, {
-      attributes: {
-        include: [
-          [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.follower_id = User.id)'), 'followingCount'],
-          [sequelize.literal('( SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'followerCount'],
-          [sequelize.literal('( SELECT COUNT(*) FROM Tweets WHERE Tweets.user_id = User.id)'), 'tweetsCount'],
-          [sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships
-                WHERE Followships.follower_id = ${helpers.getUser(req).id}
-                AND Followships.following_id = ${req.params.id}
-              )`), 'isFollowed']
-        ]
-      },
-      raw: true,
-      nest: true
-    })
-  },
-
-  getFollowings: async req => {
-    const userId = req.params.id
-    const userWithfollowings = await User.findByPk(userId, {
-      include: [
-        {
-          model: User,
-          as: 'Followings',
-          attributes: [
-            'id',
-            'name',
-            'account',
-            'avatar',
-            'introduction',
-            [sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships
-                WHERE Followships.follower_id = ${userId}
-                AND Followships.following_id = Followings.id
-              )`), 'isFollowed'] // 查看此User是否已追蹤
-          ],
-          through: {
-            model: Followship,
-            attributes: ['createdAt']
-          }
-        }
-      ],
-      order: [[{ model: User, as: 'Followings' }, { model: Followship }, 'createdAt', 'DESC']]
-
-    })
-
-    return userWithfollowings.toJSON()
-  },
-
-  getFollowers: async req => {
-    const userId = req.params.id
-    const userWithfollowers = await User.findByPk(userId, {
-      include: [
-        {
-          model: User,
-          as: 'Followers',
-          attributes: [
-            'id',
-            'name',
-            'account',
-            'avatar',
-            'introduction',
-            [sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships
-                WHERE Followships.follower_id = ${userId}
-                AND Followships.following_id = Followers.id
-              )`), 'isFollowed'] // 查看此User是否已追蹤
-          ],
-          through: {
-            model: Followship,
-            attributes: ['createdAt']
-          }
-        }
-      ],
-      order: [[{ model: User, as: 'Followers' }, { model: Followship }, 'createdAt', 'DESC']]
-
-    })
-
-    return userWithfollowers.toJSON()
-  },
-
-  topFollowedUser: req => {
-    return User.findAll({
-      where: {
-        id: { [Op.ne]: helpers.getUser(req).id }, // 不要出現登入帳號
-        role: { [Op.ne]: 'admin' } // admin不推薦, ne = not
-      },
-      attributes: {
-        include: [
-          // 使用 sequelize.literal 創建一個 SQL 子查詢來計算帖子數量
-          [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.following_id = User.id)'), 'followerCount'], // User不要加s, 坑阿！
-          // req.user是追別人的,  findAll的user是被追的人
-          [sequelize.literal(
-            `(SELECT COUNT(*) FROM Followships
-              WHERE Followships.follower_id = ${helpers.getUser(req).id}
-              AND Followships.following_id = User.id
-            )`), 'isFollowed'] // 查看此User是否已追蹤
-        ]
-      },
-      limit: 10,
-      order: [['followerCount', 'DESC']],
-      raw: true,
-      nest: true
-    })
-  }
-}
-
+const LOAD_USER_TWEET_JS = 'unlimitScrolldown/loadUserTweet.js'
+const LOAD_USER_LIKE_TWEET_JS = 'unlimitScrolldown/loadUserLikeTweet.js'
 const userController = {
   /* user登入 */
   getLoginPage: (req, res, next) => {
@@ -239,36 +129,18 @@ const userController = {
   /* user登入結束 */
 
   getUserTweets: async (req, res, next) => {
-    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
-    const viewingUserId = req.params.id
-    const loggingUserId = helpers.getUser(req).id
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, LOAD_USER_TWEET_JS]
+    const limit = 8
+    const page = 0
 
     try {
-      const viewingUser = await userHelper.getUserInfo(req)
+      const viewingUser = await userService.getUserInfo(req)
 
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
 
-      const tweets = await Tweet.findAll({
-        include: [
-          {
-            model: User,
-            required: true
-          }
-        ],
-        where: { UserId: viewingUserId },
-        attributes: {
-          include: [
-            [sequelize.literal('( SELECT COUNT(*) FROM Replies WHERE Replies.tweet_id = Tweet.id)'), 'countReply'],
-            [sequelize.literal('( SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id)'), 'countLike'],
-            [sequelize.literal(`(SELECT COUNT(*) FROM Likes WHERE Likes.tweet_id = Tweet.id AND Likes.user_id = ${loggingUserId})`), 'isLiked']
-          ]
-        },
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
+      const tweets = await userService.getUserTweets(req, limit, page)
 
-      const recommendUser = await userHelper.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(req)
 
       return res.render('user/tweets', {
         route: 'user',
@@ -283,6 +155,28 @@ const userController = {
     }
   },
 
+  getUserTweetsUnload: async (req, res, next) => {
+    try {
+      let { limit, page } = req.query
+      limit = parseInt(limit)
+      page = parseInt(page)
+
+      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
+      // 檢查是否有提供有效的 limit 和 page
+        return res.json({ message: 'error', data: {} })
+      }
+
+      const userTweetsUnload = await userService.getUserTweets(req, limit, page)
+
+      if (!userTweetsUnload) {
+        return res.json({ message: 'error', data: {} })
+      }
+
+      return res.json({ message: 'success', data: userTweetsUnload })
+    } catch (error) {
+      return next(error)
+    }
+  },
   getUserEditPage: async (req, res, next) => {
     const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, CHECK_PASSWORD_JS]
     const loadingUser = req.user.id
@@ -318,8 +212,8 @@ const userController = {
   },
 
   getFollowings: async (req, res, next) => {
-    const followings = await userHelper.getFollowings(req)
-    const recommendUser = await userHelper.topFollowedUser(req)
+    const followings = await userService.getFollowings(req)
+    const recommendUser = await userService.topFollowedUser(req)
 
     return res.render('user/followings', {
       userTab: 'followings',
@@ -329,8 +223,8 @@ const userController = {
   },
 
   getFollowers: async (req, res, next) => {
-    const followers = await userHelper.getFollowers(req)
-    const recommendUser = await userHelper.topFollowedUser(req)
+    const followers = await userService.getFollowers(req)
+    const recommendUser = await userService.topFollowedUser(req)
 
     return res.render('user/followers', {
       userTab: 'followers',
@@ -340,15 +234,15 @@ const userController = {
   },
 
   getLikeTweets: async (req, res, next) => {
-    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS]
+    const javascripts = [INPUT_LENGTH_JS, USER_PAGE_JS, LOAD_USER_LIKE_TWEET_JS]
     const viewingUserId = req.params.id
     const loggingUserId = helpers.getUser(req).id
 
     try {
-      const viewingUser = await userHelper.getUserInfo(req)
+      const viewingUser = await userService.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const recommendUser = await userHelper.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(req)
 
       const tweets = await Tweet.findAll({
         include: [
@@ -391,10 +285,10 @@ const userController = {
     const viewingUserId = req.params.id
 
     try {
-      const viewingUser = await userHelper.getUserInfo(req)
+      const viewingUser = await userService.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const recommendUser = await userHelper.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(req)
 
       const replies = await Reply.findAll({
         where: {
@@ -439,5 +333,5 @@ const userController = {
 
 module.exports = {
   userController,
-  userHelper
+  userService
 }

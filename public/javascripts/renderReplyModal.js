@@ -12,7 +12,6 @@ const replyModal = document.querySelector(REPLY_MODAL_ID)
 const replyModalTextarea = replyModal.querySelector('textarea')
 const replyModalForm = replyModal.querySelector('form')
 
-const isRepliesPage = href[href.length - 1] === 'replies'
 if (!isRepliesPage) {
   tweetCards.forEach(tweet => {
     tweet.addEventListener('click', event => {

@@ -85,7 +85,7 @@
           <div class="tweet-user-horizontal">
             <a href="/users/{{this.User.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
               <p class="fw-bold">{{this.User.name}}</p>
-              <p class="font-size-sm text-secondary">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
+              <p class="font-size-sm text-secondary">@{{this.User.account}}・{{this.createdAt}}</p>
             </a>
           </div>
 

@@ -6,6 +6,7 @@ const cpUpload = require('../../middlewares/multer')
 
 router.get('/:id/likes', userController.getLikeTweets)
 router.get('/:id/tweets', userController.getUserTweets)
+router.get('/:id/tweetsunload', userController.getUserTweetsUnload)
 router.get('/:id/replies', userController.getUserReplies)
 router.get('/:id/followers', userController.getFollowers)
 router.get('/:id/followings', userController.getFollowings)

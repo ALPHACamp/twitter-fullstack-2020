@@ -126,7 +126,7 @@
 /*hide scroll bar*/
 .scrollbar-hidden {
   width: 100%;
-  /* height: 100%; */
+  height: 100%;
   overflow: auto;
   /* 啟用捲軸 */
   scrollbar-width: none;
@@ -190,7 +190,7 @@
 
 /*tweet-reply*/
 .tweet-reply {
-  width: 639px;
+  width: auto;
   padding: 0 21px 0 16px;
 }
 
