@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
+// const userController = require('../../../controllers/pages/user-controller')
 
-// controllers
-// const userController = require('../../controllers/user-controller')
 
 module.exports = router
