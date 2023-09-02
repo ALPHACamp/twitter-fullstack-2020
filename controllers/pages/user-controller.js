@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet } = require('../models')
+const { User, Tweet } = require('../../models')
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
@@ -76,6 +76,49 @@ const userController = {
     } catch (err) {
       next(err)
     }
+  },
+  addFollowing: async (req, res, next) => {
+    if (req.user.id.toString() === req.params.id.toString()) {
+      req.flash('error_messages', 'can not follow self')
+      return res.redirect('back')
+    }
+
+    const [user, followship] = await Promise.all([
+      User.findByPk(req.params.id),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.id
+        }
+      })
+    ])
+
+    if (!user) throw new Error("User didn't exist!")
+    if (followship) throw new Error('You are already following this user!')
+
+    await Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.id
+    })
+      .then(() => res.redirect('back'))
+      .catch(err => next(err))
+  },
+  removeFollowing: async (req, res, next) => {
+    const [user, followship] = await Promise.all([
+      User.findByPk(req.params.id),
+      Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.id
+        }
+      })
+    ])
+
+    if (!user) throw new Error("User didn't exist!")
+    if (!followship) throw new Error("You haven't following this user!")
+
+    followship.destroy()
+    return res.redirect('back')
   }
 }
 
