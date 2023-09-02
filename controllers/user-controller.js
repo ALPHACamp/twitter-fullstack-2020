@@ -9,6 +9,10 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res, next) => {
+    if (!req.body.account) throw new Error('帳號不可為空白!')
+    if (!req.body.name) throw new Error('名稱不可為空白!')
+    if (!req.body.email) throw new Error('Email不可為空白!')
+    if (!req.body.password) throw new Error('密碼不可為空白!')
     if (req.body.password !== req.body.checkPassword) throw new Error('密碼不一致!')
     if (req.body.name.length > 50) throw new Error('字數超出上限！')
 
