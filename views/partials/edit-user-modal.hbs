@@ -20,8 +20,16 @@
             <img id="modal-profile-cover" src="{{ tweetsUser.cover }}" alt="user-cover"
               style="position: absolute; width: 639px; height: 200px; z-index: 0;" class="img-fluid opacity-75">
             <div class="cover-cover mx-auto" style="position: relative; width: 632px; height: 200px; background-color: #171725; opacity: 50%; z-index: 1;">
-              <img src="/images/icons/white-camera.png" alt="add-cover" style="height: 24px; width: 24px; margin-top: 88px; margin-left: 276px;">
-              <img src="/images/icons/white-cross.png" alt="delete-cover" style="height: 24px; width: 24px; margin-top: 88px; margin-left: 32px;">
+              <label for="modal-cover">
+                <img src="/images/icons/white-camera.png" alt="add-cover"
+                  style="height: 24px; width: 24px; margin-top: 88px; margin-left: 276px;">
+                <input name="cover" type="file" id="modal-cover" style="height: 0px; width: 0px; z-index: 1;">
+              </label>
+              <label for="delete-cover">
+                <img src="/images/icons/white-cross.png" alt="delete-cover"
+                  style="height: 24px; width: 24px; margin-top: 88px; margin-left: 32px;">
+                <input name="cover" type="file" id="delete-cover" style="height: 0px; width: 0px; z-index: 1;">
+              </label>
             </div>  
           </div>
           <div class="avatar" style="height: 80px;">
@@ -30,8 +38,8 @@
               style="position: relative; top: -60px; left: -230px; width: 132px; height: 132px; background-color: #171725; opacity: 50%; z-index: 3;">
               <label class="form-label" for="modal-avatar">
                 <img src="/images/icons/white-camera.png" alt="add-avatar" id="upload-avatar" style="height: 24px; width: 24px;">
+                <input name="avatar" type="file" id="modal-avatar" style="height: 0px; width: 0px; z-index: 1;">
               </label>
-              <input name="avatar" type="file" id="modal-avatar" style="height: 24px; width: 24px; z-index: 1;">
             </label>
           </div>
         </div>
