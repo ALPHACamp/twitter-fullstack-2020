@@ -19,14 +19,14 @@
       </div>
     </div>
 
-
+    
     <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
       <button type="submit" class="delete-btn" onclick="return confirm(`確定要刪除此篇推文嗎？`)">
         <img class="delete-icon" src="/stylesheets/icons/close.svg">
-      </button>
+    </button>
     </form>
-
-  </div>
-  <div class="card-text">{{this.description}}
+  
+  </div>   
+  <div class="card-text">{{this.simpleText}} ...
   </div>
 </div>

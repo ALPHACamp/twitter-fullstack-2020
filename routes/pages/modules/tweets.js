@@ -1,7 +1,5 @@
 const express = require('express')
 const router = express.Router()
-
-// controllers
 const tweetController = require('../../../controllers/pages/tweet-controller')
 
 router.get('/', tweetController.getTweets)
