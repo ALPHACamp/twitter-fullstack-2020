@@ -1,9 +1,5 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Followship } = require('../../models')
-<<<<<<< HEAD
-const helpers = require('../../_helpers')
-=======
->>>>>>> master
 
 const userController = {
   signUpPage: (req, res) => {
@@ -114,8 +110,6 @@ const userController = {
     })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
-<<<<<<< HEAD
-=======
   },
   removeFollowing: async (req, res, next) => {
     const [user, followship] = await Promise.all([
@@ -148,7 +142,6 @@ const userController = {
     } catch (err) {
       next(err)
     }
->>>>>>> master
   }
 
 }
