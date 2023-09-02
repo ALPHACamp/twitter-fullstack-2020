@@ -10,12 +10,14 @@
         <div class="d-flex flex-column flex-wrap justify-content-center mb-2"
           style="border-bottom: 1px #E6ECF0 solid; max-width:639px; margin: 0px 12px 0px 0px;">
           <div class="d-inline-flex">
-            <a href="/users/{{user.id}}/tweets" style="text-decoration:none;">
+            <a href="/users/{{../user.id}}/tweets" style="text-decoration:none;">
               <img src="{{#if ../user.avatar}}{{../user.avatar}}{{else}}https://i.imgur.com/hpSLhnx.png"{{/if}} title="source: imgur.com" style="width: 50px;height: 50px;"
                 class="ms-4 mt-2 rounded-circle">
             </a>
             <div class="d-inline-flex flex-wrap pt-3 ms-3">
-              <h5 style="color: #171725;">{{../user.name}}</h5>
+              <a href="/users/{{../user.id}}/tweets" style="text-decoration:none;">
+                <h5 style="color: #171725;">{{../user.name}}</h5>
+              </a>
               <span class="ms-1" style="color: #6C757D;">@{{../user.account}}· {{relativeTimeFromNow this.createdAt}}</span>
             </div>
           </div>
@@ -26,9 +28,12 @@
               <a href="/users/{{this.Tweet.UserId}}/tweets" style="text-decoration:none;">
                 <span style="color:#FF6600">@{{this.Tweet.User.account}}</span>
               </a>
-              <p class="mt-2 text-break">
-                {{this.comment}}
-              </p>
+              <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration:none;">
+                <p class="mt-2 text-break" style="color:#171725">
+                  {{this.comment}}
+                </p>
+              </a>
+              
             </div>
 
           </div>
@@ -39,3 +44,4 @@
     {{>right}}
   </div>
 </main>
+{{>post-modal}}

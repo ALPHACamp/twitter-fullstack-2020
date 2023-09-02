@@ -71,7 +71,13 @@
             </div>
           </div>
           <div style="max-width: 528px; margin-left: 85px;">
-            <span style="color: #657786; font-size: 14px">回覆 <span style="color: #FF6600; font-size: 14px">@{{this.User.account}}</span></span>
+            <span style="color: #657786; font-size: 14px">回覆 
+              <a href="/users/{{../tweet.User.id}}/tweets" style="text-decoration: none;">
+                <span style="color: #FF6600; font-size: 14px">
+                  @{{../tweet.User.account}}
+                </span>
+              </a>
+            </span>
             <p class="mb-3 text-break" style="font-size: 16px; margin-top: 10px">{{this.comment}}
             </p>
           </div>
