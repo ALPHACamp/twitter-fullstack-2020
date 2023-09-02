@@ -287,7 +287,41 @@ const userServices = {
       return tweet
     })
     return tweets
+  },
+  getUserReplies: async (req, limit = 8, page = 0) => {
+    const viewingUserId = req.params.id
+    const offset = getOffset(limit, page)
+    const replies = await Reply.findAll({
+      where: {
+        UserId: viewingUserId
+      },
+      include: [
+        {
+          model: Tweet,
+          include: [{
+            model: User,
+            attributes: ['account'],
+            require: true
+          }],
+          attributes: [],
+          required: true
+        },
+        {
+          model: User,
+          attributes: ['name', 'account', 'avatar'],
+          require: true
+        }
+      ],
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+      offset,
+      limit
+    })
+    replies.forEach(reply => {
+      reply.createdAt = relativeTimeFromNow(reply.createdAt)
+    })
+    return replies
   }
-
 }
 module.exports = userServices
