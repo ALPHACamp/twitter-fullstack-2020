@@ -4,13 +4,18 @@ const {
 } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Like extends Model {
-    static associate (models) {
+    static associate(models) {
       // define association here
-      Like.belongsTo(models.User, { foreignKey: 'userId' })
-      Like.belongsTo(models.Tweet, { foreignKey: 'tweetId' })
+      Like.belongsTo(models.User, { foreignKey: 'UserId' })
+      Like.belongsTo(models.Tweet, { foreignKey: 'TweetId' })
     }
   };
   Like.init({
+    id: {
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER
   }, {
