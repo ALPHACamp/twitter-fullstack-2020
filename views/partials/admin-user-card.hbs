@@ -1,0 +1,48 @@
+<div class="card-top">
+  {{#if this.cover}}
+  <img class="card-cover" src="{{this.cover}}" alt="cover" title="cover">
+  {{else}}
+  <img class="default-cover" src="/stylesheets/icons/cover.svg" alt="cover" title="cover">
+  {{/if}}
+</div>
+<div class="card-center">
+  <div class="photo">
+    {{#if this.avatar}}
+    <img class="card-avatar" src="{{this.avatar}}" alt="avatar" title="avatar">
+    {{else}}
+    <img class="default-avatar" src="/stylesheets/icons/profile-img.svg" alt="avatar" title="avatar">
+    {{/if}}
+  </div>
+  <div class="name">{{this.name}}</div>
+  <div class="account">@{{this.account}}</div>
+</div>
+<div class="card-foot">
+  <div class="actions">
+    <div class="reply">
+      <i class="post-icon"></i>
+      <span class="reply-count">
+        {{this.tweetsCount}}
+      </span>
+    </div>
+    <div class="like">
+      <i class="like-icon"></i>
+      <span class="like-count">
+        {{this.likesCount}}
+      </span>
+    </div>
+  </div>
+  <div class="follow">
+    <div class="follower">
+      <span class="follow-count">
+        {{this.followersCount}} 個
+      </span>
+      <span class="follow-text">跟隨中</span>
+    </div>
+    <div class="following">
+      <span class="follow-count">
+        {{this.followingsCount}} 位
+      </span>
+      <span class="follow-text">跟隨者</span>
+    </div>
+  </div>
+</div>
