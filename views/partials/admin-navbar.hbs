@@ -1,39 +1,43 @@
-<nav class="navbar-column">
-
-  {{!-- Logo --}}
-  <div class="logo-container">
-    <a href="/admin/tweets">
-      <img src="/images/icons/logo.svg" alt="Logo" class="logo">
-    </a>
-  </div>
-
-  <div class="main-navbar">
-    {{!-- Tweets tab --}}
-    <div class="nav-row">
-      <a class="nav-item-tweet {{#if tweets}}active{{/if}}" href="/admin/tweets">
-        <div class="home-icon"></div>
-        <h5 class="nav-title-tweet-tab">推文清單</h5>
+<nav class="nav">
+  <a href="/admin/tweets" class="navbar-brand">
+    <img src="/stylesheets/icons/logo.svg" alt="logo" class="logo">
+  </a>
+  <div class="nav-list">
+    <div class="nav-item">
+      <a class="nav-link" href="/admin/tweets">
+        <i class="nav-icon">
+          {{#if adminTweets}}
+          <div class="home-icon home-filled-icon background-image"></div>
+          {{else}}
+          <div class="home-icon home-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if adminTweets}}nav-tab-title{{/if}}">
+          推文清單
+        </span>
       </a>
     </div>
-
-  {{!-- Users list --}}
-    <div class="nav-row">
-      <a class="nav-item-user {{#if users}}active{{/if}}" href="/admin/users">
-        <div class="user-icon"></div>
-        <h5 class="nav-title-user-tab">使用者列表</h5>
+    <div class="nav-item">
+      <a class="nav-link" href="/admin/users">
+        <i class="nav-icon">
+          {{#if adminUsers}}
+          <div class="user-icon user-filled-icon background-image"></div>
+          {{else}}
+          <div class="user-icon user-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if adminUsers}}nav-tab-title{{/if}}">
+          使用者列表
+        </span>
+      </a>
+    </div>
+    <div class="nav-item-logout">
+      <a class="nav-link" href="/admin/signin">
+        <i class="nav-icon">
+          <div class="logout-icon background-image"></div>
+        </i>
+        <span class="nav-tab">登出</span>
       </a>
     </div>
   </div>
-
-  {{!-- Log out --}}
-  <div class="nav-row-logout">
-    <form action="/admin/signin" method="POST" class="logout-form">
-      <button type="submit" class="btn nav-item-logout">
-        <div class="logout-icon">
-        </div>
-        <h5 class="nav-title-logout">登出</h5>
-      </button>
-    </form>
-  </div>
-
-</nav>
+</nav>  
