@@ -7,7 +7,6 @@
       <nav class="navbar">
         <div class="container-fluid">
           <img src="/stylesheets/icons/logo.svg" width="40" height="40" href="#" alt="logo">
-          <img src="/stylesheets/icons/logo.svg" width="40" height="40" href="#" alt="logo">
         </div>
       </nav>
 
@@ -35,7 +34,6 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="#" style="color: black;font-size:18px;">
             <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/cog_outlined.svg" width="18" height="18" href="#"
-            <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/cog_outlined.svg" width="18" height="18" href="#"
               alt="setting">
             <strong>設定</strong>
           </a>
@@ -53,11 +51,10 @@
 
     </div>
 
+
     <nav class="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="/logout" style="color: black;font-size:18px;">
-          <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/logout.svg" width="18" height="18" href="#"
-            alt="logout">
           <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/logout.svg" width="18" height="18" href="#"
             alt="logout">
           <strong>登出</strong>
@@ -101,10 +98,6 @@
         </a>
         <div id="icon-container" style="display: flex; align-items:center">
 
-          <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal"
-            style="margin: 0 25px 0 0; cursor:pointer;" src="/stylesheets/icons/reply_outlined.svg" width="16"
-            height="16" href="#" alt="reply">
-
           <img id="reply" data-bs-toggle="modal" data-bs-target="#replyModal" style="margin: 0; cursor:pointer;"
             src="/stylesheets/icons/reply_outlined.svg" width="16" height="16" href="#" alt="reply"
             onclick="btnReply(`{{this.id}}`)">
@@ -137,35 +130,6 @@
         <span style="font-size:22px;"><strong>推薦跟隨</strong></span>
       </div>
       <ul class="list-group list-group-flush">
-        {{#each users}}
-        <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5"></li>
-        <div style="display: flex; background-color: #F5F5F5; padding: 0 16px; justify-content:space-between;">
-          <div style="display: flex;">
-            <img src={{this.avatar}} width="50" height="50" style="border-radius: 99em">
-            <div style="padding:0 5px;">
-              <span style="font-size:18px; font-weight:bold;" id="name">{{this.name}} </span>
-              <div style="color:gray; font-size:14px;"> @{{this.account}}</div>
-            </div>
-          </div>
-          {{#if this.isFollowed}}
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" id="btn-tweet"
-              style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex; width:90px;">
-              正在跟隨
-            </button>
-          </form>
-          {{else}}
-          <form action="/followships" method="POST" style="display: flex; align-items:center;">
-            <input type="hidden" name="id" value={{this.id}} />
-            <button type="submit" id="btn-tweet"
-              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
-              跟隨
-            </button>
-          </form>
-          {{/if}}
-        </div>
-        </li>
-        {{/each}}
         {{#each users}}
         <li class="list-group-item" style="background-color: #F5F5F5; border-color:#F5F5F5"></li>
         <div style="display: flex; background-color: #F5F5F5; padding: 0 16px; justify-content:space-between;">
@@ -263,36 +227,19 @@
             </div>
           </div>
 
-          {{!-- <sapn style="color:gray; font-size:14px;" id="replyModalFromNow"></span> --}}
-
-            <p style="margin: 2px 0; word-break: break-all;" id="replyModalDescription"></p>
-
-            <span style="color:gray; font-size:14px;" id="replyModalAccount">回覆給</span>
-
-            <span style="color:rgb(255, 106, 0); font-size:14px;" id="replyModalAt"></span>
+          <textarea class="form-control" id="comment" name="comment" rows="3" cols="140" style="margin: 10px 0 0 0;"
+            required></textarea>
         </div>
+
+        <div class="modal-footer">
+          <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
+            <strong>回覆</strong>
+          </button>
+        </div>
+      </form>
+
     </div>
-
-    <div style="display: flex; margin:8px 0;">
-      <img id="userAvatar" src="" width="50" height="50" style="border-radius: 99em">
-      <div style="margin: 0 10px;">
-        <span style="color:gray; font-size:14px;">推你的回覆</span>
-      </div>
-    </div>
-
-    <textarea class="form-control" id="comment" name="comment" rows="3" cols="140" style="margin: 10px 0 0 0;"
-      required></textarea>
   </div>
-
-  <div class="modal-footer">
-    <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
-      <strong>回覆</strong>
-    </button>
-  </div>
-  </form>
-
-</div>
-</div>
 </div>
 
 <script>

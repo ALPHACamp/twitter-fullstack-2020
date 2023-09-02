@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Followship } = require('../../models')
-
+const { User, Followship } = require('../../models')
 const helpers = require('../../_helpers')
 
 const userController = {
@@ -64,18 +63,8 @@ const userController = {
       })
 
       if (!user) { throw new Error("User didn't exist!") }
-
+      console.log(user); // 在這裡添加這行
       res.render('users/self', { user: user.toJSON()/*, myUser: req.user.id */ })
-    } catch (err) {
-      next(err)
-    }
-  },
-  editUser: async (req, res, next) => {
-    try {
-      const user = await User.findByPk(req.params.id, { raw: true })
-      if (!user) { throw new Error("User didn't exist!") }
-      // if (req.user.id !== Number(req.params.id)) throw new Error('User can only edit him or her own profile!')
-      res.render('users/edit', { user })
     } catch (err) {
       next(err)
     }
@@ -123,5 +112,4 @@ const userController = {
       .catch(err => next(err))
   }
 }
-
 module.exports = userController
