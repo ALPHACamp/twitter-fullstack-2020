@@ -1,6 +1,6 @@
 const { Tweet, Reply, Like } = require('../../models')
 const userService = require('../../service/user-services')
-const errorHandler = require('../../helpers/errors-helpers')
+const { CustomError } = require('../../libs/error/custom-error')
 const helpers = require('../../_helpers')
 const tweetServices = require('../../service/tweet-services')
 const MAX_TWEET_LENGTH = 140
@@ -19,13 +19,13 @@ const tweetController = {
       const tweets = await tweetServices.followingUsersTweets(req, limit, page)
 
       if (!tweets) {
-        throw new errorHandler.TweetError('Can not fount any tweet')
+        throw new CustomError('Can not fount any tweet', 'NotFoundError')
       }
 
       const recommendUser = await userService.topFollowedUser(req) // 給右邊的渲染用
 
       if (!recommendUser) {
-        throw new errorHandler.TweetError('Can not fount any recomend users')
+        throw new CustomError('Can not fount any recomend users', 'NotFoundError')
       }
 
       return res.render('main/tweets', {
@@ -67,9 +67,9 @@ const tweetController = {
       const description = req.body.description.trim()
 
       if (!description.length) {
-        throw new errorHandler.TweetError('內容不可空白')
+        throw new CustomError('內容不可空白', 'ValidateError')
       } else if (description.length > MAX_TWEET_LENGTH) {
-        throw new errorHandler.TweetError(`字數不可超過${MAX_TWEET_LENGTH}字`)
+        throw new RangeError(`字數不可超過${MAX_TWEET_LENGTH}字`)
       }
 
       await Tweet.create({
@@ -95,13 +95,13 @@ const tweetController = {
       const recommendUser = await userService.topFollowedUser(req) // 給右邊的渲染用
 
       if (!recommendUser) {
-        throw new errorHandler.TweetError('Can not fount any recomend users')
+        throw new CustomError('Can not fount any recommend users', 'NotFoundError')
       }
 
       const tweetWithReplies = await tweetServices.getTweetReplies(req, limit, page)
 
       if (!tweetWithReplies) {
-        throw new errorHandler.TweetError('Can not fount tweet')
+        throw new CustomError('Can not fount tweet', 'NotFoundError')
       }
 
       return res.render('main/replies', {
@@ -167,7 +167,7 @@ const tweetController = {
       const tweet = await Tweet.findByPk(tweetId)
 
       if (!tweet) {
-        throw new errorHandler.LikeError('Tweet did not exist!')
+        throw new CustomError('Tweet did not exist!', 'NotFoundError')
       }
 
       const like = await Like.findOne({
@@ -178,7 +178,7 @@ const tweetController = {
       })
 
       if (like) {
-        throw new errorHandler.LikeError('Already liked!')
+        throw new CustomError('Already liked!', 'DuplicateError')
       }
 
       await Like.create({
@@ -205,7 +205,7 @@ const tweetController = {
       })
 
       if (!like) {
-        throw new errorHandler.LikeError('Already unliked!')
+        throw new CustomError('Already unliked!', 'DuplicateError')
       }
 
       await like.destroy({
