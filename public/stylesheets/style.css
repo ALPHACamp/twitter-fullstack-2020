@@ -41,7 +41,7 @@ textarea {
 @media (min-width: 768px) and (max-width: 1199.98px) {}
 
 #left-sidebar {
-  position: fixed;
+  position: absolute;
   width: 178px;
   height: 1200px; 
   left: 130px;
@@ -101,7 +101,6 @@ textarea {
 
 .main-user-card {
   width: 888px;
-  height: 314px;
   top: 91px;
   left: 349px;
   gap: 16px;
@@ -272,4 +271,8 @@ textarea {
 
 .custom-validation {
   border-bottom: 2px solid #FC5A5A !important;
+}
+
+.admin-user-middle {
+  border-left: 1px solid #E6ECF0
 }
