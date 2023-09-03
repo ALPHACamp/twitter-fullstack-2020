@@ -31,14 +31,14 @@ const userController = {
           user.update({ account, name, email, password: hash })
             .then(() => {
               req.logout()
-              req.flash('success_messages', '恭喜個人設定更新成功，請重新登入！')
+              req.flash('success_messages', '個人設定更新成功，請重新登入！')
               res.redirect('/signin')
             })
         } else if (account !== currentUser.account) {
           user.update({ account, name, email, password: currentUser.password })
             .then(() => {
               req.logout()
-              req.flash('success_messages', '恭喜個人設定更新成功，請重新登入！')
+              req.flash('success_messages', '個人設定更新成功，請重新登入！')
               res.redirect('/signin')
             })
         } else {
