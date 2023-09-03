@@ -9,7 +9,7 @@ const api = require('./modules/api')
 const { userController } = require('../controllers/pages/user-controller')
 const followController = require('../controllers/pages/follow-controller')
 
-const errorHandler = require('../middlewares/error-handler')
+const errorHandler = require('../libs/error/error-handler')
 
 // passport & auth
 const { userLocalAuth, authenticatedUser } = require('../middlewares/auth')

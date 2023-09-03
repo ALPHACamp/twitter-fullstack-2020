@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const { User, Tweet, Reply, Like, sequelize } = require('../../models')
 const helpers = require('../../_helpers')
 const userService = require('../../service/user-services')
-const errorHandler = require('../../helpers/errors-helpers')
+const { CustomError } = require('../../libs/error/custom-error')
 
 const INPUT_LENGTH_JS = 'inputLength.js'
 const USER_PAGE_JS = 'userPage.js'
@@ -142,7 +142,7 @@ const userController = {
     try {
       const viewingUser = await userService.getUserInfo(req)
 
-      if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
+      if (!viewingUser) throw new CustomError("User didn't exist!", 'NotFoundError')
 
       const tweets = await userService.getUserTweets(req, limit, page)
 
@@ -245,7 +245,7 @@ const userController = {
     const page = 0
     try {
       const viewingUser = await userService.getUserInfo(req)
-      if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
+      if (!viewingUser) throw new CustomError("User didn't exist", 'NotFoundError')
 
       const recommendUser = await userService.topFollowedUser(req)
 
@@ -287,7 +287,7 @@ const userController = {
 
     try {
       const viewingUser = await userService.getUserInfo(req)
-      if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
+      if (!viewingUser) throw new CustomError("User didn't exist", 'NotFoundError')
 
       const recommendUser = await userService.topFollowedUser(req)
 
