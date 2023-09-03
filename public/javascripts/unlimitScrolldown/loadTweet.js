@@ -78,6 +78,8 @@ async function unlimitDraw () {
     tweets.forEach(tweet => {
       tweet.removeEventListener('click', tweetDirectToLink)
       tweet.addEventListener('click', tweetDirectToLink)
+      tweet.removeEventListener('click', renderReplyModal)
+      tweet.addEventListener('click', renderReplyModal)
     })
   }
 }

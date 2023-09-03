@@ -63,7 +63,7 @@ async function unlimitDraw () {
             </p>
 
             <div class="tweet-user-action d-flex justify-content-between">
-              <button type="button" class="btn btn-outline-light d-flex align-items-center gap-2 link-unstyled p-0 m-0"
+              <button type="button" class="border-0 btn btn-outline-light d-flex align-items-center gap-2 link-unstyled p-0 m-0"
                 data-bs-toggle="modal" data-bs-target="#reply-model">
                 <img src="/images/icons/icon_reply_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
                 <p class="font-size-sm m-0 text-secondary">${tweet.countReply}</p>
@@ -83,6 +83,8 @@ async function unlimitDraw () {
     tweets.forEach(tweet => {
       tweet.removeEventListener('click', tweetDirectToLink)
       tweet.addEventListener('click', tweetDirectToLink)
+      tweet.removeEventListener('click', renderReplyModal)
+      tweet.addEventListener('click', renderReplyModal)
     })
   }
 }

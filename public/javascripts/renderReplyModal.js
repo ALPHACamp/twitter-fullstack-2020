@@ -1,5 +1,8 @@
 const TWEET_CARDS = '.tweet-card'
-const tweetCards = document.querySelectorAll(TWEET_CARDS)
+
+/* eslint-disable */
+let tweetCards = document.querySelectorAll(TWEET_CARDS)
+/* eslint-enable */
 
 const TWEET_REPLY_CARD = '.tweet-reply'
 const tweetReplyCard = document.querySelector(TWEET_REPLY_CARD)
