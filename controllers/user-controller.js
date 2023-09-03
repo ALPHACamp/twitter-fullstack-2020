@@ -230,7 +230,7 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-      const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
+      const isFollowed = await helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
 
       // likedtweet area
       const likes = await Like.findAll({
@@ -239,7 +239,7 @@ const userController = {
         raw: true,
         nest: true //
       })
-      const likedTweetsId = likes.map(like => like.tweetId)
+      const likedTweetsId = await likes.map(like => like.tweetId)
 
       const tweets = await Tweet.findAll({
         order: [['id', 'DESC']],
@@ -250,9 +250,9 @@ const userController = {
       const myLikedTweets = await Like.findAll({
         where: { userId: reqUser.id }
       })
-      const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
+      const myLikedTweetsId = await myLikedTweets.map(l => l.tweetId)
 
-      const tweetsResult = tweets
+      const tweetsResult = await tweets
         .map(t => ({
           ...t.toJSON(),
           isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
@@ -261,7 +261,7 @@ const userController = {
       for (let i = 0; i < likes.length; i++) {
         tweetsResult[i].likedCreatedAt = likes[i].createdAt
       }
-      tweetsResult.sort((a, b) => b.likedCreatedAt - a.likedCreatedAt)
+      await tweetsResult.sort((a, b) => b.likedCreatedAt - a.likedCreatedAt)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
