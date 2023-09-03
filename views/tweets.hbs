@@ -12,7 +12,6 @@
 
       <nav class="navbar">
         <div class="container-fluid">
-
           <a class="navbar-brand" href="/tweets" style="color: rgb(255, 106, 0);font-size:18px;">
             <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/home_filled.svg" width="18" height="18"
               alt="homepage">
@@ -23,7 +22,6 @@
 
       <nav class="navbar">
         <div class="container-fluid">
-
           <a class="navbar-brand" href="#" style="color: black;font-size:18px;">
             <img style="margin: 0 7px 5px 0;" src="/stylesheets/icons/user_outlined.svg" width="18" height="18" href="#"
               alt="profile">
@@ -103,7 +101,6 @@
             src="/stylesheets/icons/reply_outlined.svg" width="16" height="16" href="#" alt="reply"
             onclick="btnReply(`{{this.id}}`)">
           <span style="margin:0 35px 0 8px;">{{this.replyCount}}</span>
-
           {{#if this.isLiked}}
           <form id="unlike" name="unlike" action="/tweets/{{this.id}}/unlike" method="POST"
             style="display: flex; align-items:center;">
