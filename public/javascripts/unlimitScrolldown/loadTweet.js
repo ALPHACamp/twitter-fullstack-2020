@@ -2,12 +2,14 @@ const container = document.querySelector('.scrollbar-hidden')
 const TWEETS_LIMIT = 8
 let mainTweetsPage = 0
 
-container.addEventListener('scroll', async () => {
+container.addEventListener('scroll', unlimitDraw)
+async function unlimitDraw () {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 100) {
     mainTweetsPage += 1
     const link = `/tweets/tweetsUnload?limit=${TWEETS_LIMIT}&page=${mainTweetsPage}`
     let moreTweets = await loadMoreData(link)
-    if (!moreTweets.data) {
+    if (!moreTweets.data || !moreTweets.data.length) {
+      container.removeEventListener('scroll', unlimitDraw)
       return null
     }
 
@@ -78,4 +80,4 @@ container.addEventListener('scroll', async () => {
       tweet.addEventListener('click', tweetDirectToLink)
     })
   }
-})
+}
