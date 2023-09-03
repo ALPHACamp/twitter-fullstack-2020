@@ -22,7 +22,7 @@ const tweetController = {
         throw new errorHandler.TweetError('Can not fount any tweet')
       }
 
-      const recommendUser = await userService.topFollowedUser(req) // 給右邊的渲染用
+      const recommendUser = await userService.topFollowedUser(userId) // 給右邊的渲染用
 
       if (!recommendUser) {
         throw new errorHandler.TweetError('Can not fount any recomend users')
@@ -87,7 +87,7 @@ const tweetController = {
 
       const userId = helpers.getUser(req).id
       const tweetId = req.params.id
-      const recommendUser = await userService.topFollowedUser(req) // 給右邊的渲染用
+      const recommendUser = await userService.topFollowedUser(userId) // 給右邊的渲染用
 
       if (!recommendUser) {
         throw new errorHandler.TweetError('Can not fount any recomend users')

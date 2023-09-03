@@ -140,13 +140,14 @@ const userController = {
     const page = 0
 
     try {
+      const userId = helpers.getUser(req).id
       const viewingUser = await userService.getUserInfo(req)
 
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
 
       const tweets = await userService.getUserTweets(req, limit, page)
 
-      const recommendUser = await userService.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(userId)
 
       return res.render('user/tweets', {
         route: 'user',
@@ -211,8 +212,9 @@ const userController = {
   },
 
   getFollowings: async (req, res, next) => {
+    const userId = helpers.getUser(req).id
     const followings = await userService.getFollowings(req)
-    const recommendUser = await userService.topFollowedUser(req)
+    const recommendUser = await userService.topFollowedUser(userId)
 
     return res.render('user/followings', {
       userTab: 'followings',
@@ -222,8 +224,9 @@ const userController = {
   },
 
   getFollowers: async (req, res, next) => {
+    const userId = helpers.getUser(req).id
     const followers = await userService.getFollowers(req)
-    const recommendUser = await userService.topFollowedUser(req)
+    const recommendUser = await userService.topFollowedUser(userId)
 
     return res.render('user/followers', {
       userTab: 'followers',
@@ -237,10 +240,11 @@ const userController = {
     const limit = 8
     const page = 0
     try {
+      const userId = helpers.getUser(req).id
       const viewingUser = await userService.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const recommendUser = await userService.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(userId)
 
       const tweets = await userService.getLikeTweets(req, limit, page)
       return res.render('user/tweets', {
@@ -272,10 +276,11 @@ const userController = {
     const page = 0
 
     try {
+      const userId = helpers.getUser(req).id
       const viewingUser = await userService.getUserInfo(req)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const recommendUser = await userService.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(userId)
 
       const replies = await userService.getUserReplies(req, limit, page)
 

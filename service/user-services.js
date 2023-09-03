@@ -194,10 +194,10 @@ const userServices = {
     return userWithfollowers.toJSON()
   },
 
-  topFollowedUser: req => {
+  topFollowedUser: userId => {
     return User.findAll({
       where: {
-        id: { [Op.ne]: helpers.getUser(req).id }, // 不要出現登入帳號
+        id: { [Op.ne]: userId }, // 不要出現登入帳號
         role: { [Op.ne]: 'admin' } // admin不推薦, ne = not
       },
       attributes: {
@@ -207,7 +207,7 @@ const userServices = {
           // req.user是追別人的,  findAll的user是被追的人
           [sequelize.literal(
             `(SELECT COUNT(*) FROM Followships
-              WHERE Followships.follower_id = ${helpers.getUser(req).id}
+              WHERE Followships.follower_id = ${userId}
               AND Followships.following_id = User.id
             )`), 'isFollowed'] // 查看此User是否已追蹤
         ]
