@@ -1,9 +1,9 @@
 <div class="page-container">
   {{> left-sidebar route="getLikes"}}
-  <div class="main-middle border-start border-end" id="profile-page-container">
+  <section class="main-middle border-start border-end" id="profile-page-container" style="width:636px; border:1px solid #E6ECF0; overflow:scroll">
     {{> main-middle route="getLikes"}}
     {{> profile-middle-self route="getLikes"}}
-  </div>
+  </section>
   {{> right-sidebar topUsers=topUsers}}
 </div>
 

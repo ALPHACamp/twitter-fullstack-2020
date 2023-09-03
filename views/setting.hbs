@@ -1,6 +1,7 @@
 <div class="page-container">
   {{> left-sidebar alert=true route="editUser"}}
-  <div class="main-middle border-start border-end" id="setting-page-container">
+  <section class="main-middle border-start border-end" id="profile-page-container"
+    style="width:636px; border:1px solid #E6ECF0; overflow:scroll">
     {{> main-middle route="editUser"}}
     {{!-- Title --}}
     <div class="row d-flex" style="margin-left: 11px">
@@ -12,10 +13,10 @@
               {{!-- account --}}
               <div class="form-group mb-4 mt-4" style="height:78px">
                 <div class="label bg-light">
-                  <label for="account" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">帳號</label>
+                  <label for="account" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974;">帳號</label>
                 </div>
                 <input type="text" class="form-control shadow-none bg-light"
-                  id="account" name="account" placeholder="請輸入帳號" value='{{user.account}}' onkeyup="wordsTotal()">
+                  id="account" name="account" placeholder="請輸入帳號" value='{{user.account}}' onkeyup="wordsTotal()" maxlength="50">
                 <div class="d-flex col justify-content-between">
                   <span class="col"
                     style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
@@ -31,7 +32,7 @@
                   <label for="name" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">名稱</label>
                 </div>
                 <input type="text" class="form-control shadow-none bg-light" id="name"
-                  name="name" placeholder="請輸入使用者名稱" value='{{user.name}}' onkeyup="wordsTotal2()">
+                  name="name" placeholder="請輸入使用者名稱" value='{{user.name}}' onkeyup="wordsTotal2()"  maxlength="50">
                 <div class="d-flex col justify-content-between">
                   <span class="col"
                     style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
@@ -85,7 +86,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 <script type="text/javascript">

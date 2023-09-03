@@ -17,7 +17,7 @@
                 <label for="account" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">帳號</label>
               </div>
               <input type="text" class="form-control shadow-none bg-light"
-                id="account" name="account" placeholder="請輸入帳號" value='{{account}}' onkeyup="wordsTotal()" required>
+                id="account" name="account" placeholder="請輸入帳號" value='{{account}}' onkeyup="wordsTotal()" maxlength="50" required>
               <div class="d-flex col justify-content-between">
                 <span class="col"
                   style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
@@ -33,7 +33,7 @@
                 <label for="name" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">名稱</label>
               </div>
               <input type="text" class="form-control shadow-none bg-light" id="name"
-                name="name" placeholder="請輸入使用者名稱" value='{{name}}'  onkeyup="wordsTotal2()" required>
+                name="name" placeholder="請輸入使用者名稱" value='{{name}}'  onkeyup="wordsTotal2()" maxlength="50" required>
               <div class="d-flex col justify-content-between">
                 <span class="col"
                   style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"

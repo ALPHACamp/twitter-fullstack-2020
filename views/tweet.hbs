@@ -1,6 +1,6 @@
 <div class="page-container">
   {{> left-sidebar route="getTweet"}}
-  <div class="main-middle border-start border-end" id="profile-page-container">
+  <section class="main-middle border-start border-end" id="profile-page-container" style="width:636px; border:1px solid #E6ECF0; overflow:scroll">
     {{> main-middle route="getTweet"}}
     <div class="tweet-container" style="width: 639px; max-height: 401px;">
       <div class="tweet-content py-3 mx-3 border-bottom" style="width: 602px;">
@@ -106,6 +106,6 @@
         </div>
       {{/each}}
     </div>
-  </div>
+  </section>
   {{> right-sidebar topUsers=topUsers}}
 </div>
