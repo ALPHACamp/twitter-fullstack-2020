@@ -1,11 +1,12 @@
 const { User, Tweet, Like } = require('../models')
+const helper = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res) => {
     res.render('admin/signin')
   },
   signIn: (req, res) => {
-    if (req.user.role === 'user') {
+    if (helper.getUser(req).role === 'user') {
       req.flash('error_messages', '帳號不存在！')
       res.redirect('/admin/signin')
     } else {
