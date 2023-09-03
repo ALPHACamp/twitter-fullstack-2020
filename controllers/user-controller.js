@@ -45,7 +45,7 @@ const userController = {
           user.update({ account, name, email, password: currentUser.password })
             .then(() => {
               req.flash('success_messages', '恭喜個人設定更新成功！')
-              res.redirect('/tweets')
+              res.redirect(`/users/${currentUser.id}/edit`)
             })
         }
       })
