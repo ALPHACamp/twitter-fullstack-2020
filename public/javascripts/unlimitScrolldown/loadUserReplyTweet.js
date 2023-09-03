@@ -3,12 +3,14 @@ const userId = href[href.length - 2]
 const USER_REPLY_TWEETS_LIMIT = 8
 let mainUserReplyTweetsPage = 0
 
-container.addEventListener('scroll', async () => {
+container.addEventListener('scroll', unlimitDraw)
+async function unlimitDraw () {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 100) {
     mainUserReplyTweetsPage += 1
     const link = `/users/${userId}/repliesUnload?limit=${USER_REPLY_TWEETS_LIMIT}&page=${mainUserReplyTweetsPage}`
     let moreUserReplyTweets = await loadMoreData(link)
-    if (!moreUserReplyTweets) {
+    if (!moreUserReplyTweets || !moreUserReplyTweets.length) {
+      container.removeEventListener('scroll', unlimitDraw)
       return null
     }
 
@@ -28,7 +30,7 @@ container.addEventListener('scroll', async () => {
             <div class="tweet-user-horizontal">
               <a href="/users/${reply.UserId}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
                 <p class="fw-bold">${reply.User.name}</p>
-                <p class="font-size-sm text-secondary">@${reply.User.account}・${reply.createdAt}</p>
+                <p class="font-size-sm text-secondary">@${reply.User.account}・${reply.createdFromNow}</p>
               </a>
             </div>
 
@@ -55,4 +57,4 @@ container.addEventListener('scroll', async () => {
       tweet.addEventListener('click', tweetDirectToLink)
     })
   }
-})
+}

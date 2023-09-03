@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 const tweetController = require('../../controllers/pages/tweet-controller')
-
-router.get('/tweetsUnload', tweetController.getTweetsUnload)
+const verifyUnloadQuery = require('../../middlewares/verifyUnloadQuery')
+router.get('/tweetsUnload', verifyUnloadQuery, tweetController.getTweetsUnload)
 
 router.get('/:id/replies', tweetController.getReplies)
-router.get('/:id/repliesUnload', tweetController.getRepliesUnload)
+router.get('/:id/repliesUnload', verifyUnloadQuery, tweetController.getRepliesUnload)
 router.post('/:id/replies', tweetController.postReplies)
 
 router.post('/:id/like', tweetController.postLike)

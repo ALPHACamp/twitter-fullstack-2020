@@ -18,7 +18,7 @@ const adminServices = {
     })
 
     return tweets.map(tweet => {
-      tweet.createdAt = relativeTimeFromNow(tweet.createdAt)
+      tweet.createdFromNow = relativeTimeFromNow(tweet.createdAt)
       if (tweet.description.length > 50) {
         tweet.description = tweet.description.substring(0, 50) + '...'
       } else {

@@ -19,12 +19,14 @@ deleteButtons.forEach(button => {
   button.removeEventListener('click', removeTweet)
   button.addEventListener('click', removeTweet)
 })
-container.addEventListener('scroll', async () => {
+container.addEventListener('scroll', unlimitDraw)
+async function unlimitDraw () {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 10) { // 拉到往上10公分時就會 reload
   // 這裡是到達底部時需要執行的代碼，例如發送請求從 DB 加載更多數據
     let moreTweets = await loadMoreTweets()
 
-    if (!moreTweets.data) {
+    if (!moreTweets.data || !moreTweets.data.length) {
+      container.removeEventListener('scroll', unlimitDraw)
       return null
     }
 
@@ -50,7 +52,7 @@ container.addEventListener('scroll', async () => {
                   class="d-flex gap-2 link-unstyled align-items-center">
                   <p class="fw-bold">${tweet.User.name}</p>
                   <p class="font-size-sm text-secondary">
-                    @${tweet.User.account}・${tweet.createdAt}
+                    @${tweet.User.account}・${tweet.createdFromNow}
                   </p>
                 </a>
               </div>
@@ -90,7 +92,7 @@ container.addEventListener('scroll', async () => {
       button.addEventListener('click', removeTweet)
     })
   }
-})
+}
 
 async function loadMoreTweets () {
   // 使用 AJAX 來從伺服器獲取更多資料

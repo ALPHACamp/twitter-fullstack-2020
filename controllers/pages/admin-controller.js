@@ -58,15 +58,7 @@ const adminController = {
   },
   getTweetsUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
+      const { limit, page } = req
       const tweets = await adminServices.getTweets(limit, page)
       return res.json({ message: 'success', data: tweets })
     } catch (error) {
@@ -86,15 +78,7 @@ const adminController = {
   },
   getUsersUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
+      const { limit, page } = req
       const backendUsers = await adminServices.getUsers(limit, page)
       return res.json({ message: 'success', data: backendUsers })
     } catch (error) {

@@ -140,13 +140,15 @@ const userController = {
     const page = 0
 
     try {
-      const viewingUser = await userService.getUserInfo(req)
+      const viewingUserId = req.params.id
+      const loggingUserId = helpers.getUser(req).id
+      const viewingUser = await userService.getUserInfo(loggingUserId, viewingUserId)
 
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist!")
 
-      const tweets = await userService.getUserTweets(req, limit, page)
+      const tweets = await userService.getUserTweets(viewingUserId, loggingUserId, { limit, page })
 
-      const recommendUser = await userService.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(loggingUserId)
 
       return res.render('user/tweets', {
         route: 'user',
@@ -163,16 +165,11 @@ const userController = {
 
   getUserTweetsUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
+      const { limit, page } = req
 
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
-
-      const userTweetsUnload = await userService.getUserTweets(req, limit, page)
+      const viewingUserId = req.params.id
+      const loggingUserId = helpers.getUser(req).id
+      const userTweetsUnload = await userService.getUserTweets(viewingUserId, loggingUserId, { limit, page })
 
       if (!userTweetsUnload) {
         return res.json({ message: 'error', data: {} })
@@ -218,8 +215,9 @@ const userController = {
   },
 
   getFollowings: async (req, res, next) => {
-    const followings = await userService.getFollowings(req)
-    const recommendUser = await userService.topFollowedUser(req)
+    const userId = helpers.getUser(req).id
+    const followings = await userService.getFollowings(userId)
+    const recommendUser = await userService.topFollowedUser(userId)
 
     return res.render('user/followings', {
       userTab: 'followings',
@@ -229,8 +227,9 @@ const userController = {
   },
 
   getFollowers: async (req, res, next) => {
-    const followers = await userService.getFollowers(req)
-    const recommendUser = await userService.topFollowedUser(req)
+    const userId = helpers.getUser(req).id
+    const followers = await userService.getFollowers(userId)
+    const recommendUser = await userService.topFollowedUser(userId)
 
     return res.render('user/followers', {
       userTab: 'followers',
@@ -244,12 +243,14 @@ const userController = {
     const limit = 8
     const page = 0
     try {
-      const viewingUser = await userService.getUserInfo(req)
+      const viewingUserId = req.params.id
+      const loggingUserId = helpers.getUser(req).id
+      const viewingUser = await userService.getUserInfo(loggingUserId, viewingUserId)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const recommendUser = await userService.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(loggingUserId)
 
-      const tweets = await userService.getLikeTweets(req, limit, page)
+      const tweets = await userService.getLikeTweets(viewingUserId, loggingUserId, { limit, page })
       return res.render('user/tweets', {
         route: 'user',
         userTab: 'likes',
@@ -265,16 +266,11 @@ const userController = {
 
   getLikeTweetsUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
+      const { limit, page } = req
 
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
-
-      const tweets = await userService.getLikeTweets(req, limit, page)
+      const viewingUserId = req.params.id
+      const loggingUserId = helpers.getUser(req).id
+      const tweets = await userService.getLikeTweets(viewingUserId, loggingUserId, { limit, page })
       return res.json(tweets)
     } catch (error) {
       next(error)
@@ -286,12 +282,14 @@ const userController = {
     const page = 0
 
     try {
-      const viewingUser = await userService.getUserInfo(req)
+      const loggingUserId = helpers.getUser(req).id
+      const viewingUserId = req.params.id
+      const viewingUser = await userService.getUserInfo(loggingUserId, viewingUserId)
       if (!viewingUser) throw new errorHandler.UserError("User didn't exist")
 
-      const recommendUser = await userService.topFollowedUser(req)
+      const recommendUser = await userService.topFollowedUser(loggingUserId)
 
-      const replies = await userService.getUserReplies(req, limit, page)
+      const replies = await userService.getUserReplies(viewingUserId, { limit, page })
 
       return res.render('user/tweets', {
         route: 'user',
@@ -308,16 +306,9 @@ const userController = {
   },
   getUserRepliesUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
-
-      const replies = await userService.getUserReplies(req, limit, page)
+      const { limit, page } = req
+      const viewingUserId = req.params.id
+      const replies = await userService.getUserReplies(viewingUserId, { limit, page })
       return res.json(replies)
     } catch (error) {
       next(error)
