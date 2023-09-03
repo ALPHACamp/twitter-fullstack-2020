@@ -234,35 +234,22 @@ const userController = {
       const isFollowed = helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === Number(userId))
 
       // likedtweet area
+
+      // isliked
+      const like = await Like.findAll({ raw: true })
+      const allLike = like.map(lr => lr.id)
+
       const likes = await Like.findAll({
-        order: [['tweetId', 'DESC']],
         where: { userId: userId },
-        raw: true,
-        nest: true //
+        include: [{ model: Tweet, include: User }, { model: Tweet, include: Reply }, { model: Tweet, include: Like }]
       })
-      const likedTweetsId = likes.map(like => like.tweetId)
+      const data = likes.map(like => ({
+        ...like.toJSON(),
+        isLiked: allLike.some(l => l === like.id)
+      }))
+        .sort((a, b) => b.createdAt - a.createdAt)
 
-      const tweets = await Tweet.findAll({
-        order: [['id', 'DESC']],
-        include: [User, Reply, Like],
-        where: { id: likedTweetsId }
-      })
-
-      const myLikedTweets = await Like.findAll({
-        where: { userId: reqUser.id }
-      })
-      const myLikedTweetsId = myLikedTweets.map(l => l.tweetId)
-
-      const tweetsResult = tweets
-        .map(t => ({
-          ...t.toJSON(),
-          isLiked: myLikedTweetsId && myLikedTweetsId.some(l => l === t.id)
-        }))
-
-      for (let i = 0; i < likes.length; i++) {
-        tweetsResult[i].likedCreatedAt = likes[i].createdAt
-      }
-      tweetsResult.sort((a, b) => b.likedCreatedAt - a.likedCreatedAt)
+      // console.log(data)
 
       // top10users area
       const users = await User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } })
@@ -280,7 +267,7 @@ const userController = {
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
 
-      return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser, isFollowed })
+      return res.render('users/likes', { user: user.toJSON(), tweets: data, topUsers, reqUser, isFollowed })
     } catch (err) {
       next(err)
     }
