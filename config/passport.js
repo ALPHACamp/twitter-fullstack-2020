@@ -13,6 +13,12 @@ passport.use(new LocalStrategy(
     User.findOne({ where: { account } })
       .then(user => {
         if (!user) return cb(null, false, req.flash('error_messages', '帳號不存在！'))
+        if (req.originalUrl === '/admin/signin') {
+          if (user.dataValues.role !== 'admin') return cb(null, false, req.flash('error_messages', '帳號不存在！'))
+        }
+        if (req.originalUrl === '/signin') {
+          if (user.dataValues.role !== 'user') return cb(null, false, req.flash('error_messages', '帳號不存在！'))
+        }
         bcrypt.compare(password, user.password)
           .then(res => {
             if (!res) return cb(null, false, req.flash('error_messages', '密碼輸入錯誤！'))
