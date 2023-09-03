@@ -3,7 +3,7 @@
 <div class="modal fade" id="edit-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-id="{{tweetsUser.id}}">
   <div class="modal-dialog">
     <div class="modal-content p-0" style="width:634px;height:610px;border-radius:14px;padding:0px 16px">
-      <form action="/users/{{ tweetsUser.id }}" class="border-0 p-0" method="POST" enctype="multipart/form-data">
+      <form action="/api/users/{{ tweetsUser.id }}" class="border-0 p-0" method="POST" enctype="multipart/form-data">
         <div class="header-container d-flex flex-row justify-content-between">
           <div class="d-flex flex-row" style="height: 40px;">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
