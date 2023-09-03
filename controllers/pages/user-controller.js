@@ -22,13 +22,14 @@ const userController = {
     try {
       const usedAccount = await User.findOne({ where: { account } })
       if (usedAccount) {
-        return res.render('signup', { account, name, email, password, checkPassword, message: '此帳號已被使用' })
+        req.flash('error_messages', '此帳號已被使用')
+        return res.render('signup', { account, name, email, password, checkPassword })
       }
 
       const usedEmail = await User.findOne({ where: { email } })
       if (usedEmail) {
         req.flash('error_messages', '此 Email 已被使用')
-        return res.render('signup', { account, name, email, password, checkPassword, message: '此 Email 已被使用' })
+        return res.render('signup', { account, name, email, password, checkPassword })
       }
 
       const salt = await bcrypt.genSalt(10)
