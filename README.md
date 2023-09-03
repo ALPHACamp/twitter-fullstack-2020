@@ -1,4 +1,4 @@
-# My Simple Twitter
+# Simple Twitter － Alphitter
 ![image](public/photos/homepage.png)
 **可點擊[Demo](https://mighty-tundra-17871-5d8e08ab6f3e.herokuapp.com/signin) ，查看專案預覽！**
 
