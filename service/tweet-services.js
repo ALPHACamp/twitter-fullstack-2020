@@ -8,19 +8,21 @@ const tweetServices = {
   followingUsersTweets: async (req, limit = 9, page = 0) => {
     const offset = pagiHelper.getOffset(limit, page)
     const tweets = await Tweet.findAll({
-      where: {
-        [Op.or]: [
-          {
-            UserId: {
-              [Op.in]: sequelize.literal(
-              `(SELECT following_id FROM Followships
-                WHERE Followships.follower_id = ${helpers.getUser(req).id}
-              )`)
-            }
-          },
-          { UserId: { [Op.eq]: helpers.getUser(req).id } } // 自己的也撈出來, 因為要過測試
-        ]
-      },
+      /// ////以下區塊可實現僅取出自己與跟隨者的tweets, 因user story規定，暫時註解////////////
+      // where: {
+      //   [Op.or]: [
+      //     {
+      //       UserId: {
+      //         [Op.in]: sequelize.literal(
+      //         `(SELECT following_id FROM Followships
+      //           WHERE Followships.follower_id = ${helpers.getUser(req).id}
+      //         )`)
+      //       }
+      //     },
+      //     { UserId: { [Op.eq]: helpers.getUser(req).id } } // 自己的也撈出來, 因為要過測試
+      //   ]
+      // },
+      /// ////////////////////////////////////////////////////////////////////////////////////
       include: [User],
       attributes: {
         include: [
