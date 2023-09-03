@@ -1,3 +1,80 @@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{{#if alert}}
+<div class="sidebar" id="left-sidebar">
+  <div class="sidebar-container" id="logo-container">
+    <a href="/" id="logoALert">
+      <img src="/images/logo.png" alt="" id="logo">
+    </a>
+  </div>
+  <div class="sidebar-container">
+    <nav class="nav d-flex flex-row" class="sidebar-container" id="buttons-container">
+      <!--點擊首頁後變成橘色圖示與文字-->
+      {{#if tweetRoute}}
+      <a href="/tweets" class="nav-link button-container" id="homeALert">
+        <span class="icon-description p-0" id="home-span" style="color: #FF4400">
+          <img src="/images/icons/orange-home.png" alt="home" id="home-icon" class="sidebar-icon">
+          首頁
+        </span>
+      </a>
+      {{else}}
+      <a href="/tweets" class="nav-link button-container" id="homeALert">
+        <span class="icon-description p-0" id="home-span">
+          <img src="/images/icons/home.png" alt="home" id="home-icon" class="sidebar-icon">
+          首頁
+        </span>
+      </a>
+      {{/if}}
+      <!--點擊個人個人資料後變成橘色圖示與文字-->
+      {{#if profileRoute}}
+      <a href="/users/{{user.id}}/tweets" class="nav-link button-container" id="profileALert">
+        <span class="icon-description p-0" id="profile-span" style="color: #FF4400">
+          <img src="/images/icons/orange-profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
+          個人資料
+        </span>
+      </a>
+      {{else}}
+      <a href="/users/{{user.id}}/tweets" class="nav-link button-container" id="profileALert">
+        <span class="icon-description p-0" id="profile-span">
+          <img src="/images/icons/profile.png" alt="profile" id="profile-icon" class="sidebar-icon">
+          個人資料
+        </span>
+      </a>
+      {{/if}}
+      {{#if settingRoute}}
+      <!--點擊設定後變成橘色圖示與文字-->
+      <a href="/users/{{user.id}}/edit" class="nav-link button-container" id="settingALert">
+        <span class="icon-description p-0" id="setting-span" style="color: #FF4400">
+          <img src="/images/icons/orange-setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
+          設定
+        </span>
+      </a>
+      {{else}}
+      <a href="/users/{{user.id}}/edit" class="nav-link button-container" id="settingALert">
+        <span class="icon-description p-0" id="setting-span">
+          <img src="/images/icons/setting.png" alt="setting" id="setting-icon" class="sidebar-icon">
+          設定
+        </span>
+      </a>
+      {{/if}}
+      <div class="button-container d-block p-0" id="add-tweet">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn d-grid" data-bs-toggle="modal" data-bs-target="#newTweet" id="new-tweet">
+          <span class="new-tweet-span" style="font-size: 20px;">推文</span>
+        </button>
+        {{> add-tweet-modal}}
+      </div>
+    </nav>
+  </div>
+  <div id="logout">
+    <a href="/logout" class="btn" id="logoutALert">
+      <span class="icon-description" id="logout-span">
+        <img src="/images/icons/logout.png" alt="logout" id="logout-icon" class="sidebar-icon">
+        登出
+    </a>
+  </div>
+</div>
+{{else}}
 <div class="sidebar" id="left-sidebar">
   <div class="sidebar-container" id="logo-container">
     <a href="/">
@@ -71,3 +148,97 @@
     </a>
   </div>
 </div>
+{{/if}}
+
+<script type="text/javascript">
+  // 獲取連結元素
+  const logoALert= document.getElementById('logoALert');
+  const homeALert = document.getElementById('homeALert');
+  const profileALert = document.getElementById('profileALert');
+  const settingALert = document.getElementById('settingALert');
+  const logoutALert = document.getElementById('logoutALert');
+  // 添加點擊事件監聽器
+  logoALert.addEventListener('click', e => {
+    // 阻止默認的連結行為
+    e.preventDefault()
+    // 彈出確認訊息，並根據使用者的選擇執行操作
+    swal({
+      title: "確定要離開帳戶設定頁面嗎?",
+      icon: "warning",
+      buttons: ["取消", "確定"],
+      dangerMode: true,
+    })
+    .then(sure => {
+      if (sure) {
+        // 使用者按下了 "確定"，繼續連結到目標頁面
+        window.location.href = logoALert.href
+        } else {
+        // 使用者按下了 "取消"，不執行任何操作
+      }
+    })
+  })
+
+  homeALert.addEventListener('click', e => {
+    e.preventDefault()
+    swal({
+      title: "確定要離開帳戶設定頁面嗎?",
+      icon: "warning",
+      buttons: ["取消", "確定"],
+      dangerMode: true,
+    })
+    .then(sure => {
+      if (sure) {
+        window.location.href = homeALert.href
+      } else {
+      }
+    })
+  })
+
+  profileALert.addEventListener('click', e => {
+    e.preventDefault()
+    swal({
+      title: "確定要離開帳戶設定頁面嗎?",
+      icon: "warning",
+      buttons: ["取消", "確定"],
+      dangerMode: true,
+    })
+    .then(sure => {
+      if (sure) {
+        window.location.href = profileALert.href
+      } else {
+      }
+    })
+  })
+
+  settingALert.addEventListener('click', e => {
+    e.preventDefault()
+    swal({
+      title: "確定要重新整理帳戶設定頁面嗎?",
+      icon: "warning",
+      buttons: ["取消", "確定"],
+      dangerMode: true,
+    })
+    .then(sure => {
+      if (sure) {
+        window.location.href = settingALert.href
+      } else {
+      }
+    })
+  })
+
+  logoutALert.addEventListener('click', e => {
+    e.preventDefault()
+    swal({
+      title: "確定要登出頁面嗎?",
+      icon: "warning",
+      buttons: ["取消", "確定"],
+      dangerMode: true,
+    })
+    .then(sure => {
+      if (sure) {
+        window.location.href = logoutALert.href
+      } else {
+      }
+    })
+  })
+</script>
