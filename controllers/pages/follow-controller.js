@@ -1,5 +1,5 @@
 const { Followship, User } = require('../../models')
-const { FollowshipError } = require('../../helpers/errors-helpers')
+const { CustomError } = require('../../libs/error/custom-error')
 const helpers = require('../../_helpers')
 
 const followshipController = {
@@ -20,7 +20,7 @@ const followshipController = {
         })
 
       if (!user) {
-        throw new FollowshipError("User you want to follow didn't exist!")
+        throw new CustomError("User you want to follow didn't exist", 'NotFoundError')
       }
 
       const followship = await Followship.findOne({
@@ -33,7 +33,7 @@ const followshipController = {
       })
 
       if (followship) {
-        throw new FollowshipError('You have already followed this user!')
+        throw new CustomError('You have already followed this user!', 'DuplicateError')
       }
 
       await Followship.create({
@@ -61,7 +61,7 @@ const followshipController = {
       })
 
       if (!followship) {
-        throw new FollowshipError('You have not followed this user!')
+        throw new CustomError('You have not followed this user!', 'TypeError')
       }
 
       await followship.destroy()

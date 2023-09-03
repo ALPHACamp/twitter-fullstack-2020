@@ -1,6 +1,6 @@
 const { User, Tweet, Reply, sequelize } = require('../models')
 // const { Op } = require('sequelize')
-const errorHandler = require('../helpers/errors-helpers')
+const { CustomError } = require('../libs/error/custom-error')
 const helpers = require('../_helpers')
 const pagiHelper = require('../helpers/pagination-helpers')
 const { relativeTimeFromNow } = require('../helpers/handlebars-helpers')
@@ -49,10 +49,10 @@ const tweetServices = {
   isValidWordsLength: (text, len, next) => {
     try {
       if (!text.length) {
-        throw new errorHandler.TweetError('內容不可空白')
+        throw new CustomError('內容不可空白', 'ValidateError')
       }
       if (text.length > len) {
-        throw new errorHandler.TweetError(`字數不可超過${len}字`)
+        throw new RangeError(`字數不可超過${len}字`)
       }
     } catch (error) {
       return next(error)

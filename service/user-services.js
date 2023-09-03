@@ -9,7 +9,7 @@ const { imgurFileHandler } = require('../helpers/file-helpers')
 const { getOffset } = require('../helpers/pagination-helpers')
 const { relativeTimeFromNow } = require('../helpers/handlebars-helpers')
 const helpers = require('../_helpers')
-const errorHandler = require('../helpers/errors-helpers')
+const { CustomError } = require('../libs/error/custom-error')
 
 const userServices = {
   getUserEditPage: async (req, cb) => {
@@ -23,7 +23,7 @@ const userServices = {
       }
 
       const user = await User.findByPk(req.params.id, { raw: true })
-      if (!user) throw new errorHandler.UserError("User didn't exist!")
+      if (!user) throw new CustomError("User didn't exist!", 'NotFoundError')
 
       return cb(null, user)
     } catch (error) {
@@ -35,7 +35,7 @@ const userServices = {
     const emailRegex = /^\w+((-|\.)\w+)*@[A-Za-z0-9]+((-|\.)[A-Za-z0-9]+)*\.[A-Za-z]+$/
     try {
       const user = await User.findByPk(req.params.id)
-      if (!user) throw new errorHandler.UserError("User didn't exist!")
+      if (!user) throw new CustomError("User didn't exist!", 'NotFoundError')
 
       // 在 user edit model 藏一個isModel input 判斷此編輯請求從哪裡來
       const { email, name, account, password, checkPassword, introduction, isModel, notTest } = req.body
@@ -79,7 +79,7 @@ const userServices = {
 
       if (errors.length) {
         const errorMessages = errors.map(error => error.messages).join(' & ')
-        throw new errorHandler.UpdateError(errorMessages)
+        throw new CustoRmError(errorMessages, 'ValidateError')
       }
 
       // model頁沒有password ， 有才作加密
