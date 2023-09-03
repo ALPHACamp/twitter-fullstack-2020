@@ -101,7 +101,6 @@ textarea {
 
 .main-user-card {
   width: 888px;
-  height: 314px;
   top: 91px;
   left: 349px;
   gap: 16px;
@@ -272,4 +271,8 @@ textarea {
 
 .custom-validation {
   border-bottom: 2px solid #FC5A5A !important;
+}
+
+.admin-user-middle {
+  border-left: 1px solid #E6ECF0
 }
