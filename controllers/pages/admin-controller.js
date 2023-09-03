@@ -1,24 +1,46 @@
-const { Tweet, User, Like, Followship, Reply } = require('../models')
+const { Tweet, User, Like, Followship, Reply } = require('../../models')
 
 const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
   },
   signIn: async (req, res) => {
-    req.flash('success_messages', '成功登入！')
+    req.flash('success_messages', '成功登入後台')
     return res.redirect('/admin/tweets')
   },
-  getTweets: (req, res, next) => {
-    Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User],
-      order: [['createdAt', 'DESC']]
-    })
-      .then(tweets => {
-        res.render('admin/tweets', { tweets })
+  getTweets: async (req, res, next) => {
+    try {
+      let tweets = await Tweet.findAll({
+        order: [['updatedAt', 'DESC']],
+        include: User
       })
-      .catch(err => next(err))
+      tweets = tweets.map(tweet => ({
+        ...tweet.toJSON(),
+        simpleText: tweet.description.substring(0, 50)
+      })
+      )
+      return res.render('admin/tweets', { tweets, adminTweets: true })
+    } catch (err) {
+      next(err)
+    }
+  },
+  deleteTweet: async (req, res, next) => {
+    const TweetId = req.params.id
+    try {
+      const tweet = await Tweet.findByPk(TweetId)
+      const replies = await Reply.findAll({ where: { TweetId } })
+      const likes = await Like.findAll({ where: { TweetId } })
+
+      if (!tweet) throw new Error('此篇推文不存在')
+      await tweet.destroy()
+      if (replies) await Reply.destroy({ where: { TweetId } })
+      if (likes) await Like.destroy({ where: { TweetId } })
+
+      req.flash('success_messages', '成功刪除')
+      return res.redirect('/admin/tweets')
+    } catch (err) {
+      next(err)
+    }
   },
   getUsers: async (req, res, next) => {
     try {
@@ -85,29 +107,13 @@ const adminController = {
         tweetsCount: tweetsMap[user.id] ? tweetsMap[user.id] : 0,
         followingsCount: followingsMap[user.id] ? followingsMap[user.id] : 0,
         followersCount: followersMap[user.id] ? followersMap[user.id] : 0,
-        likeCount: userLikedMap[user.id] ? userLikedMap[user.id] : 0
+        likesCount: userLikedMap[user.id] ? userLikedMap[user.id] : 0
       }))
 
       // 依推文數量排序
       const sortedUser = userData.sort((a, b) => b.tweetsCount - a.tweetsCount)
 
-      res.render('admin/users', { user: sortedUser })
-    } catch (err) {
-      next(err)
-    }
-  },
-  deleteTweet: async (req, res, next) => {
-    try {
-      const TweetId = req.params.id
-      const tweet = await Tweet.findByPk(TweetId)
-      if (!tweet) throw new Error("Tweet didn't exist!")
-      const deletedTweet = await tweet.destroy()
-      const reply = await Reply.destroy({ where: { TweetId } })
-      const like = await Like.destroy({ where: { TweetId } })
-      if (!deletedTweet || !reply || !like) throw new Error('發生錯誤，請稍後再試')
-
-      req.flash('success_messages', '成功刪除')
-      res.redirect('back')
+      res.render('admin/users', { user: sortedUser, adminUsers: true })
     } catch (err) {
       next(err)
     }
