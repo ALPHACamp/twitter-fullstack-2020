@@ -4,9 +4,9 @@ const tweetController = require('../../../controllers/pages/tweet-controller')
 
 router.get('/', tweetController.getTweets)
 router.post('/', tweetController.postTweet)
-router.post('/:tweetId/like', tweetController.addLike)
-router.post('/:tweetId/unlike', tweetController.removeLike)
-router.get('/:tweetId/replies', tweetController.getReplies)
-router.post('/:tweetId/replies', tweetController.postReply)
+router.post('/:id/like', tweetController.addLike)
+router.post('/:id/unlike', tweetController.removeLike)
+router.get('/:id/replies', tweetController.getTweet)
+router.post('/:id/replies', tweetController.postReply)
 
 module.exports = router

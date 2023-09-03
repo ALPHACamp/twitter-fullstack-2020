@@ -62,12 +62,7 @@ const tweetController = {
 
     const sortedData = data.sort((a, b) => b.createdAt - a.createdAt)
 
-    res.render('tweets', {
-      tweets: sortedData,
-      user: helpers.getUser(req),
-      users: usersSorted,
-      Tweets: true
-    })
+    res.render('tweets', { tweets: sortedData, user: helpers.getUser(req), users: usersSorted })
   },
   postTweet: (req, res, next) => {
     const description = req.body.description
@@ -77,7 +72,7 @@ const tweetController = {
       return res.redirect('back')
     }
     if (description.length > 140) {
-      req.flash('error_messages', '內容不可超出 140 字')
+      req.flash('error_messages', '推文字數限制在 140 以內!')
       return res.redirect('back')
     }
     Tweet.create({
@@ -85,7 +80,6 @@ const tweetController = {
       description
     })
       .then(() => {
-        req.flash('success_messages', '成功發布推文')
         res.redirect('/tweets')
       })
       .catch(err => next(err))
@@ -102,8 +96,8 @@ const tweetController = {
       })
     ])
       .then(([tweet, like]) => {
-        if (!tweet) throw new Error('推文不存在')
-        if (like) throw new Error('您已經對此推文按過愛心')
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (like) throw new Error('You have liked this Tweet!')
 
         return Like.create({
           UserId: helpers.getUser(req).id,
@@ -125,15 +119,15 @@ const tweetController = {
       })
     ])
       .then(([tweet, like]) => {
-        if (!tweet) throw new Error('推文不存在')
-        if (!like) throw new Error('您尚未對此推文按愛心')
+        if (!tweet) throw new Error("Tweet didn't exist!")
+        if (!like) throw new Error("You haven't liked this Tweet")
 
         return like.destroy()
       })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
-  getReplies: async (req, res, next) => {
+  getTweet: async (req, res, next) => {
     const TweetId = req.params.id
     const [tweet, replies, likes, users] = await Promise.all([
       Tweet.findByPk(TweetId, {
@@ -176,10 +170,6 @@ const tweetController = {
       req.flash('error_messages', '內容不可空白')
       return res.redirect('back')
     }
-    if (comment.length > 140) {
-      req.flash('error_messages', '內容不可超出 140 字')
-      return res.redirect('back')
-    }
 
     Reply.create({
       UserId,
@@ -187,8 +177,7 @@ const tweetController = {
       comment
     })
       .then(() => {
-        req.flash('tweet_success', '回覆發送成功')
-        res.redirect('back')
+        return res.redirect('back')
       })
       .catch(err => next(err))
   }
