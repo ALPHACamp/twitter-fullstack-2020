@@ -152,7 +152,7 @@ const userController = {
           followerCount: followShip.Followers.length,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
         }))
-          .sort((a, b) => b.followerCount - a.followerCount)
+          .sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
         res.render('followings', { user: userData, tweetCount, followings, topUser, currentUserId })
       })
       .catch(err => next(err))
@@ -190,7 +190,7 @@ const userController = {
           followerCount: followShip.Followers.length,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
         }))
-          .sort((a, b) => b.followerCount - a.followerCount)
+          .sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
         res.render('followers', { user: userData, tweetCount, followers, topUser, currentUserId })
       })
@@ -255,7 +255,7 @@ const userController = {
           followerCount: followShip.Followers.length,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
         }))
-          .sort((a, b) => b.followerCount - a.followerCount)
+          .sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
         res.render('user-tweets', {
           user: userData,
           currentUserId,
@@ -305,7 +305,7 @@ const userController = {
           followerCount: followShip.Followers.length,
           isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
         }))
-          .sort((a, b) => b.followerCount - a.followerCount)
+          .sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
 
         res.render('user-replies', {
           user: userData,
@@ -367,7 +367,7 @@ const userController = {
         followerCount: followShip.Followers.length,
         isFollowed: helpers.getUser(req).Followings.some(f => f.id === followShip.id)
       }))
-        .sort((a, b) => b.followerCount - a.followerCount)
+        .sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
       res.render('user-likes', {
         user: userData,
         currentUserId,
