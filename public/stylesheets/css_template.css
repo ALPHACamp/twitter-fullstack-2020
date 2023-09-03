@@ -190,7 +190,7 @@
 
 /*tweet-reply*/
 .tweet-reply {
-  width: 639px;
+  width: auto;
   padding: 0 21px 0 16px;
 }
 

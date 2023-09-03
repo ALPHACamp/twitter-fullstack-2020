@@ -20,7 +20,7 @@
       </div>
       <p class="p-0 m-0 text-secondary fw-bold">有什麼新鮮事？</p>
     </div>
-    <button type="" class="btn btn-primary rounded-pill">回覆</button>
+    <button type="" class="btn btn-primary rounded-pill">推文</button>
   </div>
 
   {{!-- 分隔線 --}}
@@ -42,7 +42,7 @@
             <div class="tweet-user-horizontal">
               <a href="/users/{{this.User.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
                 <p class="fw-bold">{{this.User.name}}</p>
-                <p class="font-size-sm text-secondary">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</p>
+                <p class="font-size-sm text-secondary">@{{this.User.account}}・{{this.createdAt}}</p>
               </a>
             </div>
             <p class="m-0 text-wrap text-break">

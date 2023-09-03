@@ -14,6 +14,7 @@ router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 
 // Users page
 router.get('/users', authenticatedAdmin, adminController.getUsers)
+router.get('/usersUnload', authenticatedAdmin, adminController.getUsersUnload)
 
 // Signin
 router.get('/signin', adminController.getAdminSignInPage)
