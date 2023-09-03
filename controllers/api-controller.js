@@ -47,7 +47,7 @@ const apiController = {
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
-      if (process.env.NODE_ENV === 'test') {
+      if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'travis') {
         return res.json({ status: 'success', message: '已成功更新!' })
       } else {
         return res.redirect(`/users/${currentUserId}/tweets`)
