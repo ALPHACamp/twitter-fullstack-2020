@@ -17,7 +17,7 @@ passport.use(new LocalStrategy(
           if (user.dataValues.role !== 'admin') return cb(null, false, req.flash('error_messages', '帳號不存在！'))
         }
         if (req.originalUrl === '/signin') {
-          if (user.dataValues.role !== 'user') return cb(null, false, req.flash('error_messages', '帳號不存在！'))
+          if (user.dataValues.role === 'admin') return cb(null, false, req.flash('error_messages', '帳號不存在！'))
         }
         bcrypt.compare(password, user.password)
           .then(res => {
