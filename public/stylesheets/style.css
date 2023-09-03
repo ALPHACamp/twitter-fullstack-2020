@@ -41,7 +41,7 @@ textarea {
 @media (min-width: 768px) and (max-width: 1199.98px) {}
 
 #left-sidebar {
-  position: absolute;
+  position: fixed;
   width: 178px;
   height: 1200px; 
   left: 130px;
