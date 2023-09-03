@@ -27,22 +27,14 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('userSignin', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
-// user logout
+// logout
 router.get('/logout', userController.logout)
 
-// admin route
+// routes
 router.use('/admin', adminAuthenticated, admin)
-
-// followship oute
 router.use('/followships', authenticated, followships)
-
-// tweets route
 router.use('/tweets', authenticated, tweets)
-
-// followships route
 router.use('/followships', authenticated, followships)
-
-// users route
 router.use('/users', authenticated, users)
 
 router.use('/', (req, res) => res.redirect('/tweets'))
