@@ -212,6 +212,7 @@ const userController = {
           isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       return res.render('users/replies', { user: user.toJSON(), topUsers, reqUser, isFollowed })
     } catch (err) {
@@ -277,6 +278,7 @@ const userController = {
           isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       return res.render('users/likes', { user: user.toJSON(), tweets: tweetsResult, topUsers, reqUser, isFollowed })
     } catch (err) {
@@ -316,6 +318,7 @@ const userController = {
           isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       return res.render('users/followings', { user: user.toJSON(), followships, topUsers, reqUser })
     } catch (err) {
@@ -356,6 +359,7 @@ const userController = {
           isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === u.id)
         }))
         .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       return res.render('users/followers', { user: user.toJSON(), followships, topUsers, reqUser })
     } catch (err) {

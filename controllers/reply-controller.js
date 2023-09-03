@@ -4,15 +4,12 @@ const helpers = require('../_helpers')
 const replyController = {
   getTweetReplies: (req, res, next) => {
     const reqUser = helpers.getUser(req)
-    // const { id } = req.params
     const { tweetId } = req.params
     const userId = helpers.getUser(req).id
 
     Promise.all([
       Tweet.findByPk(tweetId, {
         include: [{ model: User }, { model: Reply }, { model: Like }]
-        // raw: true,
-        // nest: true
       }),
       Reply.findAll({
         where: { tweetId },
