@@ -12,10 +12,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}}
-          method="POST">
-          <div class="form">
-
+        <div class="form">
+          <form {{#if tweet}} action="/tweets/{{tweet.id}}/replies" {{else}} action="/tweets/{{this.id}}/replies" {{/if}}
+              method="POST" id="reply-form" class="needs-validation g-3" novalidate>
             <div class="d-flex align-items-start flex-column" style="min-height: 130px;">
               <div class="align-self-start">
                 <img class="rounded-circle ms-4" {{#if tweet}} src="{{tweet.User.avatar}}" {{else}}
@@ -39,17 +38,24 @@
             <div class="mt-4 d-flex">
               <img src="{{user.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;"
                 class="ms-4 me-2 rounded-circle" />
-                <label for="comment">
-                  <textarea name="comment" id="comment" cols="60" rows="4"
+                <label for="comment" class="form-label">
+                  <textarea name="comment" id="reply-comment" cols="60" rows="4" class="form-control"
                     style="outline:none; border:none; box-shadow:none; margin-top:10px; margin-left:5px" maxlength="140"
-                    required placeholder="推你的回覆"></textarea>
+                    placeholder="推你的回覆" required></textarea>
                 </label>
+              
             </div>
-          </div>
-          <input type="hidden" name="TweetId" value="{{#if tweet}} {{tweet.id}} {{else}} {{this.id}} {{/if}}">
-          <button type="submit" class="btn btn-default position-absolute" id="submitButton"
-            style="background-color: #FF6600;border-radius: 23px; color: white; right: 20px; bottom: 20px;width: 64px; height: 40px;">回覆</button>
-        </form>
+            {{!-- 錯誤訊息 --}}
+            <div id="commentFeedback" class="invalid-feedback"
+              style="position:absolute; right: 100px; bottom: 28px; color:#FC5A5A; font-size:15px; width:90px;">
+              內容不可空白
+            </div>
+
+            <input type="hidden" name="TweetId" value="{{#if tweet}} {{tweet.id}} {{else}} {{this.id}} {{/if}}">
+            <button type="submit" class="btn btn-default position-absolute" id="reply-button"
+              style="background-color: #FF6600;border-radius: 23px; color: white; right: 20px; bottom: 20px;width: 64px; height: 40px;">回覆</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
