@@ -1,6 +1,6 @@
 const { User } = require('../models')
 const helpers = require('../_helpers')
-const imgurFileHandler = require('../helpers/file-helpers')
+const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const apiController = {
   apiEditUser: async (req, res, next) => {
@@ -41,13 +41,14 @@ const apiController = {
       if (name.length > 50) return res.json({ status: 'error', message: '字數超出上限！' })
       if (introduction.length > 160) return res.json({ status: 'error', message: '字數超出上限！' })
 
-      const data = await user.update({
+      await user.update({
         name,
         introduction,
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
-      res.json({ status: 'success', message: '已成功更新!', data })
+      // res.json({ status: 'success', message: '已成功更新!' })
+      res.redirect(`/users/${currentUserId}/tweets`)
     } catch (err) {
       next(err)
     }
