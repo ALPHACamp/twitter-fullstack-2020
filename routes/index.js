@@ -1,6 +1,7 @@
 const pages = require('./pages')
 const apis = require('./apis')
 
+<<<<<<< HEAD
 // Controllers
 const tweetController = require('../controllers/tweet-controller')
 const userController = require('../controllers/user-controller')
@@ -45,6 +46,8 @@ router.use('/', generalErrorHandler)
 router.use('/', generalErrorHandler)
 
 module.exports = router
+=======
+>>>>>>> origin/master
 module.exports = {
   pages,
   apis

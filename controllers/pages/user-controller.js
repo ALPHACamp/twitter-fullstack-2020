@@ -6,39 +6,42 @@ const userController = {
     res.render('signup')
   },
   signUp: async (req, res, next) => {
+    const { account, name, email, password, checkPassword } = req.body
+
+    if (!account || !name || !email || !password) {
+      req.flash('error_messages', '所有欄位皆為必填')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+
+    if (password !== checkPassword) {
+      req.flash('error_messages', '密碼與密碼確認不相符')
+      return res.render('signup', { account, name, email, password, checkPassword })
+    }
+
     try {
-      const { account, name, email, password, checkPassword } = req.body
-      const errors = []
-
-      if (name.length > 50) {
-        errors.push('名稱不得超過 50 個字')
-      }
-
-      if (password !== checkPassword) {
-        errors.push('密碼與密碼確認不相符')
-      }
-
       const usedAccount = await User.findOne({ where: { account } })
       if (usedAccount) {
-        errors.push('此帳號已被註冊')
+        return res.render('signup', { account, name, email, password, checkPassword, message: '此帳號已被使用' })
       }
 
       const usedEmail = await User.findOne({ where: { email } })
       if (usedEmail) {
-        errors.push('此 Email 已被註冊')
+        req.flash('error_messages', '此 Email 已被使用')
+        return res.render('signup', { account, name, email, password, checkPassword, message: '此 Email 已被使用' })
       }
 
-      if (errors.length > 0) {
-        throw new Error(errors.join('\n & \n'))
-      }
-
-      const hash = await bcrypt.hash(req.body.password, 10)
-      await User.create({ account, name, email, password: hash })
-
-      req.flash('success_messages', '註冊成功！')
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+      await User.create({
+        account,
+        name,
+        email,
+        password: hashedPassword
+      })
+      req.flash('success_messages', '註冊成功')
       return res.redirect('/signin')
     } catch (err) {
-      next(err)
+      return next(err)
     }
   },
   signInPage: (req, res) => {
@@ -111,38 +114,55 @@ const userController = {
       .then(() => res.redirect('back'))
       .catch(err => next(err))
   },
-  removeFollowing: async (req, res, next) => {
-    const [user, followship] = await Promise.all([
-      User.findByPk(req.params.id),
-      Followship.findOne({
-        where: {
-          followerId: req.user.id,
-          followingId: req.params.id
-        }
-      })
+  getFollowers: async (req, res, next) => {
+    const UserId = req.params.id
+
+    const [users, user] = await Promise.all([User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }),
+    User.findByPk(UserId, {
+      include: [{ model: User, as: 'Followers' }]
+    })
     ])
 
-    if (!user) throw new Error("User didn't exist!")
-    if (!followship) throw new Error("You haven't following this user!")
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0.10)
 
-    followship.destroy()
-    return res.redirect('back')
+    const followers = user.Followers
+    const followersSorted = followers.map(follower => ({
+      ...follower.toJSON(),
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === follower.id)
+    })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+    res.render('followers', { users: usersSorted, followers: followersSorted })
   },
-  getUserTweets: async (req, res, next) => {
-    try {
-      const userId = req.params.id
-      const user = await User.findByPk(userId, {
-        include: [Tweet],
-        order: [['createdAt', 'DESC']]
-      })
+  getFollowings: async (req, res, next) => {
+    const UserId = req.params.id
 
-      if (!user) { throw new Error("User didn't exist!") }
-      console.log(user); // 在這裡添加這行
-      res.render('users/self', { user: user.toJSON()/*, myUser: req.user.id */ })
-    } catch (err) {
-      next(err)
-    }
+    const [users, user] = await Promise.all([User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }),
+    User.findByPk(UserId, { include: [{ model: User, as: 'Followings' }] })
+    ])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0.10)
+
+    const followings = user.Followings
+    const followingsSorted = followings.map(following => ({
+      ...following.toJSON(),
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === following.id)
+    })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+    res.render('followings', { users: usersSorted, followings: followingsSorted })
   }
 
 }
 module.exports = userController
+
