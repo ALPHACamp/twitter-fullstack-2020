@@ -24,6 +24,7 @@ textarea {
 
 .form-control {
   border: none;
+  border-radius: 0;
 }
 
 .border-container {
@@ -91,6 +92,7 @@ textarea {
   position: absolute;
   left: 333px;
   min-height: 1200px;
+  top: 0;
 }
 
 .row-card {

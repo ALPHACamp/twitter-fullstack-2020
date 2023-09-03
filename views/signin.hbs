@@ -16,8 +16,7 @@
               <div class="label bg-light">
                 <label for="account" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">帳號</label>
               </div>
-              <input type="text" class="form-control shadow-none bg-light"
-                id="account" name="account" placeholder="請輸入帳號" onkeyup="wordsTotal()" required>
+              <input type="text" class="form-control shadow-none bg-light" style="outline: none; resize: none;" maxlength="50" id="account" name="account" placeholder="請輸入帳號" onkeyup="wordsTotal()" required>
               <div class="d-flex col justify-content-between">
                   <span class="col"
                     style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
@@ -33,7 +32,7 @@
               <div class="label bg-light">
                 <label for="password" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼</label>
               </div>
-              <input type="password" class="form-control shadow-none bg-light" style="font-family: Noto Sans TC; font-size: 16px;font-weight: 400; line-height: 26px; letter-spacing: 0px; text-align: left;" id="password" name="password" placeholder="請輸入密碼" required>
+              <input type="password" class="form-control shadow-none bg-light" style="font-family: Noto Sans TC; font-size: 16px;font-weight: 400; line-height: 26px; letter-spacing: 0px; text-align: left;" id="password" name="password" placeholder="請輸入密碼" maxlength="50" required>
             </div>
             {{!-- submit button --}}
             <div class="text-center">
