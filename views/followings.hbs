@@ -136,6 +136,8 @@
               <div style="color:gray; font-size:14px;"> @{{this.account}}</div>
             </div>
           </div>
+          {{#ifCond this.id ../user.id}}
+          {{else}}
           {{#if this.isFollowed}}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit" id="btn-tweet"
@@ -152,6 +154,7 @@
             </button>
           </form>
           {{/if}}
+          {{/ifCond}}
         </div>
         </li>
         {{/each}}

@@ -139,22 +139,28 @@
               <div style="color:gray; font-size:14px;"> @{{this.account}}</div>
             </div>
           </div>
-          {{#if this.isFollowed}}
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" id="btn-tweet"
-              style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex; width:90px;">
-              正在跟隨
-            </button>
-          </form>
+
+          {{#ifCond this.id ../user.id}}
           {{else}}
-          <form action="/followships" method="POST" style="display: flex; align-items:center;">
-            <input type="hidden" name="id" value={{this.id}} />
-            <button type="submit" id="btn-tweet"
-              style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
-              跟隨
-            </button>
-          </form>
-          {{/if}}
+          <div>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" id="btn-tweet"
+                style="color: white; background-color:rgb(255, 106, 0); font-size:14px; display: flex; width:90px;">
+                正在跟隨
+              </button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: flex; align-items:center;">
+              <input type="hidden" name="id" value={{this.id}} />
+              <button type="submit" id="btn-tweet"
+                style="color: rgb(255, 106, 0); border: solid; border-color: rgb(255, 106, 0); background-color:white; font-size:14px; display: flex; margin:0; padding:0;">
+                跟隨
+              </button>
+            </form>
+            {{/if}}
+          </div>
+          {{/ifCond}}
         </div>
         </li>
         {{/each}}
@@ -241,18 +247,14 @@
 
 <script>
   function btnReply(id) {
-    console.log("按到onclick，進到btnReply()了")
     const replyModal = document.getElementById('replyModal')
     if (replyModal) {
       replyModal.addEventListener('shown.bs.modal', event => {
-        console.log("modal打開了")
         fetch(`/api/tweets/${id}`)
           .then(res => {
-            console.log(`fetch到http://localhost:3000/api/tweets/${id}`)
             return res.json();
           })
           .then(result => {
-            console.log("進到DOM了")
             document.querySelector('#replyModalAvatar').src = result.avatar
             document.querySelector('#replyModalName').textContent = result.name
             document.querySelector('#replyModalAccount').innerHTML = `  @${result.account}·`
@@ -260,7 +262,6 @@
             document.querySelector('#replyModalAt').innerHTML = `  @${result.account}`
             document.querySelector('#userAvatar').src = result.loginUserAvatar
             document.querySelector('#action').action = `/tweets/${result.tweet_id}/replies`
-            console.log("做完DOM了")
           })
           .catch(error => console.error("Error:", error))
       })
