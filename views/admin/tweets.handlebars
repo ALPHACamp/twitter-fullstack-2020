@@ -1,0 +1,103 @@
+<div
+  class="container d-flex flex-column m-0 p-0 h-100 w-100 border-start-1 border-end-1 border-1px">
+  {{! 首頁表頭 }}
+  <div class="partial-title p-4 flex-shrink-1">
+    <div
+      class="d-flex gap-3 p-0 m-0 h-26px justify-content-start align-items-center">
+      <div class="d-flex flex-column m-0 p-0 gap-0">
+        <p class="fw-bold m-0 p-0 align-bottom fs-4 ln-height-26px">推文清單</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container tweet-display-admin main-tweets-area p-0 m-0  flex-shrink-1">
+    <div class="scrollbar-hidden p-0 m-0 gap-0 d-flex flex-column">
+      {{#each tweets}}
+      <div
+        data-id="{{ this.id }}"
+        class="admin-tweet-card card shadow-none py-0 px-4 border-1px border-bottom-1 border-top-0 border-start-0 border-end-0">
+        <div class="card-body m-0 pb-3 d-flex gap-2">
+          <div class="tweet-user-icon flex-shrink-0 p-0">
+            <a
+              href="/api/users/{{ this.User.id }}"
+              class="overflow-hidden rounded-circle link-unstyled child-img-center w-100 h-100 p-0">
+              <img src="{{ this.User.avatar }}" alt="" class="w-100 h-100" />
+            </a>
+          </div>
+          <div class="tweet-card-content d-flex flex-column gap-2 w-100">
+            <div
+              class="p-0 m-0 d-flex justify-content-between align-items-center">
+              <div class="tweet-user-horizontal">
+                <a
+                  href="/api/users/{{ this.User.id }}"
+                  class="d-flex gap-2 link-unstyled align-items-center">
+                  <p class="fw-bold">{{ this.User.name }}</p>
+                  <p class="font-size-sm text-secondary">
+                    @{{
+                      this.User.account
+                    }}・{{this.createdFromNow}}
+                  </p>
+                </a>
+              </div>
+
+              <form
+                action="/admin/tweets/{{ this.id }}?_method=DELETE"
+                method="POST"
+                style="display: inline">
+                <button
+                  type="submit"
+                  class="btn admin-delete-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteTweetModal">
+                  <img
+                    src="/images/icons/close_outlined.svg"
+                    alt=""
+                    class="filter-grey-7" />
+                </button>
+              </form>
+            </div>
+            <p class="m-0">
+              {{ this.description }}
+            </p>
+          </div>
+        </div>
+        <div class="bottom-border"></div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<!-- Delete Tweet Modal -->
+<div
+  class="modal fade"
+  id="deleteTweetModal"
+  tabindex="-1"
+  aria-labelledby="deleteTweetModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteTweetModalLabel">刪除推文</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">您確定要刪除這則推文嗎？</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          取消
+        </button>
+        <form id="deleteTweetForm" action="" method="POST">
+          <input type="hidden" name="_method" value="DELETE" />
+          <button type="submit" class="btn btn-danger">確定刪除</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/javascripts/axios.min.js"></script>
+<script src="/javascripts/unlimitScrolldown/adminLoadTweet.js"></script>
