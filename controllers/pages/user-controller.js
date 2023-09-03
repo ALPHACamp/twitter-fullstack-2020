@@ -98,6 +98,54 @@ const userController = {
     })
       .then(() => res.redirect('back'))
       .catch(err => next(err))
+  },
+  getFollowers: async (req, res, next) => {
+    const UserId = req.params.id
+
+    const [users, user] = await Promise.all([User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }),
+    User.findByPk(UserId, {
+      include: [{ model: User, as: 'Followers' }]
+    })
+    ])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0.10)
+
+    const followers = user.Followers
+    const followersSorted = followers.map(follower => ({
+      ...follower.toJSON(),
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === follower.id)
+    })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+    res.render('followers', { users: usersSorted, followers: followersSorted })
+  },
+  getFollowings: async (req, res, next) => {
+    const UserId = req.params.id
+
+    const [users, user] = await Promise.all([User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }),
+    User.findByPk(UserId, { include: [{ model: User, as: 'Followings' }] })
+    ])
+
+    const usersSorted = users.map(user => ({
+      ...user.toJSON(),
+      followerCount: user.Followers.length,
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === user.id)
+    })).sort((a, b) => b.followerCount - a.followerCount).slice(0.10)
+
+    const followings = user.Followings
+    const followingsSorted = followings.map(following => ({
+      ...following.toJSON(),
+      isFollowed: helpers.getUser(req) && helpers.getUser(req).Followings.some(f => f.id === following.id)
+    })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+    res.render('followings', { users: usersSorted, followings: followingsSorted })
   }
 }
 
