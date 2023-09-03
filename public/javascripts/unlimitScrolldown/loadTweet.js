@@ -50,7 +50,7 @@ container.addEventListener('scroll', async () => {
             <div class="tweet-user-horizontal">
               <a href="/users/${tweet.User.id}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
                 <p class="fw-bold">${tweet.User.name}</p>
-                <p class="font-size-sm text-secondary">@${tweet.User.account}・${tweet.createdAt}</p>
+                <p class="font-size-sm text-secondary">@${tweet.User.account}・${tweet.createdFromNow}</p>
               </a>
             </div>
             <p class="m-0 text-wrap text-break">

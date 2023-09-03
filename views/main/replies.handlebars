@@ -44,7 +44,7 @@
 
     <div class="tweet-reply-icons d-flex justify-content-between">
 
-      <button type="button" class="btn btn-outline-light d-flex align-items-center gap-2 link-unstyled p-0 m-0"
+      <button type="button" class="btn btn-outline-light border-0 d-flex align-items-center gap-2 link-unstyled p-0 m-0"
         data-bs-toggle="modal" data-bs-target="#reply-model">
         <img src="/images/icons/icon_reply_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
       </button>
@@ -85,7 +85,7 @@
           <div class="tweet-user-horizontal">
             <a href="/users/{{this.User.id}}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
               <p class="fw-bold">{{this.User.name}}</p>
-              <p class="font-size-sm text-secondary">@{{this.User.account}}・{{this.createdAt}}</p>
+              <p class="font-size-sm text-secondary">@{{this.User.account}}・{{this.createdFromNow}}</p>
             </a>
           </div>
 

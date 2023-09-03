@@ -163,14 +163,7 @@ const userController = {
 
   getUserTweetsUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
+      const { limit, page } = req
 
       const userTweetsUnload = await userService.getUserTweets(req, limit, page)
 
@@ -265,14 +258,7 @@ const userController = {
 
   getLikeTweetsUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
+      const { limit, page } = req
 
       const tweets = await userService.getLikeTweets(req, limit, page)
       return res.json(tweets)
@@ -308,15 +294,7 @@ const userController = {
   },
   getUserRepliesUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
-
+      const { limit, page } = req
       const replies = await userService.getUserReplies(req, limit, page)
       return res.json(replies)
     } catch (error) {
