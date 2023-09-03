@@ -60,7 +60,7 @@
                 <label for="password" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼</label>
               </div>
               <input type="password"class="form-control shadow-none bg-light"
-                id="password" name="password" placeholder="請設定密碼" value='{{password}}' onkeyup="passwordCheck()" required>
+                id="password" name="password" placeholder="請設定密碼" value='{{password}}'  required>
               <div class="d-flex col justify-content-between">
                 <span class="col"
                   style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
@@ -102,7 +102,7 @@
   const input2 = document.getElementById('name')
   function wordsTotal() {
     let total = document.getElementById('account').value.length
-    if (Number(total) > Number(50)) {
+    if (Number(total) === Number(50)) {
       document.getElementById('displayErr').textContent = '字數超出上限！'
       input.classList.add('custom-validation')
     } else {
@@ -113,7 +113,7 @@
   }
   function wordsTotal2() {
     let total = document.getElementById('name').value.length
-    if (Number(total) > Number(50)) {
+    if (Number(total) === Number(50)) {
       document.getElementById('displayErr2').textContent = '字數超出上限！'
       input2.classList.add('custom-validation')
     } else {

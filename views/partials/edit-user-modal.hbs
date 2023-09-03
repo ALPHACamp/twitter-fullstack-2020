@@ -74,7 +74,7 @@
   // name 字數確認
   const nameCount = document.querySelector('#name-area')
   function nameWordsCheck() {
-    const content = document.querySelector('#modal-profile-name').value.trim().length
+    const content = document.querySelector('#modalProfileName').value.trim().length
     if (content === 50) {
       nameCount.innerHTML = `<span style="font-weight: 500;font-size: 12px;color: #FC5A5A;">字數不可超過${content}字</span>`
     } else {
