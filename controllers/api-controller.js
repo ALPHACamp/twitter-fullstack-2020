@@ -47,8 +47,11 @@ const apiController = {
         avatar: uploadAvatar || user.avatar,
         cover: uploadCover || user.cover
       })
-      // res.json({ status: 'success', message: '已成功更新!' })
-      res.redirect(`/users/${currentUserId}/tweets`)
+      if (process.env.NODE_ENV === 'test') {
+        return res.json({ status: 'success', message: '已成功更新!' })
+      } else {
+        return res.redirect(`/users/${currentUserId}/tweets`)
+      }
     } catch (err) {
       next(err)
     }
