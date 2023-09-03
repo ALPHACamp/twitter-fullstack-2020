@@ -120,7 +120,8 @@ const tweetController = {
           replyCount,
           likeCount,
           isLiked,
-          topUser
+          topUser,
+          currentUserId: user.id
         })
       })
       .catch(err => next(err))
