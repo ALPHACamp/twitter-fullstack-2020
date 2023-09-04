@@ -47,19 +47,10 @@
             <div class="col-1 d-flex justify-content-center align-items-start ms-2">
               <img src="{{#if currentUser.avatar}}{{ ../currentUser.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}" class="rounded-circle ms-2" style="width: 50px; height: 50px" alt="avatar">
             </div>
-            <div class="input-container d-flex flex-column" style="width: 500px;">
-              <textarea class="form-control mt-2 ms-0 ms-2 border-0" style="outline: none; resize: none; width: 345px;" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆" onkeyup="replyWordsCheck()" minlength="1"></textarea>
-              <div id="reply-area" class="mt-1">
-                <span class="text-end now1" style="font-size: 12px; color: #FC5A5A; margin-left: 260px;">
-                  無法回應空白回覆
-                </span>
-              </div>
-              <input type="text" name="TweetId" value="{{ this.id }}" style="outline: none; color: #FFFFFF" class="border-0" style="width: 1px; height: 1px;">
-            </div>
+            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆"></textarea>
           </div>
-          <div id="reply-button-container">
-            <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal" disabled>回覆</button>
-          </div>
+          <input type="text" name="TweetId" value="{{ this.id }}" style="outline: none; color: #FFFFFF" class="border-0">
+          <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>
         </form>
       </div>
     </div>
@@ -120,20 +111,10 @@
                 src="{{#if user.avatar}}{{ user.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
                 class="rounded-circle ms-2" style="width: 50px; height: 50px" alt="avatar">
             </div>
-            <div class="input-container d-flex flex-column" style="width: 500px;">
-              <textarea class="form-control mt-2 ms-0 ms-2 border-0" style="outline: none; resize: none; width: 345px;" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆" onkeyup="replyWordsCheck()" minlength="1"></textarea>
-              <div id="reply-area" class="mt-1">
-                <span class="text-end now1" style="font-size: 12px; color: #FC5A5A; margin-left: 260px;">
-                  無法回應空白回覆
-                  </span>
-              </div>
-            </div>
-            <input type="text" name="TweetId" value="{{ tweet.id }}" style="outline: none; color: #FFFFFF" class="border-0"
-              style="width: 1px; height: 1px;">
-            </div>
-            <div id="reply-button-container">
-              <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal" disabled>回覆</button>
-            </div>
+            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆" style="outline: none;"></textarea>
+          </div>
+          <input type="text" name="TweetId" value="{{tweet.id}}" style="outline: none; color: #FFFFFF" class="border-0">
+          <button type="submit" class="btn"  id="reply-button" data-bs-dismiss="modal">回覆</button>
         </form>
       </div>
     </div>
@@ -194,19 +175,12 @@
                 src="{{#if currentUser.avatar}}{{ ../currentUser.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
                 class="rounded-circle ms-2" style="width: 50px; height: 50px" alt="avatar">
             </div>
-            <div class="input-container d-flex flex-column" style="width: 500px;">
-              <textarea class="form-control mt-2 ms-0 ms-2 border-0" style="outline: none; resize: none; width: 345px;" id="comment" name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆" onkeyup="replyWordsCheck()" minlength="1"></textarea>
-              <div id="reply-area" class="mt-1">
-                <span class="text-end now1" style="font-size: 12px; color: #FC5A5A; margin-left: 260px;">
-                  無法回應空白回覆
-                </span>
-              </div>
-              <input type="text" name="TweetId" value="{{ this.tweetId }}" style="outline: none; color: #FFFFFF" class="border-0" style="width: 1px; height: 1px;">
-            </div>
+            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20"
+              minlength:"1" placeholder="推你的回覆"></textarea>
           </div>
-          <div id="reply-button-container">
-            <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal" disabled>回覆</button>
-          </div>
+          <input type="text" name="TweetId" value="{{ this.tweetId }}" style="outline: none; color: #FFFFFF"
+            class="border-0">
+          <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>
         </form>
       </div>
     </div>
@@ -333,40 +307,15 @@
                 src="{{#if currentUser.avatar}}{{ ../currentUser.avatar}}{{else}}https://i.imgur.com/7sJckYK.png{{/if}}"
                 class="rounded-circle ms-2" style="width: 50px; height: 50px" alt="avatar">
             </div>
-            <div class="input-container d-flex flex-column" style="width: 500px;">
-              <textarea class="form-control mt-2 ms-0 ms-2 border-0" style="outline: none; resize: none; width: 345px;" id="comment"
-                name="comment" rows="7" cols="20" minlength:"1" placeholder="推你的回覆" onkeyup="replyWordsCheck()"
-                minlength="1"></textarea>
-              <div id="reply-area" class="mt-1">
-                <span class="text-end now1" style="font-size: 12px; color: #FC5A5A; margin-left: 260px;">
-                  無法回應空白回覆
-                </span>
-              </div>
-              <input type="text" name="TweetId" value="{{ this.tweet.id }}" style="outline: none; color: #FFFFFF" class="border-0"
-                style="width: 1px; height: 1px;">
-            </div>
-            </div>
-            <div id="reply-button-container">
-              <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal" disabled>回覆</button>
-            </div>
+            <textarea class="form-control mt-2 ms-0 ps-2 border-0" id="comment" name="comment" rows="7" cols="20"
+              minlength:"1" placeholder="推你的回覆"></textarea>
+          </div>
+          <input type="text" name="TweetId" value="{{ this.id }}" style="outline: none; color: #FFFFFF"
+            class="border-0">
+          <button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 {{/ifCond}}
-
-<script type="text/javascript">
-  const replyAlert = document.querySelector('#reply-area')
-  const replyButton = document.querySelector('#reply-button-container')
-    function replyWordsCheck() {
-      const content = document.querySelector('#comment').value.trim().length
-      if (content > 0) {
-        replyButton.innerHTML = `<button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal">回覆</button>`
-        replyAlert.innerHTML = `<span class="text-end text-muted now1" style="font-size: 12px;"></span>`
-      } else {
-        replyButton.innerHTML = `<button type="submit" class="btn" id="reply-button" data-bs-dismiss="modal" disabled>回覆</button>`
-        replyAlert.innerHTML = `<span class="text-end now1" style="font-size: 12px; color: #FC5A5A; margin-left: 260px;">無法回應空白回覆</span>`
-      }
-    }
-</script>
