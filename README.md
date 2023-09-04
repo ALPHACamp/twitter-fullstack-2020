@@ -1,6 +1,6 @@
 # Simple Twitter － Alphitter
 ![image](public/photos/homepage.png)
-**可點擊[Demo](https://mighty-tundra-17871-5d8e08ab6f3e.herokuapp.com/signin) ，查看專案預覽！**
+**可點擊[Demo](https://vast-gorge-80772-a3d6b2e88ad8.herokuapp.com/signin) ，查看專案預覽！**
 
 ## 專案簡介
 > 本專案係以Twitter(今已改名為X)的架構所打造社群網站。
