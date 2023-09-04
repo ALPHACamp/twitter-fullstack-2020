@@ -57,7 +57,7 @@
   const input = document.getElementById('account')
   function wordsTotal() {
     let total = document.getElementById('account').value.length
-    if (Number(total) > Number(50)) {
+    if (Number(total) === Number(50)) {
       document.getElementById('displayErr').textContent = '字數超出上限！'
       input.classList.add('custom-validation')
     } else {
