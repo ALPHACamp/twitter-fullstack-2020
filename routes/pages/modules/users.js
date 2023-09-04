@@ -15,4 +15,3 @@ router.get('/users/:id/likes', userController.getUserLikes)
 router.put('/users/:id/edit', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putUserProfile)
 
 module.exports = router
-
