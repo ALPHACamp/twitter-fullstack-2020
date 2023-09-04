@@ -7,7 +7,7 @@
       <span style="font-size: 22px;"><strong>首頁</strong></span>
     </div>
     <div style="padding:15px; border-top:2px #ECECEC solid;">
-      <div class="position-relative" data-bs-toggle="modal" data-bs-target="#tweetModal" style="height:100px;">
+      <div class="position-relative" data-bs-toggle="modal" data-bs-target="#postTweet" style="height:100px;">
         <div style="margin: 0 10px;"></div>
         <img src={{user.avatar}} width="50" height="50" style="border-radius: 99em">
         <strong style="color:	#757676; font-size: 18px; margin:0 5px;">有什麼新鮮事?</strong>
@@ -109,28 +109,25 @@
 </div>
 
 <!-- 推文Modal -->
-<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+<div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tweetModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
       </div>
-
-      <form action="/tweets" method="POST">
-        <div class="modal-body">
-          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="有什麼新鮮事?"
-            required></textarea>
-        </div>
-
-        <div class="modal-footer">
-          <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
-            <strong>推文</strong>
-          </button>
-        </div>
-
-      </form>
-
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <div class="form d-flex">
+            <img src="{{user.avatar}}" title="source: imgur.com" class="modal-avatar">
+            <label for="description">
+              <textarea name="description" id="description" cols="60" rows="4" maxlength="140" required
+                placeholder="有什麼新鮮事？"></textarea>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-post">推文</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
