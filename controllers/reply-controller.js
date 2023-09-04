@@ -31,7 +31,7 @@ const replyController = {
             user: User.dataValues
           }
         })
-        res.render('tweet', { tweet, replies, personalTweetRoute })
+        res.render('tweet', { tweet, replies, personalTweetRoute, topUsers: req.topFollowingsList })
       })
       .catch(err => next(err))
   },
