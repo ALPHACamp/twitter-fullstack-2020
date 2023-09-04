@@ -33,7 +33,7 @@ const adminController = {
         if (!tweets) throw new Error('Tweets do not exist!')
         tweets = tweets.map(tweet => ({
           ...tweet,
-          description: tweet.description.substring(0, 50)
+          description: Number(tweet.description.length) <= 50 ? tweet.description : tweet.description.substring(0, 50) + '...'
         }))
         res.render('admin/tweets', { tweets, tweetRoute })
       })
