@@ -25,7 +25,8 @@
                 style="height:40px; font-size: 15px; border-radius: 50px; background-color: #FF6600; border:none;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+            <form action="/followships" method="POST" style="display: contents;">
+            <input type="text" name="id" value="{{this.id}}" class="d-none">
               <button type="submit" class="btn btn-outline-light btn-block"
                 style="width:64px; height:40px; font-size: 15px; border-radius: 50px; font-weight: bold; border-color: #FF6600;">
                 <font color="#FF6600">跟隨</font>
