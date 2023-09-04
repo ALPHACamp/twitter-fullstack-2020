@@ -82,13 +82,16 @@ npm run dev
 10. 瀏覽器開啟本機頁面
 當終端機出現下列訊息" "Example app listening on port 3000!" 表示本機伺服器建立成功，在瀏覽器輸入 http://localhost:3000 使用本專案。
 
-11. 預設使用者帳號
+11. 預設前台使用者及後台管理者帳號
 加入種子資料後，可以使用預設帳號/密碼登入網站
-- Account 1
+- User Account 1
   - 帳號: user1
   - 密碼: 12345678
-- Account 2
+- User Account 2
   - 帳號: user2
+  - 密碼: 12345678
+- 管理者帳號
+  - 帳號: root
   - 密碼: 12345678
 
 12. 結束專案
