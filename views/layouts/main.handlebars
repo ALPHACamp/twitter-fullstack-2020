@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="h-100">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://lighthouse.alphacamp.co/images/logo-simple.jpg">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap_custom.css">
+  <link rel="stylesheet" href="/stylesheets/css_template.css">
+  <link rel="stylesheet" href="/stylesheets/errors.css" />
+  <title>Simple Twitter</title>
+
+<body class="">
+  {{!-- 先把error message放在這邊 --}}
+  {{> message}}
+  <main role="main" class="">
+    <div class="container-lg">
+      {{{body}}}
+    </div>
+  </main>
+</body>
+
+{{#each javascripts}}
+  <script src="/javascripts/{{this}}"></script>
+{{/each}}
+<script src="/javascripts/validation.js"></script>
+<script src="/javascripts/message.js"></script>
+<script src="/javascripts/popper.min.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+
+</html>

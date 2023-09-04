@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-4"></div>
+  <div class="sign-in col-4 d-flex flex-column justify-content-center align-items-center gap-4 position-relative">
+    <img src="/images/icons/ac_icon.svg" alt="">
+    <h3>
+      後台登入
+    </h3>
+    <form action="/admin/signin" method="post" class="w-100 needs-validation" novalidate>
+      <div class="mb-4 position-relative">
+        <label for="account" class="form-label position-absolute font-size-sm">帳號</label>
+        <input type="text" class="form-control fs-6" name="account" id="account" placeholder="請輸入帳號" required>
+        <div class="invalid-feedback">
+          請輸入帳號
+        </div>
+      </div>
+      <div class="mb-4 position-relative">
+        <label for="password" class="form-label position-absolute font-size-sm">密碼</label>
+        <input type="password" class="form-control fs-6" name="password" id="password" placeholder="請輸入密碼" required>
+        <div class="invalid-feedback">
+          請輸入密碼
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">登入</button>
+    </form>
+    <div class="d-flex flex-row-reverse w-100">
+      <a href="/signin">前台登入</a>
+    </div>
+  </div>
+  <div class="col-4"></div>
+</div>

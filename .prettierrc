@@ -1,0 +1,23 @@
+{
+  "tabWidth": 2,
+  "singleQuote": true,
+  "semi": false,
+  "arrowParens": "avoid",
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": [
+        "**/*.css",
+        "**/*.scss",
+        "**/*.html",
+        "**/*.handlebars",
+        "**/*.hbs"
+      ],
+      "options": {
+        "singleQuote": false,
+        "parser": "angular",
+        "bracketSameLine": true
+      }
+    }
+  ]
+}
