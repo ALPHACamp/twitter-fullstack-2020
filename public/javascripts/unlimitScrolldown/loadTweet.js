@@ -2,12 +2,14 @@ const container = document.querySelector('.scrollbar-hidden')
 const TWEETS_LIMIT = 8
 let mainTweetsPage = 0
 
-container.addEventListener('scroll', async () => {
+container.addEventListener('scroll', unlimitDraw)
+async function unlimitDraw () {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 100) {
     mainTweetsPage += 1
     const link = `/tweets/tweetsUnload?limit=${TWEETS_LIMIT}&page=${mainTweetsPage}`
     let moreTweets = await loadMoreData(link)
-    if (!moreTweets.data) {
+    if (!moreTweets.data || !moreTweets.data.length) {
+      container.removeEventListener('scroll', unlimitDraw)
       return null
     }
 
@@ -50,7 +52,7 @@ container.addEventListener('scroll', async () => {
             <div class="tweet-user-horizontal">
               <a href="/users/${tweet.User.id}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
                 <p class="fw-bold">${tweet.User.name}</p>
-                <p class="font-size-sm text-secondary">@${tweet.User.account}・${tweet.createdAt}</p>
+                <p class="font-size-sm text-secondary">@${tweet.User.account}・${tweet.createdFromNow}</p>
               </a>
             </div>
             <p class="m-0 text-wrap text-break">
@@ -76,6 +78,8 @@ container.addEventListener('scroll', async () => {
     tweets.forEach(tweet => {
       tweet.removeEventListener('click', tweetDirectToLink)
       tweet.addEventListener('click', tweetDirectToLink)
+      tweet.removeEventListener('click', renderReplyModal)
+      tweet.addEventListener('click', renderReplyModal)
     })
   }
-})
+}

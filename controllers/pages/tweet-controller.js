@@ -15,14 +15,14 @@ const tweetController = {
       const javascripts = [TWEET_MODAL_JS, LOAD_TWEET_JS]
       const limit = 12
       const page = 0
-
-      const tweets = await tweetServices.followingUsersTweets(req, limit, page)
+      const userId = helpers.getUser(req).id
+      const tweets = await tweetServices.followingUsersTweets(userId, { limit, page })
 
       if (!tweets) {
         throw new CustomError('Can not fount any tweet', 'NotFoundError')
       }
 
-      const recommendUser = await userService.topFollowedUser(req) // 給右邊的渲染用
+      const recommendUser = await userService.topFollowedUser(userId) // 給右邊的渲染用
 
       if (!recommendUser) {
         throw new CustomError('Can not fount any recomend users', 'NotFoundError')
@@ -40,16 +40,9 @@ const tweetController = {
   },
   getTweetsUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
-
-      const tweetsUnload = await tweetServices.followingUsersTweets(req, limit, page)
+      const { limit, page } = req
+      const userId = helpers.getUser(req).id
+      const tweetsUnload = await tweetServices.followingUsersTweets(userId, { limit, page })
 
       if (!tweetsUnload) {
         return res.json({ message: 'error', data: {} })
@@ -92,13 +85,15 @@ const tweetController = {
       const limit = 8
       const page = 0
 
-      const recommendUser = await userService.topFollowedUser(req) // 給右邊的渲染用
+      const userId = helpers.getUser(req).id
+      const tweetId = req.params.id
+      const recommendUser = await userService.topFollowedUser(userId) // 給右邊的渲染用
 
       if (!recommendUser) {
         throw new CustomError('Can not fount any recommend users', 'NotFoundError')
       }
 
-      const tweetWithReplies = await tweetServices.getTweetReplies(req, limit, page)
+      const tweetWithReplies = await tweetServices.getTweetReplies(userId, tweetId, { limit, page })
 
       if (!tweetWithReplies) {
         throw new CustomError('Can not fount tweet', 'NotFoundError')
@@ -117,16 +112,10 @@ const tweetController = {
 
   getRepliesUnload: async (req, res, next) => {
     try {
-      let { limit, page } = req.query
-      limit = parseInt(limit)
-      page = parseInt(page)
-
-      if ((limit !== 0 && !limit) || (page !== 0 && !page) || isNaN(limit) || isNaN(page)) {
-      // 檢查是否有提供有效的 limit 和 page
-        return res.json({ message: 'error', data: {} })
-      }
-
-      const tweetWithReplies = await tweetServices.getTweetReplies(req, limit, page)
+      const { limit, page } = req
+      const userId = helpers.getUser(req).id
+      const tweetId = req.params.id
+      const tweetWithReplies = await tweetServices.getTweetReplies(userId, tweetId, { limit, page })
 
       if (!tweetWithReplies) {
         return res.json({ message: 'error', data: {} })
@@ -164,7 +153,12 @@ const tweetController = {
       const tweetId = req.params.id
       const userId = helpers.getUser(req).id
 
-      const tweet = await Tweet.findByPk(tweetId)
+      const tweet = await Tweet.findByPk(tweetId,
+        {
+          attrbutes: ['id'],
+          raw: true
+        }
+      )
 
       if (!tweet) {
         throw new CustomError('Tweet did not exist!', 'NotFoundError')

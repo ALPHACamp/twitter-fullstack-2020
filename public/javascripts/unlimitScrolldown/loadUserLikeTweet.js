@@ -3,13 +3,14 @@ const userId = href[href.length - 2]
 const USER_LIKE_TWEETS_LIMIT = 8
 let mainUserLikeTweetsPage = 0
 
-container.addEventListener('scroll', async () => {
+container.addEventListener('scroll', unlimitDraw)
+async function unlimitDraw () {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 100) {
     mainUserLikeTweetsPage += 1
     const link = `/users/${userId}/likesUnload?limit=${USER_LIKE_TWEETS_LIMIT}&page=${mainUserLikeTweetsPage}`
     let moreUserLikeTweets = await loadMoreData(link)
-    console.log(moreUserLikeTweets)
-    if (!moreUserLikeTweets) {
+    if (!moreUserLikeTweets || !moreUserLikeTweets.length) {
+      container.removeEventListener('scroll', unlimitDraw)
       return null
     }
 
@@ -19,7 +20,7 @@ container.addEventListener('scroll', async () => {
         likeBtn = `
         <form action="/tweets/${tweet.id}/unlike" method="post">
           <button href="#"
-            class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
+            class="btn border-0 btn-outline-light border-0 p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
             <img src="/images/icons/icon_like_filled.svg" alt=""
               class="filter-red-color img-fluid center tweet-action-icon">
             <p class="font-size-sm m-0 text-secondary">${tweet.countLike}</p>
@@ -30,7 +31,7 @@ container.addEventListener('scroll', async () => {
         likeBtn = `
         <form action="/tweets/${tweet.id}/like" method="post">
           <button href="#"
-            class="btn border-0 btn-outline-light p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
+            class="btn border-0 btn-outline-light border-0 p-0 m-0 d-flex align-items-center gap-2 link-unstyled">
             <img src="/images/icons/icon_like_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
             <p class="font-size-sm m-0 text-secondary">${tweet.countLike}</p>
           </button>
@@ -54,7 +55,7 @@ container.addEventListener('scroll', async () => {
             <div class="tweet-user-horizontal">
               <a href="/users/${tweet.User.id}/tweets" class=" d-flex gap-2 link-unstyled align-items-center">
                 <p class="fw-bold">${tweet.User.name}</p>
-                <p class="font-size-sm text-secondary">@${tweet.User.account}・${tweet.createdAt}</p>
+                <p class="font-size-sm text-secondary">@${tweet.User.account}・${tweet.createdFromNow}</p>
               </a>
             </div>
             <p class="m-0 text-break">
@@ -62,7 +63,7 @@ container.addEventListener('scroll', async () => {
             </p>
 
             <div class="tweet-user-action d-flex justify-content-between">
-              <button type="button" class="btn btn-outline-light d-flex align-items-center gap-2 link-unstyled p-0 m-0"
+              <button type="button" class="border-0 btn btn-outline-light d-flex align-items-center gap-2 link-unstyled p-0 m-0"
                 data-bs-toggle="modal" data-bs-target="#reply-model">
                 <img src="/images/icons/icon_reply_outlined.svg" alt="" class="img-fluid center tweet-action-icon">
                 <p class="font-size-sm m-0 text-secondary">${tweet.countReply}</p>
@@ -77,12 +78,13 @@ container.addEventListener('scroll', async () => {
         `
       return html
     })
-    console.log(moreUserLikeTweets)
     container.innerHTML += moreUserLikeTweets.join('')
     tweets = document.querySelectorAll(TWEET_CARD_CLASS)
     tweets.forEach(tweet => {
       tweet.removeEventListener('click', tweetDirectToLink)
       tweet.addEventListener('click', tweetDirectToLink)
+      tweet.removeEventListener('click', renderReplyModal)
+      tweet.addEventListener('click', renderReplyModal)
     })
   }
-})
+}

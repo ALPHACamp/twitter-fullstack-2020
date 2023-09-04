@@ -5,11 +5,13 @@ const row = document.querySelector('.scrollbar-hidden .row')
 const USERS_LIMIT = 8
 let usersPage = 0
 
-container.addEventListener('scroll', async () => {
+container.addEventListener('scroll', unlimitDraw)
+async function unlimitDraw () {
   if (container.scrollHeight - container.scrollTop <= container.clientHeight + 250) { // 拉到往上10公分時就會 reload
   // 這裡是到達底部時需要執行的代碼，例如發送請求從 DB 加載更多數據
     let moreUsers = await loadMoreUsers()
-    if (!moreUsers.data) {
+    if (!moreUsers.data || !moreUsers.data.length) {
+      container.removeEventListener('scroll', unlimitDraw)
       return null
     }
 
@@ -58,7 +60,7 @@ container.addEventListener('scroll', async () => {
     row.innerHTML += moreUsers.join('')
     // Get delete button
   }
-})
+}
 
 async function loadMoreUsers () {
   // 使用 AJAX 來從伺服器獲取更多資料

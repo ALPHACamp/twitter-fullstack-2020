@@ -12,7 +12,12 @@ const followshipController = {
         return res.redirect(200, 'back')
       }
 
-      const user = await User.findByPk(followingId) // 我要follow的人在不在
+      const user = await User.findByPk(
+        followingId,
+        {
+          attributes: ['id'],
+          raw: true
+        })
 
       if (!user) {
         throw new CustomError("User you want to follow didn't exist", 'NotFoundError')
@@ -22,7 +27,9 @@ const followshipController = {
         where: {
           followerId,
           followingId
-        }
+        },
+        raw: true,
+        attributes: ['id']
       })
 
       if (followship) {
