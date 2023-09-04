@@ -1,0 +1,50 @@
+<main class="container">
+  <div class="row">
+    {{>sidebar}}
+
+    {{!-- follower --}}
+    <div class="col-md-6" style="border: 1px #E6ECF0 solid; max-width: 639px; margin-left: 278px">
+      {{>user-header}}
+      {{>follow-tabs route='followers'}}
+      {{#each followers}}
+      <div class="d-flex flex-column pt-2 mt-2" style="min-height: 130px; border-bottom: 1px #E6ECF0 solid;">
+        <div class="d-flex justify-content-between">
+          <div class="align-self-start d-inline-flex">
+            <img src="{{this.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;"
+              class="ms-4 rounded-circle">
+            <div class="d-flex align-self-center">
+              <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+                <h5 class="mx-2" style="color: #171725;">{{this.name}}</h5>
+              </a>              
+            </div>
+          </div>
+          <div>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="btn btn-primary"
+                style="height:40px; font-size: 15px; border-radius: 50px; background-color: #FF6600; border:none;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" style="display: contents;">
+            <input type="text" name="id" value="{{this.id}}" class="d-none">
+              <button type="submit" class="btn btn-outline-light btn-block"
+                style="width:64px; height:40px; font-size: 15px; border-radius: 50px; font-weight: bold; border-color: #FF6600;">
+                <font color="#FF6600">跟隨</font>
+              </button>
+            </form>
+            {{/if}}
+          </div>
+      
+        </div>
+        <div class="align-self-start mt-2" style="max-width: 580px; margin-left: 86px;">
+          <p>
+            {{this.introduction}}
+          </p>
+        </div>
+      </div>
+    {{/each}}
+    
+    </div>
+    {{> right}}
+  </div>
+</main>

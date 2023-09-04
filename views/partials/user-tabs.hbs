@@ -1,0 +1,27 @@
+
+<div class="row mb-2" style="height: 53px; border: 1px #E6ECF0 solid; max-width:639px; margin:0px;">
+  <ul class="nav nav-tab d-flex flex-nowrap" style="height: 53px;">
+
+    <li class="nav-item d-flex align-items-center justify-content-center"
+      style="width:130px;{{#ifCond route 'tweets'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/tweets"
+        style="color:#657786;{{#ifCond route 'tweets'}}color:#FF6600;{{/ifCond}}">
+        推文
+      </a>
+    </li>
+    <li class="nav-item d-flex align-items-center justify-content-center"
+      style="width:130px; {{#ifCond route 'replies'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/replies"
+        style="color:#657786; {{#ifCond route 'replies'}}color:#FF6600;{{/ifCond}}">
+        回覆
+      </a>
+    </li>
+    <li class="nav-item d-flex align-items-center justify-content-center"
+      style="width:130px; {{#ifCond route 'likes'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/likes"
+        style="color:#657786; {{#ifCond route 'likes'}}color:#FF6600;{{/ifCond}}">
+        喜歡的內容
+      </a>
+    </li>
+  </ul>
+</div>

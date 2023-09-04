@@ -1,0 +1,57 @@
+
+<div class="card-body p-0">
+  <div style="height: 280px;">
+    <img src="{{#if user.cover}}{{user.cover}}{{else}}https://i.imgur.com/yLZPe7q.jpg{{/if}}"
+      alt="user-cover" class="img-fluid card-img-top" style="height:100%;">
+  </div>
+
+  <div style="margin-top:-70px; margin-left:20px; height:140px;">
+    <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://i.imgur.com/TEssa4K.jpeg{{/if}}"
+      class="rounded-circle" alt="user_avatar" height="140px" width="140px" style="border:4px #FFFFFF solid;">
+  </div>
+</div>
+<div class="card-body col-12 d-flex justify-content-end" style="margin-top:-70px;">
+  {{#ifCond user.id currentUserId}}
+  <!-- Button trigger modal -->
+  <button type="submit" class="btn btn-default" id="btnEdit" data-user-id="{{currentUserId}}"
+    style="border-radius: 30px; height: 40px; font-weight: 400; color:#FF6600; border-color: #FF6600;"
+    data-bs-toggle="modal" data-bs-target="#profileModal">編輯個人資料</button>
+  {{else}}
+
+  {{#if isFollowed}}
+  <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
+    <button type="submit" class="btn btn-primary" style="height:40px; width: 96px; border-radius: 50px; background-color: #FF6600; border:none;">正在跟隨</button>
+  </form>
+  {{else}}
+  <form action="/followships" method="POST">
+  <input type="text" name="id" value="{{user.id}}" class="d-none">
+    <button type="submit" class="btn btn-default btn-block"
+      style="margin-left: 10px; width:64px; height:40px; font-size: 15px; border-radius:50px; border-color: #FF6600; color:#FF6600;" >跟隨</button>
+  </form>
+  {{/if}}
+  {{/ifCond}}
+</div>
+
+<div class="card-body">
+  <div class="card-text ps-2">
+    <h4 style="font-weight: 900; line-height: 18px">{{user.name}}</h4>
+    <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@{{user.account}}</span>
+    <p class="my-2" style="font-size: 0.96em; line-height: 25px">
+      {{#if user.introduction}}
+        {{user.introduction}}
+      {{else}}
+        Lorem example text example text for AC simple twitter project practice
+      {{/if}}
+    </p>
+    <a href="/users/{{user.id}}/followings" style="text-decoration:none;">
+      <span class="text-dark">{{followingCount}} 個</span><span class="text-muted">跟隨中</span>
+    </a>
+    <a href="/users/{{user.id}}/followers" style="text-decoration:none;" class="ms-3">
+      <span class="text-dark">{{followerCount}} 位</span><span class="text-muted">跟隨者</span>
+    </a>
+  </div>
+</div>
+      
+{{>profile-modal}}
+
+<script src="/javascripts/edit.js"></script>

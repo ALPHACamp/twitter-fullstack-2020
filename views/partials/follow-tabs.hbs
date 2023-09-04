@@ -1,0 +1,16 @@
+
+<div class="row mb-2" style="height: 53px; border: 1px #E6ECF0 solid;">
+  <ul class="nav nav-tab" style="height: 53px;">
+    <li class="nav-item d-flex align-items-center justify-content-center"
+      style="width:130px;{{#ifCond route 'followers'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/followers"  style="color:#657786;{{#ifCond route 'followers'}}color:#FF6600;{{/ifCond}}">
+        追蹤者
+      </a>
+    </li>
+    <li class="nav-item d-flex align-items-center justify-content-center" style="width:130px; {{#ifCond route 'followings'}} border-bottom:2px solid #FF6600;{{/ifCond}}">
+      <a class="nav-link" href="/users/{{user.id}}/followings" style="color:#657786; {{#ifCond route 'followings'}}color:#FF6600;{{/ifCond}}">
+        正在追隨
+      </a>
+    </li>
+  </ul>
+</div>

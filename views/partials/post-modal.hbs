@@ -1,0 +1,25 @@
+<div class="modal fade" id="postTweet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 634px; height: 300px; border-radius: 14px;">
+      <div class="modal-header" style="position: relative; height: 50px;">
+        <button type="button" class="btn btn-default m-3" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; left: 0;">
+          <i class="fa-solid fa-xmark fa-lg" style="color: #ff6600;"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <div class="form d-flex">
+            <img src="{{user.avatar}}" title="source: imgur.com" style="width: 50px;height: 50px;" class="rounded-circle"/>
+            <label for="description">
+            <textarea name="description" id="description" cols="60" rows="4" style="outline:none; border:none; box-shadow:none; margin-top:10px; margin-left:5px" maxlength="140" required placeholder="有什麼新鮮事？"></textarea>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-default position-absolute"
+            style="background-color: #FF6600;border-radius: 23px; color: white; right: 20px; top: 190px;width: 64px; height: 40px;">推文</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
