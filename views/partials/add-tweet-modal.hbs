@@ -13,8 +13,12 @@
             <div class="user-avatar">
               <img src="{{user.avatar}}" alt="avatar" class="modal-user-avatar ms-3">
             </div>
-            <textarea class="form-control mt-2 ps-0" id="description" name="description"
-              rows="7" cols="20" maxlength:"140" minlength:"1" placeholder="有什麼新鮮事?"></textarea>
+            <div class="form-container d-flex flex-column ms-3" style="width: 500px; height: 180px;">
+              <textarea class="form-control mt-2 ps-0 border-0" style="" id="description" name="description" rows="7" cols="20" maxlength:"140" minlength:"1" placeholder="有什麼新鮮事?" onkeyup="descriptionWordsCheck()" maxlength="160"></textarea>
+              <div id="description-area">
+                <p class="text-end text-muted now1" style="font-size:12px;">0/160</p>
+              </div>
+            </div>
           </div>
           <button type="submit" class="btn" id="add-tweet-button" data-bs-dismiss="modal">推文</button>
         </form>
@@ -22,3 +26,15 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  const descriptionCount = document.querySelector('#description-area')
+    function descriptionWordsCheck() {
+      const content = document.querySelector('#description').value.trim().length
+      if (content === 160) {
+        descriptionCount.innerHTML = `<span style="font-weight: 500;font-size: 12px;color: #FC5A5A;">字數不可超過${content}字</span>`
+      } else {
+        descriptionCount.innerHTML = `<p class="text-end text-muted now1" style="font-size: 12px;">${content}/160</p>`
+      }
+    }
+</script>
