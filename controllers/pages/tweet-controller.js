@@ -170,7 +170,10 @@ const tweetController = {
       req.flash('error_messages', '內容不可空白')
       return res.redirect('back')
     }
-
+    if (comment.length > 140) {
+      req.flash('error_messages', '回覆字數限制在 140 以內!')
+      return res.redirect('back')
+    }
     Reply.create({
       UserId,
       TweetId,
