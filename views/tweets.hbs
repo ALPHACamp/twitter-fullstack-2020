@@ -108,33 +108,6 @@
 
 </div>
 
-<!-- 推文Modal -->
-<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="tweetModalLabel"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <form action="/tweets" method="POST">
-        <div class="modal-body">
-          <textarea class="form-control" id="description" name="description" rows="3" cols="140" placeholder="有什麼新鮮事?"
-            required></textarea>
-        </div>
-
-        <div class="modal-footer">
-          <button type="submit" id="btn-tweet" style="color: white; background-color:rgb(255, 106, 0); font-size:14px;">
-            <strong>推文</strong>
-          </button>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
-</div>
-
 <!-- 回覆Modal -->
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
   <div class="modal-dialog">
