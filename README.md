@@ -67,22 +67,26 @@ use ac_twitter_workspace_test;
 ```
 npm install
 ```
-7. 資料庫遷移設定
+7. 安裝 nodemon
+```
+npm install -g nodemon
+```
+8. 資料庫遷移設定
 ```
 npx sequelize db:migrate 
 ```
-8. 加入預設種子資料
+9. 加入預設種子資料
 ```
 npx sequelize db:seed:all 
 ```
-9. 啟動專案
+10. 啟動專案
 ```
 npm run dev
 ```
-10. 瀏覽器開啟本機頁面
+11. 瀏覽器開啟本機頁面
 當終端機出現下列訊息" "Example app listening on port 3000!" 表示本機伺服器建立成功，在瀏覽器輸入 http://localhost:3000 使用本專案。
 
-11. 預設前台使用者及後台管理者帳號
+12. 預設前台使用者及後台管理者帳號
 加入種子資料後，可以使用預設帳號/密碼登入網站
 - User Account 1
   - 帳號: user1
@@ -94,7 +98,7 @@ npm run dev
   - 帳號: root
   - 密碼: 12345678
 
-12. 結束專案
+13. 結束專案
 ```
 Ctrl + C
 ```
