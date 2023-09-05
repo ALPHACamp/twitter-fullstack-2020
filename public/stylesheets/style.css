@@ -46,12 +46,11 @@ body {
   --success: #3DD598;
   --warning: #FFC542;
   --error: #FC5A5A;
-  --info: #50B5FF;
-  --light-orange: #FF974A;
-  --light-blue: #50B5FF;
-  --light-green: #82C43C;
-  --light-purple: #A461D8;
-  --light-pink: #FF9AD5;
+  --secondary-orange: #FF974A;
+  --secondary-blue: #50B5FF;
+  --secondary-green: #82C43C;
+  --secondary-purple: #A461D8;
+  --secondary-pink: #FF9AD5;
   --form-gray: #F5F8FA;
   --dark: #171725;
 }
@@ -600,8 +599,8 @@ header {
   margin: 0 auto;
   max-width: 356px;
   height: 1200px;
-  background-color: white;
-
+  background-color: #FFFFFF;
+  
   .signin-header,
   .signup-header {
     position: relative;
@@ -637,7 +636,7 @@ header {
 .form-panel {
   position: relative;
   top: 128px;
-  background-color: white;
+  background-color: #FFFFFF;
 
   .form-container {
     display: flex;
@@ -683,7 +682,7 @@ header {
 
 .form-input:hover,
 .form-input:focus {
-  border-bottom: 2px solid var(--light-blue);
+  border-bottom: 2px solid var(--secondary-blue);
   outline-width: 0;
   outline: none;
 }
@@ -695,7 +694,7 @@ header {
 .invalid-feedback {
   padding-top: 4px;
   margin: 0;
-  background-color: white;
+  background-color: #FFFFFF;
 }
 
 .input-minmax {
@@ -716,7 +715,7 @@ header {
     width: 100%;
     height: 100%;
     border-radius: 50px;
-    background: #FF6600;
+    background: var(--brand-color);
     border: none;
 
     .signin-text,
@@ -741,7 +740,7 @@ header {
 
   .sub-link {
     text-decoration: underline;
-    color: #0062FF;
+    color: var(--primary);
     font-family: "Noto Sans TC";
     font-size: 16px;
     font-weight: 400;
@@ -765,7 +764,7 @@ header {
   .sub-link {
     margin: 35px auto;
     text-decoration: underline;
-    color: #0062FF;
+    color: var(--primary);
     font-family: "Noto Sans TC";
     font-size: 16px;
     font-weight: 400;
@@ -782,7 +781,7 @@ header {
   padding: 8px 24px;
   width: 156px;
   height: 46px;
-  background: #FF6600;
+  background: var(--brand-color);
   border: none;
   border-radius: 50px;
   flex: none;
@@ -802,7 +801,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
   padding: 0;
   width: 394px;
   height: 96px;
@@ -847,19 +845,19 @@ header {
 }
 
 .btn-container .btn-error {
-  border: 2px solid var(--error)
+  border: 2px solid var(--error);
 }
 
 .btn-container .btn-success {
-  border: 2px solid var(--light-green)
+  border: 2px solid var(--secondary-green);
 }
 
 .btn-container .btn-warning {
-  border: 2px solid var(--warning)
+  border: 2px solid var(--warning);
 }
 
 .btn-container .btn-info {
-  border: 2px solid var(--info)
+  border: 2px solid var(--secondary-blue);
 }
 
 
@@ -870,7 +868,7 @@ header {
   align-items: center;
   width: 56px;
   height: 35px;
-  background: #FF6600;
+  background: var(--brand-color);
   border: none;
   border-radius: 50px;
   flex: none;
