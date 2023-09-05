@@ -1,0 +1,23 @@
+<div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <div class="form d-flex">
+            <img src="{{user.avatar}}" title="source: imgur.com" class="modal-avatar">
+            <label for="description">
+              <textarea name="description" id="description" cols="60" rows="4" maxlength="140"
+                required placeholder="有什麼新鮮事？"></textarea>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-post">推文</button>
+        </form>
+      </div>
+    
+    </div>
+  </div>
+</div>
