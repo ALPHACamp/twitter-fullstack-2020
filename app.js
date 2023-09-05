@@ -55,6 +55,7 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
+
 app.use('/api', apis)
 app.use(pages)
 
