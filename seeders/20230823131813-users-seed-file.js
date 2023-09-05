@@ -6,6 +6,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     try {
       const delayInMinutes = 5
+      const maxIntroductiontLength = 160
       const users = [
         {
           account: 'root',
@@ -21,23 +22,25 @@ module.exports = {
           password: await bcrypt.hash('12345678', 10),
           avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
           cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
-          introduction: faker.lorem.text().substring(0, 160),
+          introduction: faker.lorem.text().substring(0, maxIntroductiontLength),
           role: 'user'
         }]
 
       const generateUsers = 25
+      const maxAccountLength = 10
 
       for (let i = 0; i < generateUsers; i++) {
-        const account = faker.name.firstName().substring(1, 10)
+        const account = faker.name.firstName().substring(0, maxAccountLength)
+        const maxNameLength = 50
 
         users.push({
           account,
-          name: faker.name.findName().substring(1, 50),
+          name: faker.name.findName().substring(0, maxNameLength),
           email: `${account}@example.com`,
           password: bcrypt.hashSync(Math.random().toString(36).slice(-8), 10),
           avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
           cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
-          introduction: faker.lorem.text().substring(0, 160),
+          introduction: faker.lorem.text().substring(0, maxIntroductiontLength),
           role: 'user'
         })
       }
