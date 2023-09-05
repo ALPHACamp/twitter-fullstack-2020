@@ -5,11 +5,12 @@ const nameInput = document.querySelector('#name')
 const passwordInput = document.querySelector('#password')
 const confirmPasswordInput = document.querySelector('#checkPassword')
 
-submitButton.addEventListener('click', function onSubmitClick () {
+// Submit
+submitButton.addEventListener('click', function onSubmitClick (event) {
   form.classList.add('was-validated')
 })
 
-form.addEventListener('submit', function onFormSubmit () {
+form.addEventListener('submit', function onFormSubmit (event) {
   if (!form.checkValidity()) {
     event.preventDefault()
     event.stopPropagation()
@@ -17,13 +18,13 @@ form.addEventListener('submit', function onFormSubmit () {
 })
 
 // Account
-accountInput.addEventListener('keyup', function countLetters () {
+accountInput.addEventListener('keyup', function countLetters (event) {
   const target = event.target
   const counter = target.parentElement.lastElementChild
   counter.innerText = `${target.value.length}/10`
 })
 
-accountInput.addEventListener('keyup', function onInputKeyUp () {
+accountInput.addEventListener('keyup', function onInputKeyUp (event) {
   if (event.target.value.length > 10) {
     event.target.setCustomValidity('Invalid field.')
   } else {
@@ -32,13 +33,13 @@ accountInput.addEventListener('keyup', function onInputKeyUp () {
 })
 
 // Name
-nameInput.addEventListener('keyup', function countLetters () {
+nameInput.addEventListener('keyup', function countLetters (event) {
   const target = event.target
   const counter = target.parentElement.lastElementChild
   counter.innerText = `${target.value.length}/50`
 })
 
-nameInput.addEventListener('keyup', function onInputKeyUp () {
+nameInput.addEventListener('keyup', function onInputKeyUp (event) {
   if (event.target.value.length > 50) {
     event.target.setCustomValidity('Invalid field.')
   } else {
@@ -47,7 +48,7 @@ nameInput.addEventListener('keyup', function onInputKeyUp () {
 })
 
 // Confirm Password
-confirmPasswordInput.addEventListener('keyup', function checkpassword () {
+confirmPasswordInput.addEventListener('keyup', function checkpassword (event) {
   if (passwordInput.value !== confirmPasswordInput.value) {
     event.target.setCustomValidity('Invalid field.')
   } else {
