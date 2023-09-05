@@ -2,49 +2,55 @@
 const bcrypt = require('bcryptjs')
 const faker = require('faker')
 
-const generateUsers = async () => {
-  const users = []
-  for (let i = 1; i <= 5; i++) {
-    const user = {
-      account: `user${i}`,
-      name: `user${i}`,
-      email: `user${i}@example.com`,
-      password: await bcrypt.hash('12345678', 10),
-      role: 'user',
-      avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
-      introduction: faker.lorem.text().substring(0, 50),
-      cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`
-    }
-    users.push(user)
-  }
-  return users
-}
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     try {
-      const generatedUsers = await generateUsers()
+      const delayInMinutes = 5
+      const maxIntroductiontLength = 160
       const users = [
-        ...generatedUsers,
         {
           account: 'root',
           name: 'root',
           email: 'root@example.com',
           password: await bcrypt.hash('12345678', 10),
-          role: 'admin',
+          role: 'admin'
+        },
+        {
+          account: 'user1',
+          name: 'user1',
+          email: 'user1@example.com',
+          password: await bcrypt.hash('12345678', 10),
           avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
-          introduction: faker.lorem.text().substring(0, 50),
-          cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`
-        }
-      ]
+          cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
+          introduction: faker.lorem.text().substring(0, maxIntroductiontLength),
+          role: 'user'
+        }]
 
-      const delayInMinutes = 5
+      const generateUsers = 25
+      const maxAccountLength = 10
+
+      for (let i = 0; i < generateUsers; i++) {
+        const account = faker.name.firstName().substring(0, maxAccountLength)
+        const maxNameLength = 50
+
+        users.push({
+          account,
+          name: faker.name.findName().substring(0, maxNameLength),
+          email: `${account}@example.com`,
+          password: bcrypt.hashSync(Math.random().toString(36).slice(-8), 10),
+          avatar: `https://loremflickr.com/200/200/people/?lock=${Math.random() * 100}`,
+          cover: `https://loremflickr.com/960/300/landscape/?lock=${Math.random() * 100}`,
+          introduction: faker.lorem.text().substring(0, maxIntroductiontLength),
+          role: 'user'
+        })
+      }
 
       for (let i = 0; i < users.length; i++) {
         const createdAt = new Date(Date.now() - i * delayInMinutes * 60000).toISOString().substring(0, 16)
+        const updatedAt = createdAt
 
         users[i].created_at = createdAt
-        users[i].updated_at = createdAt
+        users[i].updated_at = updatedAt
       }
 
       await queryInterface.bulkInsert('Users', users, {})
