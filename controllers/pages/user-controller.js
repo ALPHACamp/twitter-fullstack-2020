@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
-const { User, Followship, Tweet, sequelize } = require('../../models')
 const helpers = require('../../_helpers')
+const { User, Followship, Tweet, sequelize } = require('../../models')
 const { Op } = require('sequelize')
 const { isAdmin, userInfoHelper } = require('../../helpers/user-helpers')
 
