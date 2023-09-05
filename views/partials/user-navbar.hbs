@@ -18,7 +18,7 @@
       </a>
     </div>
     <div class="nav-item">
-      <a class="nav-link" href="/users/{{currentUserId}}/tweets">
+      <a class="nav-link" href="/users/{{signinUser.id}}/tweets">
         <i class="nav-icon">
           {{#if User}}
           <div class="user-icon user-filled-icon background-image"></div>
@@ -27,12 +27,12 @@
           {{/if}}
         </i>
         <span class="nav-tab {{#if User}}nav-tab-title{{/if}}">
-          使用者列表
+          個人資料
         </span>
       </a>
     </div>
     <div class="nav-item">
-      <a class="nav-link" href="/users/{{currentUserId}}/setting">
+      <a class="nav-link" href="/users/{{signinUser.id}}/setting">
         <i class="nav-icon">
           {{#if Setting}}
           <div class="cog-icon cog-filled-icon background-image"></div>
