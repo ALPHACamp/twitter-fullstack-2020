@@ -1,50 +1,39 @@
 const bcrypt = require('bcryptjs')
 const { User, Followship } = require('../../models')
+const { Op } = require('sequelize')
 const helpers = require('../../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
     res.render('signup')
   },
-  signUp: async (req, res, next) => {
-    const { account, name, email, password, checkPassword } = req.body
+  signUp: (req, res, next) => {
+    const { account, name, email, password } = req.body
 
-    if (!account || !name || !email || !password) {
-      req.flash('error_messages', '所有欄位皆為必填')
-      return res.render('signup', { account, name, email, password, checkPassword })
-    }
-
-    if (password !== checkPassword) {
-      req.flash('error_messages', '密碼與密碼確認不相符')
-      return res.render('signup', { account, name, email, password, checkPassword })
-    }
-
-    try {
-      const usedAccount = await User.findOne({ where: { account } })
-      if (usedAccount) {
-        req.flash('error_messages', '此帳號已被使用')
-        return res.render('signup', { account, name, email, password, checkPassword })
+    return User.findOne({
+      where: {
+        [Op.or]: [{ email }, { account }]
       }
-
-      const usedEmail = await User.findOne({ where: { email } })
-      if (usedEmail) {
-        req.flash('error_messages', '此 Email 已被使用')
-        return res.render('signup', { account, name, email, password, checkPassword })
-      }
-
-      const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(password, salt)
-      await User.create({
+    })
+      .then(user => {
+        if (user) {
+          if (user.toJSON().account === account) throw new Error('此帳號已被註冊')
+          if (user.toJSON().email === email) throw new Error('此 Email 已被註冊')
+        }
+        return bcrypt.hash(password, 10)
+      })
+      .then(hash => User.create({
         account,
         name,
         email,
-        password: hashedPassword
+        password: hash,
+        role: 'user'
+      }))
+      .then(() => {
+        req.flash('success_messages', '成功註冊')
+        return res.redirect('/signin')
       })
-      req.flash('success_messages', '註冊成功')
-      return res.redirect('/signin')
-    } catch (err) {
-      return next(err)
-    }
+      .catch(err => next(err))
   },
   signInPage: (req, res) => {
     res.render('signin')
