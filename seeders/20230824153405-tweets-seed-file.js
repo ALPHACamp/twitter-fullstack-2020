@@ -9,7 +9,7 @@ module.exports = {
         { type: queryInterface.sequelize.QueryTypes.SELECT }
       )
       const delayInMinutes = 5
-      const tweetCount = 50
+      const tweetCount = 260
       const tweets = []
 
       for (let i = 0; i < tweetCount; i++) {
