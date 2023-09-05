@@ -1,0 +1,62 @@
+<nav class="nav">
+  <a href="/admin/tweets" class="navbar-brand">
+    <img src="/stylesheets/icons/logo.svg" alt="logo" class="logo">
+  </a>
+  <div class="nav-list">
+    <div class="nav-item">
+      <a class="nav-link" href="/tweets">
+        <i class="nav-icon">
+          {{#if Tweets}}
+          <div class="home-icon home-filled-icon background-image"></div>
+          {{else}}
+          <div class="home-icon home-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if Tweets}}nav-tab-title{{/if}}">
+          首頁
+        </span>
+      </a>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="/users/{{signinUser.id}}/tweets">
+        <i class="nav-icon">
+          {{#if User}}
+          <div class="user-icon user-filled-icon background-image"></div>
+          {{else}}
+          <div class="user-icon user-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if User}}nav-tab-title{{/if}}">
+          個人資料
+        </span>
+      </a>
+    </div>
+    <div class="nav-item">
+      <a class="nav-link" href="/users/{{signinUser.id}}/setting">
+        <i class="nav-icon">
+          {{#if Setting}}
+          <div class="cog-icon cog-filled-icon background-image"></div>
+          {{else}}
+          <div class="cog-icon cog-outlined-icon background-image"></div>
+          {{/if}}
+        </i>
+        <span class="nav-tab {{#if Setting}}nav-tab-title{{/if}}">
+          設定
+        </span>
+      </a>
+    </div>
+    <button type="button" id="btn-nav-tweet" data-bs-toggle="modal" data-bs-target="#postTweet">
+      <span class="nav-btn-text">推文</span>
+    </button>
+    <div class="nav-item-logout">
+      <a class="nav-link" href="/signin">
+        <i class="nav-icon">
+          <div class="logout-icon background-image"></div>
+        </i>
+        <span class="nav-tab">登出</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+{{> post-tweet-modal}}

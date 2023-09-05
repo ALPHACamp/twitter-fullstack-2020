@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="signin-content">
+    <div class="signin-header">
+      <div class="brand-logo">
+        <img src="/stylesheets/icons/logo.svg" alt="logo" class="logo">
+      </div>
+      <h3 class="signin-title">後台登入</h3>
+    </div>
+    <div class="form-panel">
+      <div class="form-container">
+        <form action="/admin/signin" method="POST" id="form" class="needs-validation" novalidate>
+          <div class="form-content">
+            <div class="form-row">
+              <label for="account" class="form-label">帳號</label>
+              <input type="text" id="account" name="account" placeholder="請輸入帳號" class="form-input" value="{{account}}" required />
+            </div>
+            <div class="form-row">
+              <label for="password" class="form-label">密碼</label>
+              <input type="password" id="password" name="password" placeholder="請輸入密碼" class="form-input" value="{{ password }}" required />
+            </div>
+          </div>
+          <div id="btn-control" class="control-panel">
+            <button type="submit" class="btn btn-signin" id="submit">
+              <span class="signin-text">登入</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="admin-signin-sub-btn">
+      <a href="/signin" class="sub-link">前台登入</a>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,15 @@
+<div class="container">
+  {{> admin-navbar}}
+  <div class="user-main-content">
+    <header>
+      <h4 class="header-title">使用者列表</h4>
+    </header>
+    <section class="user-card-list">
+      {{#each user}}
+      <div id="user-card">
+        {{>admin-user-card}}
+      </div>
+      {{/each}}
+    </section>
+  </div>
+</div> 

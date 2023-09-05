@@ -1,0 +1,15 @@
+<div class="container">
+  {{> admin-navbar}}
+  <div class="tweet-main-content">
+    <header>
+      <h4 class="header-title">推文清單</h4>
+    </header>
+    <section class="tweet-card-list">
+      {{#each tweets}}
+      <div id="tweet-card">
+        {{>admin-tweet-card}}
+      </div>
+      {{/each}}
+    </section>
+  </div>
+</div>
