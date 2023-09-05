@@ -46,6 +46,7 @@ body {
   --success: #3DD598;
   --warning: #FFC542;
   --error: #FC5A5A;
+  --info: #50B5FF;
   --light-orange: #FF974A;
   --light-blue: #50B5FF;
   --light-green: #82C43C;
@@ -102,6 +103,10 @@ a:hover,
 a:focus {
   text-decoration: none;
   color: var(--dark);
+}
+
+#page-container {
+  position: relative;
 }
 
 .container {
@@ -790,6 +795,10 @@ header {
 /* ---------- Messages ---------- */
 
 .msg-container {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -838,19 +847,19 @@ header {
 }
 
 .btn-container .btn-error {
-  border: 2px solid #fc5a5a;
+  border: 2px solid var(--error)
 }
 
 .btn-container .btn-success {
-  border: 2px solid #82c43c;
+  border: 2px solid var(--light-green)
 }
 
 .btn-container .btn-warning {
-  border: 2px solid #ffc542;
+  border: 2px solid var(--warning)
 }
 
 .btn-container .btn-info {
-  border: 2px solid #50b5ff;
+  border: 2px solid var(--info)
 }
 
 
