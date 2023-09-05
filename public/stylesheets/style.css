@@ -171,7 +171,8 @@ a:focus {
 
     .home-icon,
     .user-icon,
-    .logout-icon {
+    .logout-icon,
+    .cog-icon {
       position: relative;
       width: 22.2px;
       height: 20.25px;
@@ -206,7 +207,8 @@ a:focus {
   }
 }
 
-.nav-item .nav-link:hover .nav-tab, .nav-item-logout .nav-link:hover .nav-tab {
+.nav-item .nav-link:hover .nav-tab,
+.nav-item-logout .nav-link:hover .nav-tab {
   text-decoration: none;
   color: var(--brand-color);
 }
@@ -217,6 +219,10 @@ a:focus {
 
 .nav-link:hover .nav-icon .user-icon {
   background-image: url("/stylesheets/icons/user_filled.svg")
+}
+
+.nav-link:hover .nav-icon .cog-icon {
+  background-image: url("/stylesheets/icons/cog_filled.svg")
 }
 
 .home-outlined-icon {
@@ -235,12 +241,37 @@ a:focus {
   background-image: url("/stylesheets/icons/user_outlined.svg");
 }
 
+.cog-filled-icon {
+  background-image: url("/stylesheets/icons/cog_filled.svg");
+}
+
+.cog-outlined-icon {
+  background-image: url("/stylesheets/icons/cog_outlined.svg");
+}
+
 .logout-icon {
   background-image: url("/stylesheets/icons/logout.svg")
 }
 
 .nav-link:hover .nav-icon .logout-icon {
   background-image: url("/stylesheets/icons/logout_colored.svg")
+}
+
+#btn-nav-tweet {
+  width: 178px; 
+  height: 46px;
+  padding: 8px 24px;
+  border-radius: 50px;
+  background-color: var(--brand-color);
+  .nav-btn-text {
+    font-family: "Noto Sans TC";
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #FFFFFF;
+  }
 }
 
 
@@ -784,6 +815,7 @@ header {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -842,4 +874,69 @@ header {
   order: 0;
   align-self: stretch;
   flex-grow: 0;
+}
+
+
+/* ---------- Modal ---------- */
+
+.modal-content {
+  width: 634px;
+  height: 300px;
+  border-radius: 14px;
+
+  .modal-header {
+    position: relative;
+    height: 50px;
+
+    .btn-close {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      margin: 4.5px;
+      width: 10px;
+      height: 10px;
+      background-image: url('/stylesheets/icons/close.svg');
+      filter: invert(53%) sepia(87%) saturate(3477%) hue-rotate(358deg) brightness(98%) contrast(110%);
+      background-size: cover;    
+    }
+  }
+}
+
+.modal-body{
+  .form {
+    display: flex;
+    .modal-avatar{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    #description {
+      outline: none;
+      border: none;
+      box-shadow: none;
+      margin-top: 10px;
+      margin-left: 5px;
+      width: 100%
+    }
+  }
+}
+
+.btn-post {
+  position: absolute;
+  background-color: var(--brand-color);
+  border-radius: 23px;
+  color: white;
+  right: 20px;
+  top: 190px;
+  width: 64px;
+  height: 40px;
+  font-family: "Noto Sans TC"; font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.btn-post:hover {
+  background-color: #FFFFFF;
+  border-color: var(--brand-color);
+  color: var(--brand-color);
 }
