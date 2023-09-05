@@ -18,7 +18,7 @@ module.exports = {
 
         tweets.push({
           User_id: users[userIndex].id,
-          description: faker.lorem.text().substring(0, 100),
+          description: faker.lorem.text().substring(1, 140),
           created_at: createdAt,
           updated_at: createdAt
         })
