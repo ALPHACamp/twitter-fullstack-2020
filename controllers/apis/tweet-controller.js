@@ -1,4 +1,5 @@
 const { Tweet, User } = require('../../models')
+const helpers = require('../../_helpers')
 
 const tweetController = {
   getTweet: (req, res, next) => {
@@ -7,7 +8,6 @@ const tweetController = {
     })
       .then(tweet => {
         if (!tweet) throw new Error("Tweet didn't exist!")
-
         User.findByPk(tweet.UserId, {
           raw: true
         })
@@ -19,7 +19,7 @@ const tweetController = {
               tweet_id: tweet.id,
               createdAt: tweet.createdAt,
               description: tweet.description,
-              loginUserAvatar: req.user.avatar
+              loginUserAvatar: helpers.getUser(req).avatar
             })
           })
       })
