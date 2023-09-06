@@ -52,7 +52,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   res.locals.warning_messages = req.flash('warning_messages')
   res.locals.info_messages = req.flash('info_messages')
-  res.locals.user = helpers.getUser(req)
+  res.locals.signinUser = helpers.getUser(req)
   next()
 })
 
