@@ -1,0 +1,294 @@
+html,
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 16px;
+  color: #171725;
+  padding: 0;
+  margin: 0;
+}
+ 
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+textarea {
+  border: none;
+  padding: 0px;
+  resize: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.form-control {
+  border: none;
+  border-radius: 0;
+}
+
+.border-container {
+  width: 1140px;
+  height: 1200px;
+}
+
+.main-middle {
+  position: absolute;
+  width: 641px; 
+  height: 1200px;
+}
+
+@media (min-width: 1200px) {}
+@media (min-width: 768px) and (max-width: 1199.98px) {}
+
+#left-sidebar {
+  position: absolute;
+  width: 178px;
+  height: 1200px; 
+  left: 130px;
+  background-color: #FFFFFF;
+  margin-right: 24px;
+}
+
+#right-sidebar {
+  position: absolute;
+  left: 973px;
+  width: 178px;
+  margin: 0px;
+}
+
+#logo-container {
+  position: absolute;
+  width: 50px; 
+  height: 50px;
+  top: 0px; 
+  left: 0px;
+  margin: 8px;
+  padding: 5px;
+}
+
+#logo {
+  width: 50px;
+  height: 50px; 
+}
+
+#buttons-container {
+  position: relative;
+  width: Fixed (178px);
+  height: 244px;
+  top: 66px;
+  gap: 8px;
+}
+
+#admin-buttons-container {
+  position: relative;
+  width: Fixed (178px);
+  height: 124px;
+  top: 66px;
+  gap: 8px;
+}
+
+.main-middle {
+  position: absolute;
+  left: 333px;
+  min-height: 1200px;
+  top: 0;
+}
+
+.row-card {
+  position: absolute;
+  left: 332px;
+  top: 1px;
+}
+
+.main-user-card {
+  width: 888px;
+  top: 91px;
+  left: 349px;
+  gap: 16px;
+}
+
+.button-container {
+  width: 178px;
+  height: 58px;
+  padding-top: 16px;
+  padding-left: 16px;
+}
+
+.sidebar-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  margin-bottom: 3.5px;
+}
+
+.icon-description {
+  width: 36px;
+  height: 26px;
+  font-family: Noto Sans TC;
+  font-size: 18px;
+  font-weight: 700;
+  color: #44444f;
+  line-height: 26px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+#logout {
+  position: fixed;
+  width: 178px;
+  height: 58px;
+  bottom: 0px;
+}
+
+#new-tweet {
+  width: 178px;
+  height: Hug (46px); 
+  padding: 8px 24px 8px 24px; 
+  border-radius: 50px;
+  background: #FF6600;
+  color: #FFFFFF;
+}
+
+#fake-tweet {
+  width: 64px;
+  height: 40px;
+  padding: 8px 16px 8px 16px;
+  border-radius: 50px;
+  background: #FF6600;
+  color: #FFFFFF;
+}
+
+#new-tweet.span {
+  width: 130px;
+  height: 30px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+.main-middle {
+  position: absolute;
+  left: 333px;
+  height: 1200px;
+}
+
+#add-tweet-button, #reply-button {
+  position: absolute;
+  width: Hug (64px);
+  height: Hug (40px); 
+  bottom: 16px; 
+  right: 16px;
+  border-radius: 50px;
+  background: #FF6600;
+  color: #FFFFFF;
+}
+
+.btn-close {
+  margin-top: 16px;
+  margin-left: 15px;
+  color: #FF6600;
+}
+
+.modal-user-avatar {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 100%;
+  margin:auto 8px auto 24px;
+}
+
+#top-users-container {
+  position: relative;
+  width: 273px;
+  height: 895px; 
+  top: 16px; 
+  left: 16px;
+  border-radius: 16px;
+  background-color: #fafafb;
+}
+
+#recommended-users {
+  width: 96px;
+  height: 26px; 
+  margin-top: 24px; 
+  margin-left: 24px;
+}
+
+.recommended-users-card {
+  width: 273px; 
+  height: 82px;
+}
+
+.vertical-box {
+  position: relative;
+  flex: 1;
+}
+
+.vertical-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30px;
+  border: 1px solid #b5b5be;
+}
+
+.top-user-name {
+  width: 74px;
+  height: 26px;
+  color: #171725;
+  font-family: Noto Sans TC;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+}
+
+.top-user-account {
+  width: 71px;
+  height: 22px;
+  color: #92929D;
+  font-family: Noto Sans TC;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.form-group input {
+  border-bottom: #657786 solid 2px;
+}
+
+.form-group input:hover {
+  border-bottom: #50B5FF solid 2px;
+}
+
+.form-group input:focus {
+  border-bottom: #50B5FF solid 2px;
+}
+
+.form-group input::placeholder {
+  color: #B5B5BE
+}
+
+.custom-validation {
+  border-bottom: 2px solid #FC5A5A !important;
+}
+
+.admin-user-middle {
+  border-left: 1px solid #E6ECF0
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

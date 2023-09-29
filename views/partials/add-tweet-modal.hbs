@@ -1,0 +1,24 @@
+<!-- Modal -->
+<div class="modal fade" id="newTweet" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-0" style="width:634px;height:320px;border-radius:14px;padding:0px 16px;">
+      <div class="d-flex justify-content-start m-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <hr class="solid">
+      <div class="modal-body p-0">
+        <form action="/tweets" class="border-0 p-0" method="POST">
+          <div class="form-row d-flex flex-row mb-3 mt-0" style="display:inline-block">
+            <div class="user-avatar">
+              <img src="{{user.avatar}}" alt="avatar" class="modal-user-avatar ms-3">
+            </div>
+            <textarea class="form-control mt-2 ps-0" id="description" name="description"
+              rows="7" cols="20" maxlength:"140" minlength:"1" placeholder="有什麼新鮮事?"></textarea>
+          </div>
+          <button type="submit" class="btn" id="add-tweet-button" data-bs-dismiss="modal">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

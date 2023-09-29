@@ -1,0 +1,54 @@
+<div class="self-profile-container" style="width: 639px; height: 378px; position: relative;">
+  <img src="{{ tweetsUser.cover }}" alt="user-cover" style="width: 639px; height: 200px" class="img-fluid">
+  <img src="{{ tweetsUser.avatar }}" alt="user-avatar" class="border border-4 rounded-circle border-white" style="position: relative; width: 140px; height: 140px; top: -70px; left: 16px; background-color: #FFFFFF;">
+  <div class="user-info" style="position: absolute; top: 200px;">
+    <div class="button d-flex justify-content-end" style="height: 70px; position: relative; width: 639px;">
+      {{#if profileRoute}}
+      <button class="edit-profile bg-white mt-3 me-3" style="width: 128px; height: 40px; border-radius: 50px; background: #FFFFFF; color: #FF6600; font-size: 16px; border-style: solid; border-color: #FF6600;" type="button" data-bs-toggle="modal" data-bs-target="#edit-profile">編輯個人資料</button>
+      {{> edit-user-modal}}
+      {{else}}
+        {{#if followByMe}}
+        <form action="/followships/{{ tweetsUser.id }}?_method=DELETE" method="POST" style="display: contents" class="d-flex flex-row mt-3 me-3">
+          <img src="/images/icons/message.png" alt="message-icon" style="height: 40px; width: 40px; margin-right: 16px;">
+          <img src="/images/icons/notification.png" alt="noti-icon" style="height: 40px; width: 40px; margin-right: 16px;">
+          <button type="submit" class="btn btn-primary"
+            style="width:96px; height:40px; border: solid; border-radius: 50px; border: #FF6600 solid; color: white; background-color: #FF6600">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST" style="display: contents" class="d-flex flex-row mt-3 me-3">
+          <img src="/images/icons/message.png" alt="message-icon" style="height: 40px; width: 40px; margin-right: 16px;">
+          <img src="/images/icons/notification.png" alt="noti-icon" style="height: 40px; width: 40px; margin-right: 16px;">
+          <button type="submit" class="btn btn-primary" name="id" value="{{ tweetsUser.id }}"
+            style="width:64px; height:40px; border: #FF6600 solid; border-radius: 50px; color: #FF6600; background-color: white">跟隨</button>
+        </form>
+        {{/if}}
+      {{/if}}
+    </div>
+    <div class="info my-3 ps-4" style="height: 108px; position: relative;">
+      <div class="name-acoount">
+        <h5 class="m-0">{{ tweetsUser.name }}</h5>
+        <span style="font-size: 14px; font-weight: 400; color: #6C757D; font-family: Noto Sans TC">
+          @{{ tweetsUser.account }}
+        </span>
+      </div>
+      <p class="mt-2 mb-2" style="font-size: 14px; font-weight: 400; font-family: Noto Sans TC">
+          {{ tweetsUser.introduction }}
+      </p>
+      <div class="followship-container">
+        <span style="font-size: 14px; font-weight: 400; font-family: Noto Sans TC">
+          <span class="followings-button me-3" style="color: #171725">
+            <a href="/users/{{tweetsUser.id}}/followings" class="text-dark text-decoration-none">
+              {{followingsCount}} 個<span style="color: #6C757D">跟隨中</span>
+            </a>
+          </span>
+          <span class="followers-button me-3" style="color: #171725">
+            <a href="/users/{{tweetsUser.id}}/followers" class="text-dark text-decoration-none">
+              {{followersCount}} 位<span style="color: #6C757D;">跟隨者</span>
+            </a>
+          </span>
+        </span>
+      </div>
+    </div>
+    {{> user-info-tab}}
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-5">
+      <div class="login-section">
+        {{!-- logo --}}
+      <div class="text-center mb-4" style="margin-top: 64px">
+        <img src="/images/logo.png" alt="Icon" style="width: 50px">
+      </div>
+        {{!-- login Title --}}
+        <h5 class="text-center mb-4" style="font-size:28px"><Strong> 建立你的帳號 <Strong></h5>
+        {{!-- login form --}}
+        <form action="/signup" method="post" id="signup">
+          <div class="mx-auto" style="width:356px;">
+            {{!-- account --}}
+            <div class="form-group mb-4" style="width:356px; height:78px">
+              <div class="label bg-light">
+                <label for="account" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">帳號</label>
+              </div>
+              <input type="text" class="form-control shadow-none bg-light"
+                id="account" name="account" placeholder="請輸入帳號" value='{{account}}' onkeyup="wordsTotal()" maxlength="50" required>
+              <div class="d-flex col justify-content-between">
+                <span class="col"
+                  style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                  id="displayErr"></span>
+                <span
+                  style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; text-align: right; text-align: end; display: block; color: #696974"
+                  id="display"> 0 / 50</span>
+              </div>
+            </div>
+            {{!-- name --}}
+            <div class="form-group mb-4" style="width:356px; height:78px">
+              <div class="label bg-light">
+                <label for="name" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">名稱</label>
+              </div>
+              <input type="text" class="form-control shadow-none bg-light" id="name"
+                name="name" placeholder="請輸入使用者名稱" value='{{name}}'  onkeyup="wordsTotal2()" maxlength="50" required>
+              <div class="d-flex col justify-content-between">
+                <span class="col"
+                  style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                  id="displayErr2"></span>
+                <span
+                  style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; text-align: right; text-align: end; display: block; color: #696974"
+                  id="display2"> 0 / 50</span>
+              </div>
+            </div>
+            {{!-- email --}}
+            <div class="form-group mb-4" style="width:356px; height:78px">
+              <div class="label bg-light">
+                <label for="email" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">Email</label>
+              </div>
+              <input type="email" class="form-control shadow-none bg-light" id="email"
+                name="email" placeholder="請輸入Email" value='{{email}}' required>
+              <span
+                style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; text-align: right; text-align: end; display: block;"
+                ></span>
+            </div>
+            {{!-- password --}}
+            <div class="form-group mb-4" style="width:356px; height:78px">
+              <div class="label bg-light">
+                <label for="password" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼</label>
+              </div>
+              <input type="password"class="form-control shadow-none bg-light"
+                id="password" name="password" placeholder="請設定密碼" value='{{password}}' onkeyup="passwordCheck()" required>
+              <div class="d-flex col justify-content-between">
+                <span class="col"
+                  style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                  id="displayPassword"></span>
+              </div>
+            </div>
+            {{!-- check password --}}
+            <div class="form-group mb-3" style="width:356px; height:78px">
+              <div class="label bg-light">
+                <label for="checkPassword" class="form-label bg-light" class="form-label bg-light" style="font-family: Noto Sans TC; font-size: 14px; font-weight: 400; line-height: 22px; letter-spacing: 0px; text-align: left; margin-top: 2px; margin-left: 10.55px; color: #696974">密碼確認</label>
+              </div>
+              <input type="password" class="form-control shadow-none bg-light" id="checkPassword" onkeyup="passwordCheck()"
+                name="checkPassword" placeholder="請再次輸入密碼" value='{{checkPassword}}' required>
+              <div class="d-flex col justify-content-between">
+                <span class="col"
+                  style="font-family: Noto Sans TC; font-size: 12px; font-weight: 500; line-height: 20px; letter-spacing: 0px; display: block; color: #FC5A5A"
+                  id="displayPassword"></span>
+              </div>
+            </div>
+            {{!-- submit button --}}
+            <div class="text-center">
+              <button class="btn btn-primary my-2"
+                style="width:356px; height:46px; border-radius: 50px; background-color:#FF6600; color: white; border-color: #FF6600"
+                type="submit">註冊</button>
+            </div>
+            {{!-- others--}}
+            <div class="d-flex justify-content-center">
+              <a href="/signin" style="font-family: Noto Sans TC; font-size: 16px; font-weight: 400; line-height: 24px; letter-spacing: 0px; text-align: center; color: #0062FF">取消</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  const input = document.getElementById('account')
+  const input2 = document.getElementById('name')
+  function wordsTotal() {
+    let total = document.getElementById('account').value.length
+    if (Number(total) > Number(50)) {
+      document.getElementById('displayErr').textContent = '字數超出上限！'
+      input.classList.add('custom-validation')
+    } else {
+      input.classList.remove('custom-validation')
+      document.getElementById('displayErr').textContent = ''
+    }
+    document.getElementById('display').textContent = total + ' / 50'
+  }
+  function wordsTotal2() {
+    let total = document.getElementById('name').value.length
+    if (Number(total) > Number(50)) {
+      document.getElementById('displayErr2').textContent = '字數超出上限！'
+      input2.classList.add('custom-validation')
+    } else {
+      input2.classList.remove('custom-validation')
+      document.getElementById('displayErr2').textContent = ''
+    }
+    document.getElementById('display2').textContent = total + ' / 50'
+  }
+
+  function passwordCheck() {
+    const password = document.getElementById('password')
+    const checkPassword = document.getElementById('checkPassword')
+    const displayPassword = document.querySelectorAll('[id = "displayPassword"]')
+    if (password.value !== checkPassword.value) {
+      displayPassword[0].textContent = '密碼輸入不一致！'
+      displayPassword[1].textContent = '密碼輸入不一致！'
+      password.classList.add('custom-validation')
+      checkPassword.classList.add('custom-validation')
+    } else {
+      displayPassword[0].textContent = ''
+      displayPassword[1].textContent = ''
+      password.classList.remove('custom-validation')
+      checkPassword.classList.remove('custom-validation')
+    }
+  }
+</script>

@@ -1,0 +1,8 @@
+<div class="page-container">
+  {{> left-sidebar route="getUserTweets"}}
+  <section class="main-middle border-start border-end" id="profile-page-container" style="width:636px; border:1px solid #E6ECF0; overflow:scroll">
+    {{> main-middle route="getUserTweets"}}
+    {{> profile-middle-self route="getUserTweets"}}
+  </section>
+  {{> right-sidebar topUsers=topUsers}}
+</div>

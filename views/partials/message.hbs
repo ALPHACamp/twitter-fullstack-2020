@@ -1,0 +1,53 @@
+{{#if error_messages}}
+<div class="alert alert-dismissible fade show d-flex align-items-center mt-3" role="alert"
+  style="width: 394px; height: 96px; radius: 8px; background-color: #FFFFFF; box-shadow: 0px 4px 16px 0px #33333314;
+box-shadow: 0px 4px 4px 0px #3333330A; font-family: Roboto; font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: 0px; text-align: left;  z-index: 1; position: fixed; left: 0; top: 3px; right: 0; bottom: 0; margin: auto;">
+  <div>
+    {{ error_messages }}
+  </div>
+  <div class="ms-3">
+    <button type="button" data-bs-dismiss="alert" aria-label="Close">
+      <img src="/images/notifications/red-circle.png" alt="" class="me-3"
+        style="width: 56px; height: 56px; position:absolute; top: 20px; left: 314px; z-index:0;">
+      <img src="/images/notifications/red-noti.png" alt="" class="me-3"
+        style="width: 24px; height: 24px;  position:absolute; top: 36px; left:330px; z-index:0;">
+    </button>
+  </div>
+</div>
+{{/if}}
+
+{{#if success_messages}}
+<div class="alert alert-dismissible fade show d-flex align-items-center mt-3" role="alert"
+  style="width: 394px; height: 96px; radius: 8px; background-color: #FFFFFF; box-shadow: 0px 4px 16px 0px #33333314;
+box-shadow: 0px 4px 4px 0px #3333330A; font-family: Roboto; font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: 0px; text-align: left; position: fixed; left: 0; top: 3px; right: 0; bottom: 0; margin: auto; z-index: 1;">
+  <div>
+    {{ success_messages }}
+  </div>
+  <div class="ms-3">
+    <button type="button" data-bs-dismiss="alert" aria-label="Close">
+      <img src="/images/notifications/green-circle.png" alt="" class="me-3"
+        style="width: 56px; height: 56px; position:absolute; top: 20px; left: 314px; z-index:0;">
+      <img src="/images/notifications/green-noti.png" alt="" class="me-3"
+        style="width: 24px; height: 24px;  position:absolute; top: 36px; left:330px; z-index:0;">
+    </button>
+  </div>
+</div>
+{{/if}}
+
+{{#if warning_msg}}
+<div class="alert alert-dismissible fade show d-flex align-items-center mt-3" role="alert"
+  style="width: 394px; height: 96px; radius: 8px; background-color: #FFFFFF; box-shadow: 0px 4px 16px 0px #33333314;
+box-shadow: 0px 4px 4px 0px #3333330A; font-family: Roboto; font-size: 20px; font-weight: 700; line-height: 28px; letter-spacing: 0px; text-align: left; z-index: 1; position: fixed; left: 0; top: 3px; right: 0; bottom: 0; margin: auto">
+  <div>
+    {{ warning_msg }}
+  </div>
+  <div class="ms-3">
+    <button type="button" data-bs-dismiss="alert" aria-label="Close">
+      <img src="/images/notifications/yellow-circle.png" alt="" class="me-3"
+        style="width: 56px; height: 56px; position:absolute; top: 20px; left: 314px; z-index:0;">
+      <img src="/images/notifications/yellow-noti.png" alt="" class="me-3"
+        style="width: 24px; height: 24px;  position:absolute; top: 36px; left:330px; z-index:0;">
+    </button>
+  </div>
+</div>
+{{/if}}
