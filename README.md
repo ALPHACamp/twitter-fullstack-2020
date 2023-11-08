@@ -120,3 +120,10 @@ Alphitter是一個簡易的twitter社群互動網站，提供使用者在註冊�
 - Express - The framework used
 - MySQL - Database
 - Heroku - Where API hosted
+
+
+## 開發人員
+
+- Daniel Chen https://github.com/tingul4
+- Robert Ou https://github.com/RobertOu0213
+- Jessica Hsu https://github.com/pupss91090
