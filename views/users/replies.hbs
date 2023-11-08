@@ -1,0 +1,51 @@
+{{>navs/user-left-column route='users'}}
+
+<div style="position: absolute; left: 332px; width:641px;" class="border">
+    {{>header route='user'}}
+    {{>userpage-info}}
+    {{>navs/user-page-tabs route='replies'}}
+    <!-- 貼文回覆 -->
+    {{#each user.Replies}}
+    <div style="padding: 16px 24px" class="mx-auto border-bottom">
+        <div class="d-flex flex-row">
+            <a class="" href="/users/{{../user.id}}/tweets">
+                <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                    <img src={{#if ../user.avatar}}{{../user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                        style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+                </div>
+            </a>
+            <div style="margin-left: 8px; height: 116px" class="d-flex flex-column">
+                <div class="d-flex flex-row">
+                    <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
+                        {{../user.name}}
+                    </div>
+                    <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
+                        @{{../user.account}}• {{relativeTimeFromNow this.createdAt}}</div>
+                </div>
+
+                <div style="margin: 8px 0px" class="d-flex flex-row">
+                    <div style="font-size: 14px; font-weight: 400" class="text-muted align-middle align-self-center">
+                        回覆給</div>
+                    <div style="font-size: 14px; font-weight: 400;color:#FF6600;margin-left: 2px"
+                        class="align-middle align-self-center">
+                        @{{this.Tweet.User.account}}
+                    </div>
+                </div>
+                <div class="mt-auto">
+                    <a href="/tweets/{{this.Tweet.id}}/replies" class="p-0"
+                        style="text-decoration: none; color:#171725 ">
+
+                        <p>{{this.comment}}</p>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {{/each}}
+</div>
+
+{{>top-users-bar}}
+
+{{>personaldata-modal}}

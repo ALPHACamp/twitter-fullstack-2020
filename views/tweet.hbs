@@ -1,0 +1,166 @@
+{{>navs/user-left-column route='tweets'}}
+
+<div style="position: absolute; left: 332px; width:641px;" class="border">
+  {{>header route='main' title='首頁'}}
+  {{!-- 發文 --}}
+  <div style="padding: 16px 24px; height: 137px" class="d-flex flex-column mx-auto border-bottom border-5"
+    data-bs-toggle="modal" data-bs-target="#myModalmain">
+    <div class="d-flex flex-row">
+
+        <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+          <img src={{#if user.avatar}}{{user.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+            style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+        </div>
+      
+      <div style="margin-left: 8px" class="d-flex flex-column">
+        <p style="color:#6C757D" class="ms-1 mt-2">有什麼新鮮事?</p>
+      </div>
+    </div>
+    <div class="text-end mt-auto">
+      <button class="btn py-1 px-3 " style="background-color:#FF6600; color:white; border-radius: 30px">
+        推文
+      </button>
+    </div>
+  </div>
+
+  {{!-- 留言 --}}
+  <div class="col-12 mx-auto mt-2">
+    {{#each tweets}}
+    <div style="padding: 16px 24px" class="mx-auto border-bottom">
+      <div class="d-flex flex-row">
+        <a class="" href="/users/{{this.User.id}}/tweets">
+          <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+            <img src={{#if this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+              style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+          </div>
+        </a>
+        <div style="margin-left: 8px" class="d-flex flex-column">
+          <div class="d-flex flex-row">
+            <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">{{this.User.name}}
+            </div>
+            <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
+              @{{this.User.account}}• {{relativeTimeFromNow this.createdAt}}</div>
+          </div>
+
+          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
+            <div style="margin: 8px 0px" class="mx-auto">
+              <p class="text-break">{{this.description}}</p>
+            </div>
+          </a>
+
+          <div class="d-flex flex-row">
+            <div class="me-4 d-flex flex-row">
+              <a type="submit" class="text-decoration-none " style="color:#6C757D" data-bs-toggle="modal"
+                data-bs-target="#ModalReply{{this.id}}">
+                {{>icons/reply-icon}}
+                <span class="mx-1 align-self-center"
+                  style="font-size: 0.2rem;font-family: Montserrat;color:#6C757D">{{this.Replies.length}}</span>
+              </a>
+            </div>
+
+            <div class="d-flex flex-row">
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit"
+                  style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                  {{>icons/like-icon active=true}}
+                </button>
+                <span class="mx-1 align-self-center "
+                  style="font-size: 0.2rem;font-family: Montserrat">{{this.Likes.length}}</span>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit"
+                  style="background-color:transparent; border-color:transparent; border: none; padding: 0;">
+                  {{>icons/like-icon}}
+                </button>
+                <span class="mx-1 align-self-center"
+                  style="font-size: 0.2rem;font-family: Montserrat;color:#6C757D">{{this.Likes.length}}</span>
+              </form>
+              {{/if}}
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{!--reply modal--}}
+    <div class="modal" id="ModalReply{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content border-white" style="width:634px; top:56px">
+          <div class="d-flex justify-content-start">
+            <button type="button" class="btn-close ms-2 mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <hr style="margin-top: 5px; margin-bottom: 5px;">
+          <form action="/tweets/{{this.id}}/replies" method="POST">
+            <div style="padding: 16px 24px" class="mx-auto">
+              <div class="d-flex flex-row">
+                <a class="" href="/users/{{this.User.id}}/tweets">
+                  <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                    <img src={{#if this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                      style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+                  </div>
+                </a>
+                <div style="margin-left: 8px" class="d-flex flex-column">
+                  <div class="d-flex flex-row">
+                    <div style="font-size: 16px; font-weight: 600" class="align-middle align-self-center">
+                      {{this.User.name}}
+                    </div>
+                    <div style="font-size: 14px;margin-left: 8px" class="text-muted align-middle align-self-center">
+                      @{{this.User.account}}• {{relativeTimeFromNow this.createdAt}}</div>
+                  </div>
+
+                  <a href="/tweets/{{this.id}}/replies" style="text-decoration: none; color:#171725">
+                    <div style="margin: 8px 0px" class="mx-auto">
+                      <p>{{this.description}}</p>
+                    </div>
+                  </a>
+
+                  <div class="d-flex flex-row">
+                    <div style="font-size: 14px; font-weight: 400" class="text-muted align-middle align-self-center">
+                      回覆給</div>
+                    <div style="font-size: 14px; font-weight: 400;color:#FF6600;margin-left: 2px"
+                      class="align-middle align-self-center">
+                      @{{this.User.account}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div style="padding: 16px 24px" class="mx-auto">
+              <div class="d-flex flex-row">
+                <a class="" href="/users/{{../reqUser.id}}/tweets">
+                  <div style="width:50px; height:50px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                    <img src={{#if ../reqUser.avatar}}{{../reqUser.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                      style="aspect-ratio: 1 / 1;width: 50px;object-fit: cover;object-position: center;" alt="avatar">
+                  </div>
+                </a>
+                <div class="d-flex flex-row">
+                 <textarea class="ms-1 mt-2 form-control border-3 border-top-0 border-start-0 border-end-0 border-bottom-0" id="contentInput{{this.id}}" name="comment" cols="30" rows="6" style="width:528px" placeholder="推你的回覆"></textarea>
+                 <label for="contentInput{{this.id}}"></label>
+                </div>
+              </div>
+
+            </div>
+
+            <div style="padding: 16px 24px" class="d-flex flex-row-reverse align-items-center">
+              <button id="submitBtn" data-id="{{this.id}}" class="btn text-end my-auto" style="background-color:#FF6600; color:white; border-radius: 30px"
+                type="submit">
+                回覆
+              </button>
+              <span id="contentMessage{{this.id}}" class="text-danger me-2 mt-2" style="font-size: 10px"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+
+
+{{>top-users-bar}}
+

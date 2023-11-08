@@ -1,0 +1,35 @@
+<div class="mx-auto p-2 border-bottom">
+    <div class="card-body">
+        <div class="mx-auto d-flex flex-row">
+            <a href="/users/{{this.id}}/tweets">
+                <div style="width:40px; height:40px; background-color:#FF6600" class="rounded-circle overflow-hidden">
+                    <img src={{#if this.avatar}}{{this.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+                        style="aspect-ratio: 1 / 1;width: 40px;object-fit: cover;object-position: center;" alt="avatar">
+                </div>
+            </a>
+            <p class="inline ms-1 mt-1">{{this.name}}</p>
+            <span class="ms-1 mt-2" style="font-size: 0.2rem;">@{{this.account}}</span>
+            <span class="ms-1 mt-2" style="font-size: 0.2em;">• {{relativeTimeFromNow this.Followship.createdAt}}</span>
+            <div class="ms-auto">
+                {{#if this.isFollowed }}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit"
+                        style="background-color:#FF6600; color:#ffffff; height:40px;border-radius: 30px"
+                        class="btn">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{this.id}}" method="POST">
+                    <button type="submit"
+                        style="background-color:#ffffff; color:#FF6600; border-color:#FF6600; height:40px;border-radius: 30px"
+                        class="btn">跟隨</button>
+                </form>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="col-10 mx-auto">
+            <p>{{this.introduction}}</p>
+        </div>
+
+    </div>
+</div>

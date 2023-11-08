@@ -1,0 +1,45 @@
+{{>navs/user-left-column route='edit'}}
+<div style="position: absolute; left: 332px; width: 641px; height: 100%" class="border border-top border-end">
+  {{>header route='main' title='帳戶設定'}}
+  <form class="needs-validation" action="/users/{{user.id}}/edit" method="POST" novalidate>
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
+      <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="account"
+        name="account" style="background-color: #f5f8fa !important;" value="{{user.account}}">
+      <label for="account">帳號</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
+    </div>
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
+      <input type="text" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="name"
+        name="name" style="background-color: #f5f8fa !important;" value="{{user.name}}">
+      <label for="name">名稱</label>
+      <div class="invalid-feedback">
+        不可空白 且 字數不可超過50字！
+      </div>
+    </div>
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
+      <input type="email" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="email"
+        name="email" style="background-color: #f5f8fa !important;" value="{{user.email}}">
+      <label for="email">Email</label>
+      <div class="invalid-feedback">
+        不可空白！
+      </div>
+    </div>
+    <div class="form-floating mb-4" style="width: 593px;height: 54px;margin: 32px auto;">
+      <input type="password" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="password"
+        name="password" style="background-color: #f5f8fa !important;">
+      <label for="password" id="editForm">密碼</label>
+    </div>
+    <div class="form-floating mb-3" style="width: 593px;height: 54px;margin: 32px auto;">
+      <input type="password" class="form-control border-3 border-top-0 border-start-0 border-end-0" id="checkPassword"
+        name="checkPassword" style="background-color: #f5f8fa !important;">
+      <label for="checkPassword" id="editForm">密碼再確認</label>
+    </div>
+    <div class="d-flex justify-content-end" style="width: 593px;margin: 32px auto;">
+      <button class="btn pt-1 pb-1 ps-3 pe-3" type="submit"
+        style="background-color:#FF6600; color:white; border-radius: 30px">儲存</button>
+    </div>
+  </form>
+</div>
+

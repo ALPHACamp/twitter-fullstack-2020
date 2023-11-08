@@ -1,0 +1,48 @@
+{{> navs/admin-left-column}}
+<div class="border-start border-end" style="position: absolute; left: 332px; width: 936px; min-height: 100%;">
+  {{>header route='main' title='推文清單'}}
+  {{#each tweets}}
+    <div class="border-bottom" style="padding: 16px 0 16px 0;width: 936px;">
+      <div class="d-flex">
+        <div class="rounded-circle overflow-hidden" style="height: 50px; width: 50px;margin-left: 24px;margin-right: 8px;">
+          <img src={{#if this.User.avatar}}{{this.User.avatar}}{{else}}"/icon/avatar.jpg"{{/if}}
+            style="aspect-ratio: 1 / 1;height: 100%;width: 100%;object-fit: cover;object-position: center;" alt="avatar">
+        </div>
+        <div style="width: 855px;">
+          <div class="d-flex justify-content-between" style="margin-bottom: 8px;">
+            <div>
+              <span class="fw-bold">{{this.User.name}}</span>
+              <span style="margin-left: 8px;color:#6C757D;font-size: 14px;font-weight: 400;">@{{this.User.account}}・{{relativeTimeFromNow this.createdAt}}</span>
+            </div>
+            <form id="deleteTweet{{this.id}}" action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+              <button style="border: none;background-color: inherit;" type="button" data-bs-toggle="modal" data-bs-target="#checkDelete{{this.id}}">
+                <div style="height: 24px; width: 24px; padding: 4.5px;">
+                  {{> icons/close-icon}}
+                </div>
+              </button>
+            </form>
+          </div>
+          <div>{{this.description}}</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- checkDeleteModal -->
+    <div class="modal fade" id="checkDelete{{this.id}}" tabindex="-1" aria-labelledby="checkDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            確認刪除該則推文?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <button type="submit" class="btn btn-danger" form="deleteTweet{{this.id}}">刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each }}
+</div>
+<script>
+  
+</script>
