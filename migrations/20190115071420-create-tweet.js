@@ -9,10 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       UserId: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
-      description: {
+      content: {
+        allowNull: false,
         type: Sequelize.TEXT
+      },
+      likeCount: {
+        type: Sequelize.INTEGER
+      },
+      replyCount: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
